@@ -95,7 +95,7 @@
       Number of card:<br>
       <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
       Unique PIN:<br>
-      <input type="number" id="pin" maxlength="4" min="0" required><br>
+      <input type="number" id="pin" maxlength="4" min="0" pattern="[0-9]{4}" required><br>
       <button onclick="parseForm();">Submit</button>
     </form>
   </body>
