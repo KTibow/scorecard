@@ -13,6 +13,11 @@
         font-family: Open Sans;
       }
 
+      html,
+      body {
+        overflow: hidden;
+      }
+      
       table,
       th,
       td {
@@ -33,16 +38,25 @@
       }
 
       form {
-        min-height: 33vh;
-        height: 33vh;
-        max-height: 33vh;
-        font-size: 2.7vh;
+        min-height: 30vh;
+        height: 30vh;
+        max-height: 30vh;
+        font-size: 2.5vh;
       }
       
-      input, button {
+      input[type=text], input[type=number] {
         min-height: 2.5vh;
         height: 2.5vh;
         max-height: 2.5vh;
+        border-style: solid;
+        border-width: medium;
+        border-color: black;
+      }
+      
+      input[type=submit] {
+        padding: 7px;
+        margin-top: 4px;
+        margin-left: 2px;
       }
     </style>
   </head>
@@ -96,7 +110,7 @@
       <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
       Unique PIN:<br>
       <input type="number" id="pin" maxlength="4" min="0" pattern="[0-9]{4}" required><br>
-      <button onclick="parseForm();">Submit</button>
+      <input type="submit" onclick="parseForm();" value="Submit">
     </form>
   </body>
 </html>
