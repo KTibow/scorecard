@@ -10,6 +10,7 @@
     table {
       width: calc(100% - 8px);
       height: calc(100% - 8px);
+      font-family: Open Sans;
     }
 
     table,
@@ -23,7 +24,6 @@
     td {
       padding: 4px;
       text-align: center;
-      font-family: Open Sans;
     }
 
     table {
@@ -77,6 +77,12 @@
     </tr>
   </table>
   <form>
+    Letter of card:<br>
+    <input type="text" id="letter" maxlength="1" pattern="[A-Da-d]{1}"><br>
+    Number of card:<br>
+    <input type="number" id="number" maxlength="1" min="1" max="4"><br>
+    Unique PIN:<br>
+    <input type="number" id="number" maxlength="4"><br>
   </form>
 </body>
 </html>
