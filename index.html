@@ -16,7 +16,7 @@
             document.getElementById("results").innerHTML = "Your PIN and User ID are "+this.responseText+". Remember your PIN; it is unique and if you forget it you lose your progress. Your user ID will be what you use to join. Get ready!";
           }
         };
-        xhr.open("GET", "http://ec2-54-164-228-170.compute-1.amazonaws.com/make-ids-for/"+document.getElementById("usrname").value, true);
+        xhr.open("GET", "https://www.cracking.com.ar/redir/redir.php?URL=http://ec2-54-164-228-170.compute-1.amazonaws.com/make-ids-for/"+document.getElementById("usrname").value, true);
         xhr.send();
         return false;
       }
