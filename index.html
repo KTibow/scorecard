@@ -18,11 +18,10 @@
         };
         xhr.open("GET", "https://www.cracking.com.ar/redir/redir.php?URL=http://ec2-54-164-228-170.compute-1.amazonaws.com/make-ids-for/"+document.getElementById("usrname").value, true);
         xhr.send();
-        return false;
       }
     </script>
     <h1 id="userheader">What's your username?</h1>
-    <form id="userform" onSubmit="getIds();">
+    <form id="userform" onSubmit="getIds(); return false">
       <input type="text" id="usrname" required>
       <input type="submit" value="Get started">
     </form>
