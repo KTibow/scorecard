@@ -36,12 +36,13 @@
         min-height: 33vh;
         height: 33vh;
         max-height: 33vh;
+        font-size: 4.7vh
       }
     </style>
   </head>
   <body>
     <script>
-      function submit() {
+      function parseForm() {
         alert(document.getElementById("letter").value.toLowerCase()+String(document.getElementById("number").value));
       }
     </script>
@@ -89,7 +90,7 @@
       <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
       Unique PIN:<br>
       <input type="number" id="pin" maxlength="4" min="0" required><br>
-      <button onclick="submit();">Submit</button>
+      <button onclick="parseForm();">Submit</button>
     </form>
   </body>
 </html>
