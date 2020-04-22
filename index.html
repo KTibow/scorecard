@@ -33,6 +33,8 @@
     }
     
     form {
+      min-height: 33vh;
+      height: 33vh;
       max-height: 33vh;
     }
   </style>
@@ -83,7 +85,7 @@
     <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
     Unique PIN:<br>
     <input type="number" id="pin" maxlength="4" min="0" required><br>
-    <input type="submit" value="Submit" onclick="alert(document.getElementById("letter").value.toLowerCase()+String(document.getElementById("number").value));">
+    <button onclick="alert(document.getElementById("letter").value.toLowerCase()+String(document.getElementById("number").value));">Submit</button>
   </form>
 </body>
 </html>
