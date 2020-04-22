@@ -78,11 +78,11 @@
   </table>
   <form>
     Letter of card:<br>
-    <input type="text" id="letter" maxlength="1" pattern="[A-Da-d]{1}"><br>
+    <input type="text" id="letter" maxlength="1" pattern="[A-Da-d]{1}" required><br>
     Number of card:<br>
-    <input type="number" id="number" maxlength="1" min="1" max="4"><br>
+    <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
     Unique PIN:<br>
-    <input type="number" id="pin" maxlength="4" min="0"><br>
+    <input type="number" id="pin" maxlength="4" min="0" required><br>
     <input type="submit" value="Submit" onclick="alert(document.getElementById("letter").value.toLowerCase()+String(document.getElementById("number").value));">
   </form>
 </body>
