@@ -103,14 +103,14 @@
         <td>?????</td>
       </tr>
     </table>
-    <form>
+    <form onSubmit="parseForm();">
       Letter of card:<br>
       <input type="text" id="letter" maxlength="1" pattern="[A-Da-d]{1}" required><br>
       Number of card:<br>
       <input type="number" id="number" maxlength="1" min="1" max="4" required><br>
       Unique PIN:<br>
       <input type="number" id="pin" maxlength="4" min="0" pattern="[0-9]{4}" required><br>
-      <input type="submit" onclick="parseForm();" value="Submit">
+      <input type="submit" value="Submit">
     </form>
   </body>
 </html>
