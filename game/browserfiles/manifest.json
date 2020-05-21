@@ -1,7 +1,9 @@
 {
-  "short_name": "E-ClueCard",
-  "name": "E-Cluecard: Electronic scorecard for clues",
+  "short_name": "ClueCard",
+  "name": "Cluecard: Electronic scorecard for clues",
   "description": "Electronic scorecard for clues",
+  "categories": ["game", "clue", "clue game", "scoreboard", "leaderboard"],
+  "lang": "en-US",
   "icons": [
     {
       "src": "/android-icon-192x192.png",
@@ -25,7 +27,7 @@
     }
   ],
   "start_url": "/",
-  "background_color": "#B040FF",
+  "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",
   "theme_color": "#7000FF"
