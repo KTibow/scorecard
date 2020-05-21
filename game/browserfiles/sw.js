@@ -4,11 +4,12 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
       console.log('[Service Worker] Caching caches');
-      return cache.addAll(['/', '/open-sans.eot', '/open-sans.woff2',
-                           '/open-sans.woff', '/open-sans.ttf', '/open-sans.svg',
+      return cache.addAll(['/', '/welcome.css', '/install.js',
+                           '/sw.js', '/favicon.ico',
+                           '/manifest.json', '/maskable_icon.png',
                            '/android-icon-192x192.png', '/ms-icon-310x310.png',
                            '/ms-icon-150x150.png', '/favicon-96x96.png',
-                           '/welcome.css', '/install.js', 'sw.js']);
+                           '/favicon-16x16.png', 'favicon-32x32.png']);
     })
   );
 });
