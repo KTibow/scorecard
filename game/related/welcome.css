@@ -12,11 +12,7 @@
        url('/open-sans.svg#OpenSans') format('svg'); /* Legacy iOS */
 }
 
-html,
-body,
-table {
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
+* {
     font-family: Open Sans;
 }
 button {
