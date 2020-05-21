@@ -1,0 +1,32 @@
+{
+  "short_name": "E-ClueCard",
+  "name": "E-Cluecard: Electronic scorecard for clues",
+  "description": "Electronic scorecard for clues",
+  "icons": [
+    {
+      "src": "/android-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/ms-icon-310x310.png",
+      "type": "image/png",
+      "sizes": "310x310"
+    },
+    {
+      "src": "/ms-icon-150x150.png",
+      "type": "image/png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "/favicon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#DDFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#00FFFF"
+}
