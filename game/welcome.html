@@ -58,6 +58,11 @@
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        };
+    </script>
     <h1>Welcome...</h1>
     <h3>You've accepted the invitation. Now it's time to start going.</h3>
     <button>Let's do this.</button>
