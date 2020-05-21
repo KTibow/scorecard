@@ -27,7 +27,7 @@ for file in ['/robots.txt', '/android-icon-36x36.png',
              '/apple-icon-180x180.png', '/apple-icon-precomposed.png',
              '/browserconfig.xml', '/favicon-16x16.png',
              '/favicon-32x32.png', '/favicon-96x96.png',
-             '/favicon.ico', '/manifest.json',
+             '/favicon.ico', '/manifest.json', '/sw.js',
              '/ms-icon-70x70.png', '/ms-icon-144x144.png',
              '/ms-icon-150x150.png', '/ms-icon-310x310.png']:
     app.add_url_rule(file, file, make_sender(file))
