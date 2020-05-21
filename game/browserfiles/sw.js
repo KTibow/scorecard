@@ -1,10 +1,11 @@
-var cacheName = "escore-v3";
+var cacheName = "escore-v4";
 self.addEventListener('install', (e) => {
   console.log('[Service Worker] Install');
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
       console.log('[Service Worker] Caching caches');
-      return cache.addAll(['/', 'https://fonts.googleapis.com/css?family=Open+Sans',
+      return cache.addAll(['/', '/open-sans.eot', '/open-sans.woff2',
+                           '/open-sans.woff', '/open-sans.ttf', '/open-sans.svg',
                            '/android-icon-192x192.png', '/ms-icon-310x310.png',
                            '/ms-icon-150x150.png', '/favicon-96x96.png',
                            '/welcome.css', '/install.js']);
