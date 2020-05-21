@@ -1,4 +1,5 @@
-from flask import Flask, send_from_directory, request
+# ============== INIT ==============
+from flask import Flask, send_from_directory, request, redirect
 from flask_minify import minify
 import os, magic
 app = Flask(__name__)
@@ -13,11 +14,14 @@ def make_sender(path, dir):
         return send_from_directory(os.path.join(app.root_path, 'game/'+dir),
                                    path.replace("/", ""), mimetype=mimetype)
     return f
+@app.before_request
+def http_redir():
+    if request.headers["X-Forwarded-Proto"] == "http":
+        return redirect(request.url.replace("http", "https"), code=301)
 # ========== WEB INTERFACE ==========
 # home
 @app.route('/')
 def hello():
-    print(request.headers)
     return open("game/welcome.html", "r").read()
 # ===== RELATED TO WEB INTERFACE ====
 for file in ['/welcome.css', '/install.js']:
