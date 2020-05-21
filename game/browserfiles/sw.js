@@ -8,7 +8,7 @@ self.addEventListener('install', (e) => {
                            '/open-sans.woff', '/open-sans.ttf', '/open-sans.svg',
                            '/android-icon-192x192.png', '/ms-icon-310x310.png',
                            '/ms-icon-150x150.png', '/favicon-96x96.png',
-                           '/welcome.css', '/install.js']);
+                           '/welcome.css', '/install.js', 'sw.js']);
     })
   );
 });
