@@ -1,4 +1,4 @@
-var cacheName = "escore-v5";
+var cacheName = "e-score-v6";
 self.addEventListener('install', (e) => {
   console.log('[Service Worker] Install');
   e.waitUntil(
