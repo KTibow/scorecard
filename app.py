@@ -38,3 +38,8 @@ for file in ['/robots.txt', '/android-icon-36x36.png',
              '/ms-icon-70x70.png', '/ms-icon-144x144.png',
              '/ms-icon-150x150.png', '/ms-icon-310x310.png']:
     app.add_url_rule(file, file, make_sender(file, "browserfiles"))
+# ============== CORS ==============
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
