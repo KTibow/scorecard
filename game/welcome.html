@@ -4,41 +4,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Score Card!</title>
-    <style>
-        html,
-        body,
-        table {
-            width: calc(100% - 8px);
-            height: calc(100% - 8px);
-            font-family: Open Sans;
-        }
-        button {
-            background-color: #7000FF;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            margin: 15px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: background-color 0.3s, box-shadow 0.1s, transform 0.1s;
-            box-shadow: 4px 4px 2px #A030FF;
-        }
-        button:hover {
-            background-color: #5000DF;
-        }
-        button:active {
-            background-color: #4000CF;
-            box-shadow: 2px 2px 1px #A030FF;
-            transform: translateY(2px) translateX(2px);
-        }
-        h1, h2, h3, h4, h5, h6 {
-            color: #390070;
-            margin-left: 16px;
-        }
-    </style>
+    <link rel='stylesheet' href='welcome.css' type='text/css' />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -58,16 +24,7 @@
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <script>
-        if ("serviceWorker" in navigator) {
-          window.addEventListener("load", function() {
-            navigator.serviceWorker
-              .register("/serviceWorker.js")
-              .then(res => console.log("service worker registered"))
-              .catch(err => console.log("service worker not registered", err))
-          })
-        }
-    </script>
+    <script src="install.js"></script>
     <h1>Welcome...</h1>
     <h3>You've accepted the invitation. Now it's time to start going.</h3>
     <button>Let's do this.</button>
