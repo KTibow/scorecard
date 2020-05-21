@@ -16,7 +16,7 @@ def make_sender(path, dir):
 def hello():
     return open("game/welcome.html", "r").read()
 # ===== RELATED TO WEB INTERFACE ====
-for file in ['welcome.css', 'install.js']:
+for file in ['/welcome.css', '/install.js']:
     app.add_url_rule(file, file, make_sender(file, "related"))
 # ============== API ================
 
