@@ -16,6 +16,12 @@
       "sizes": "310x310"
     },
     {
+      "src": "/maskable_icon.png",
+      "type": "image/png",
+      "sizes": "568x568",
+      "purpose": "maskable"
+    },
+    {
       "src": "/ms-icon-150x150.png",
       "type": "image/png",
       "sizes": "150x150"
