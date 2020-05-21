@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request
 from flask_minify import minify
 import os, magic
 app = Flask(__name__)
@@ -10,7 +10,6 @@ def make_sender(path, dir):
             mimetype = "application/javascript"
         if "css" in path:
             mimetype = "text/css"
-        print("I got called to do "+os.path.join(app.root_path, 'game/'+dir+path)+" with mimetype of "+mimetype)
         return send_from_directory(os.path.join(app.root_path, 'game/'+dir),
                                    path.replace("/", ""), mimetype=mimetype)
     return f
@@ -18,6 +17,7 @@ def make_sender(path, dir):
 # home
 @app.route('/')
 def hello():
+    print(request.headers)
     return open("game/welcome.html", "r").read()
 # ===== RELATED TO WEB INTERFACE ====
 for file in ['/welcome.css', '/install.js']:
