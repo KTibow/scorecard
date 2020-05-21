@@ -1,9 +1,7 @@
 # ============== INIT ==============
 from flask import Flask, send_from_directory, request, redirect
-from flask_minify import minify
 import os, magic
 app = Flask(__name__)
-minify(app=app, html=True, js=True, cssless=True, caching_limit=0)
 def make_sender(path, dir):
     def f():
         mimetype = magic.from_file(os.path.join(app.root_path, 'game/'+dir+path), mime=True)
