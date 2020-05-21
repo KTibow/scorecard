@@ -11,9 +11,9 @@ def hello():
 # ========== BROWSER FILES ==========
 def make_sender(path):
     def f():
-        mimetype = magic.from_file(os.path.join(app.root_path, 'game'+path), mime=True)
-        print("I got called to do "+os.path.join(app.root_path, 'game'+path)+" with mimetype of "+mimetype)
-        return send_from_directory(os.path.join(app.root_path, 'game'),
+        mimetype = magic.from_file(os.path.join(app.root_path, 'game/browserfiles'+path), mime=True)
+        print("I got called to do "+os.path.join(app.root_path, 'game/browserfiles'+path)+" with mimetype of "+mimetype)
+        return send_from_directory(os.path.join(app.root_path, 'game/browserfiles'),
                                    path.replace("/", ""), mimetype=mimetype)
     return f
 for file in ['/robots.txt', '/android-icon-36x36.png',
