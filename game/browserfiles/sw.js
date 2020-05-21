@@ -1,9 +1,9 @@
 var cacheName = "e-score-v6";
 self.addEventListener('install', (e) => {
-  console.log('[Service Worker] Install');
+  console.log('Service Worker Installing...');
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
-      console.log('[Service Worker] Caching caches');
+      console.log('Service Worker Caching caches');
       return cache.addAll(['/', '/welcome.css', '/install.js',
                            '/sw.js', '/favicon.ico',
                            '/manifest.json', '/maskable_icon.png',
@@ -16,7 +16,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((r) => {
-          console.log('[Service Worker] Fetching resource: '+e.request.url);
+          console.log('Service Worker Fetching resource '+e.request.url);
       return r || fetch(e.request).then((response) => {
                 return caches.open(cacheName).then((cache) => {
           console.log('[Service Worker] Caching new resource: '+e.request.url);
