@@ -16,7 +16,7 @@ def make_sender(path):
         return send_from_directory(os.path.join(app.root_path, 'game'),
                                    path.replace("/", ""), mimetype=mimetype)
     return f
-for file in ['robots.txt', 'favicon.ico', '/android-icon-36x36.png',
+for file in ['/robots.txt', '/favicon.ico', '/android-icon-36x36.png',
             '/android-icon-48x48.png', '/android-icon-72x72.png',
             '/android-icon-96x96.png', '/android-icon-144x144.png',
             '/android-icon-192x192.png', '/apple-icon.png',
