@@ -34,9 +34,9 @@ for file in ['/robots.txt', '/android-icon-36x36.png',
              '/apple-icon-114x114.png', '/apple-icon-120x120.png',
              '/apple-icon-144x144.png', '/apple-icon-152x152.png',
              '/apple-icon-180x180.png', '/apple-icon-precomposed.png',
-             '/browserconfig.xml', '/favicon-16x16.png',
+             '/browserconfig.xml', '/favicon-16x16.png', '/sw.js',
              '/favicon-32x32.png', '/favicon-96x96.png',
-             '/favicon.ico', '/manifest.json', '/sw.js',
+             '/favicon.ico', '/manifest.json', '/maskable_icon.png',
              '/ms-icon-70x70.png', '/ms-icon-144x144.png',
              '/ms-icon-150x150.png', '/ms-icon-310x310.png']:
     app.add_url_rule(file, file, make_sender(file, "browserfiles"))
