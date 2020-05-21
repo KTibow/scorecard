@@ -6,25 +6,27 @@
   "lang": "en-US",
   "icons": [
     {
-      "src": "/android-icon-192x192.png",
+      "src": "/r_maskable_icon(1).png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "284x284",
+      "purpose": "any maskable"
     },
     {
-      "src": "/ms-icon-310x310.png",
+      "src": "/r_maskable_icon(2).png",
       "type": "image/png",
-      "sizes": "310x310"
+      "sizes": "426x426",
+      "purpose": "any maskable"
     },
     {
       "src": "/maskable_icon.png",
       "type": "image/png",
       "sizes": "568x568",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
-      "src": "/ms-icon-150x150.png",
+      "src": "/r_maskable_icon.png",
       "type": "image/png",
-      "sizes": "150x150"
+      "sizes": "142x142"
     },
     {
       "src": "/favicon-96x96.png",
