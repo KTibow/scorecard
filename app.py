@@ -6,6 +6,8 @@ def make_sender(path, dir):
         mimetype = magic.from_file(os.path.join(app.root_path, 'game/'+dir+path), mime=True)
         if "js" in path:
             mimetype = "application/javascript"
+        if "css" in path:
+            mimetype = "text/css"
         print("I got called to do "+os.path.join(app.root_path, 'game/'+dir+path)+" with mimetype of "+mimetype)
         return send_from_directory(os.path.join(app.root_path, 'game/'+dir),
                                    path.replace("/", ""), mimetype=mimetype)
