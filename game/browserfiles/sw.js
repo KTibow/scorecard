@@ -1,4 +1,4 @@
-var cacheName = "clue-card-v1.4";
+var cacheName = "clue-card-v1.5";
 self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
     e.waitUntil(
@@ -12,6 +12,16 @@ self.addEventListener('install', (e) => {
             ]);
         })
     );
+    e.waitUntil(
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
+                if (key !== cacheName) {
+                    console.log("Service Worker: Bye-Bye " + key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
 });
 self.addEventListener('fetch', function(event) {
     console.log("Service Worker: We got a (no, not fish) fetch! " + event.request.url);
@@ -23,18 +33,6 @@ self.addEventListener('fetch', function(event) {
         fetch(event.request).catch(function() {
             console.log('Service Worker: Returning cache ' + event.request.url + '...');
             return caches.match(event.request);
-        })
-    );
-});
-self.addEventListener('activate', (e) => {
-    e.waitUntil(
-        caches.keys().then((keyList) => {
-            return Promise.all(keyList.map((key) => {
-                if (key !== cacheName) {
-                    console.log("Service Worker: Bye-Bye " + key);
-                    return caches.delete(key);
-                }
-            }));
         })
     );
 });
