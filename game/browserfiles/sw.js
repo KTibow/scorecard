@@ -1,4 +1,4 @@
-var cacheName = "e-score-v12";
+var cacheName = "e-score-v13";
 self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
     e.waitUntil(
@@ -15,7 +15,7 @@ self.addEventListener('install', (e) => {
     );
 });
 self.addEventListener('fetch', function(event) {
-    console.log('Service Worker: We got a (no, not fish) fetch! " + event.request.url);
+    console.log("Service Worker: We got a (no, not fish) fetch! " + event.request.url);
     event.respondWith(
         caches.open(cacheName).then(function(cache) {
             console.log('Service Worker: Trying to cache ' + event.request.url + '...');
