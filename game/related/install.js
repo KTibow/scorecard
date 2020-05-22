@@ -43,8 +43,7 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
-                console.log("Service worker: installed! (install.js)", reg);
-                setInterval(5000, checkVersion, reg);
+                console.log("Service worker: installed! (install.js)", reg, setInterval(5000, checkVersion, reg));
             }).catch (err => console.log("Service worker: not registered (install.js)", err));
     });
 }
