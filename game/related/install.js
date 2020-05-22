@@ -1,9 +1,37 @@
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
-    navigator.serviceWorker
+    var reg = navigator.serviceWorker
       .register("/sw.js")
       .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err))
+      .catch(err => console.log("service worker not registered", err));
+    function listenForWaitingServiceWorker(reg, callback) {
+      function awaitStateChange() {
+        reg.installing.addEventListener('statechange', function() {
+          if (this.state === 'installed') callback(reg);
+        });
+      }
+      if (!reg) return;
+      if (reg.waiting) return callback(reg);
+      if (reg.installing) awaitStateChange();
+      reg.addEventListener('updatefound', awaitStateChange);
+    }
+    // reload once when the new Service Worker starts activating
+    var refreshing;
+    navigator.serviceWorker.addEventListener('controllerchange',
+      function() {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      }
+    );
+    function promptUserToRefresh(reg) {
+      // this is just an example
+      // don't use window.confirm in real life; it's terrible
+      if (window.confirm("Refresh all tabs now and get the latest version of the ClueCard?")) {
+        reg.waiting.postMessage('skipWaiting');
+      }
+    }
+    listenForWaitingServiceWorker(reg, promptUserToRefresh);
   });
 }
 window.addEventListener("load", function() {
@@ -37,15 +65,4 @@ window.addEventListener("load", function() {
           });
       });
     });            
-});
-function promptUserToRefresh() {
-  if (confirm('Refresh all tabs now and get the latest version of the ClueCard?')) reg.waiting.skipWaiting();
-}
-if (reg.waiting) promptUserToRefresh();
-reg.addEventListener('statechange', function(e) {
-  if (e.target.state === 'installed') {
-    promptUserToRefresh();
-  } else if (e.target.state === 'activated') {
-    window.location.reload();
-  }
 });
