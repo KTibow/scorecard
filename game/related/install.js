@@ -1,8 +1,9 @@
 var confirming = false;
-var globreg;
+var globreg = 0;
 console.log("Install.js running...");
 
 function checkVersion(reg) {
+    if (globreg == 0) return;
     console.log("checkVersion started... (install.js)");
 
     function listenForWaitingServiceWorker(reg, callback) {
@@ -58,12 +59,14 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
-                console.log("Service worker: installed! (install.js)", reg, checkVersion(reg), setInterval(5000, checkVersion, reg));
+                globreg = reg;
+                console.log("Service worker: installed! (install.js)", reg);
             }).
         catch (err => console.log("Service worker: not registered (install.js)", err));
     });
 }
 window.addEventListener("load", function() {
+    setInterval(5000, checkVersion, globreg);
     let deferredPrompt;
     const addBtn = document.getElementById("add2hs");
     const addAlt = document.getElementById("add2hsalt");
