@@ -1,7 +1,8 @@
 var confirming = false;
 var globreg;
-
+console.log("Install.js running...");
 function checkVersion(reg) {
+    console.log("checkVersion started...");
     function listenForWaitingServiceWorker(reg, callback) {
         function awaitStateChange() {
             reg.installing.addEventListener('statechange', function() {
@@ -40,7 +41,7 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
-                console.log("Service worker: installed!");
+                console.log("Service worker: installed! ", reg);
                 setInterval(5000, checkVersion, reg);
             }).catch (err => console.log("Service worker: not registered", err));
     });
