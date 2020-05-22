@@ -1,14 +1,13 @@
-var cacheName = "e-score-v14";
+var cacheName = "clue-card-v1";
 self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             console.log('Service Worker: Caching caches...');
             return cache.addAll(['/', '/welcome.css', '/install.js',
-                '/sw.js', '/favicon.ico',
-                '/manifest.json', '/maskable_icon.png',
-                '/r_maskable_icon(1).png', '/r_maskable_icon(2).png',
-                '/maskable_icon.png', '/r_maskable_icon.png',
+                '/sw.js', '/favicon.ico', '/manifest.json',
+                '/maskable_icon.png', '/r_maskable_icon(1).png',
+                '/r_maskable_icon(2).png', '/r_maskable_icon.png',
                 '/favicon-16x16.png', 'favicon-32x32.png'
             ]);
         })
