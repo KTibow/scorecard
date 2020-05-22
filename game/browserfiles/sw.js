@@ -1,8 +1,8 @@
-var cacheName = "e-score-v9";
-self.addEventListener('install', (e) = > {
+var cacheName = "e-score-v10";
+self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
     e.waitUntil(
-        caches.open(cacheName).then((cache) = > {
+        caches.open(cacheName).then((cache) => {
             console.log('Service Worker: Caching caches...');
             return cache.addAll(['/', '/welcome.css', '/install.js',
                 '/sw.js', '/favicon.ico',
@@ -27,10 +27,10 @@ self.addEventListener('fetch', function(event) {
         })
     );
 });
-self.addEventListener('activate', (e) = > {
+self.addEventListener('activate', (e) => {
     e.waitUntil(
-        caches.keys().then((keyList) = > {
-            return Promise.all(keyList.map((key) = > {
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
                 if (key !== cacheName) {
                     console.log("Service Worker: Bye-Bye " + key);
                     return caches.delete(key);
