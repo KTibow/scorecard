@@ -37,7 +37,9 @@ function checkVersion(reg) {
     listenForWaitingServiceWorker(reg, promptUserToRefresh);
 }
 if ("serviceWorker" in navigator) {
+    console.log("Install.js getting ready to install service worker...");
     window.addEventListener("load", function() {
+        console.log("Install.js trying to install service worker...");
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
