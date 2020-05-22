@@ -27,11 +27,6 @@
       "src": "/r_maskable_icon.png",
       "type": "image/png",
       "sizes": "142x142"
-    },
-    {
-      "src": "/favicon-96x96.png",
-      "type": "image/png",
-      "sizes": "96x96"
     }
   ],
   "start_url": "/",
