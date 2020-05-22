@@ -20,7 +20,7 @@ self.addEventListener('fetch', function(event) {
         caches.open(cacheName).then(function(cache) {
             console.log('Service Worker: Trying to cache ' + event.request.url + '...');
             cache.add(event.request.url);
-        }).catch(function() {});
+        }).catch(function() { return; });
         fetch(event.request).catch(function() {
             console.log('Service Worker: Returning cache ' + event.request.url + '...');
             return caches.match(event.request);
