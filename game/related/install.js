@@ -38,3 +38,14 @@ window.addEventListener("load", function() {
       });
     });            
 });
+function promptUserToRefresh() {
+  if (confirm('Refresh all tabs now and get the latest version of the ClueCard?')) reg.waiting.skipWaiting();
+}
+if (reg.waiting) promptUserToRefresh();
+reg.addEventListener('statechange', function(e) {
+  if (e.target.state === 'installed') {
+    promptUserToRefresh();
+  } else if (e.target.state === 'activated') {
+    window.location.reload();
+  }
+});
