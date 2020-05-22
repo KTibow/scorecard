@@ -2,7 +2,7 @@ var confirming = false;
 var globreg;
 console.log("Install.js running...");
 function checkVersion(reg) {
-    console.log("checkVersion started...");
+    console.log("checkVersion started... (install.js)");
     function listenForWaitingServiceWorker(reg, callback) {
         function awaitStateChange() {
             reg.installing.addEventListener('statechange', function() {
@@ -24,7 +24,7 @@ function checkVersion(reg) {
     );
 
     function promptUserToRefresh(reg) {
-        console.log("I think it's time to update.");
+        console.log("I think it's time to update. (install.js)");
         if (!confirming) {
             confirming = true;
             console.log("Confirming...");
@@ -43,7 +43,7 @@ if ("serviceWorker" in navigator) {
             .then(function(reg) {
                 console.log("Service worker: installed! ", reg);
                 setInterval(5000, checkVersion, reg);
-            }).catch (err => console.log("Service worker: not registered", err));
+            }).catch (err => console.log("Service worker: not registered (install.js)", err));
     });
 }
 window.addEventListener("load", function() {
@@ -69,9 +69,9 @@ window.addEventListener("load", function() {
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the A2HS prompt');
+                    console.log('User accepted the A2HS prompt (install.js)');
                 } else {
-                    console.log('User dismissed the A2HS prompt');
+                    console.log('User dismissed the A2HS prompt (install.js)');
                 }
                 deferredPrompt = null;
             });
