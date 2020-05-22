@@ -1,4 +1,4 @@
-var cacheName = "e-score-v7!";
+var cacheName = "e-score-v8";
 self.addEventListener('install', (e) => {
   console.log('Service Worker Installing...');
   e.waitUntil(
@@ -7,25 +7,25 @@ self.addEventListener('install', (e) => {
       return cache.addAll(['/', '/welcome.css', '/install.js',
                            '/sw.js', '/favicon.ico',
                            '/manifest.json', '/maskable_icon.png',
-                           '/android-icon-192x192.png', '/ms-icon-310x310.png',
-                           '/ms-icon-150x150.png', '/favicon-96x96.png',
+                           '/r_maskable_icon(1).png', '/r_maskable_icon(2).png',
+                           '/maskable_icon.png', '/r_maskable_icon.png',
                            '/favicon-16x16.png', 'favicon-32x32.png']);
     })
   );
 });
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((r) => {
-          console.log('Service Worker Fetching resource '+e.request.url);
-      return r || fetch(e.request).then((response) => {
-                return caches.open(cacheName).then((cache) => {
-          console.log('[Service Worker] Caching new resource: '+e.request.url);
-          cache.put(e.request, response.clone());
-          return response;
-        });
-      });
-    })
-  );
+self.addEventListener('fetch', (e) = > {
+    e.respondWith(
+        caches.match(e.request).then((r) = > {
+            console.log('Service Worker Fetching resource ' + e.request.url);
+            return r || fetch(e.request).then((response) = > {
+                return caches.open(cacheName).then((cache) = > {
+                    console.log('[Service Worker] Caching new resource: ' + e.request.url);
+                    cache.put(e.request, response.clone());
+                    return response;
+                });
+            });
+        })
+    );
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(
@@ -37,4 +37,7 @@ self.addEventListener('activate', (e) => {
       }));
     })
   );
+});
+addEventListener('message', messageEvent => {
+  if (messageEvent.data === 'skipWaiting') return skipWaiting();
 });
