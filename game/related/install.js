@@ -1,17 +1,31 @@
 var confirming = false;
 var globreg;
 console.log("Install.js running...");
+
 function checkVersion(reg) {
     console.log("checkVersion started... (install.js)");
+
     function listenForWaitingServiceWorker(reg, callback) {
         function awaitStateChange() {
+            console.log("Awaiting state change.");
             reg.installing.addEventListener('statechange', function() {
-                if (this.state === 'installed') callback(reg);
+                if (this.state === 'installed') {
+                    console.log("Prompting user to refresh.");
+                    callback(reg);
+                }
             });
         }
-        if (!reg) return;
-        if (reg.waiting) return callback(reg);
-        if (reg.installing) awaitStateChange();
+        if (!reg) {
+            console.log("Error: Reg isn't working");
+            return;
+        }
+        if (reg.waiting) {
+            console.log("Prompting user to refresh.");
+            return callback(reg);
+        }
+        if (reg.installing) {
+            awaitStateChange();
+        }
         reg.addEventListener('updatefound', awaitStateChange);
     }
     var refreshing;
@@ -19,6 +33,7 @@ function checkVersion(reg) {
         function() {
             if (refreshing) return;
             refreshing = true;
+
             window.location.reload();
         }
     );
@@ -43,8 +58,9 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
-                console.log("Service worker: installed! (install.js)", reg, setInterval(5000, checkVersion, reg));
-            }).catch (err => console.log("Service worker: not registered (install.js)", err));
+                console.log("Service worker: installed! (install.js)", reg, checkVersion(reg), setInterval(5000, checkVersion, reg));
+            }).
+        catch (err => console.log("Service worker: not registered (install.js)", err));
     });
 }
 window.addEventListener("load", function() {
