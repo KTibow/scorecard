@@ -1,4 +1,4 @@
-var cacheName = "clue-card-v1.6";
+var cacheName = "clue-card-v2";
 console.log("Service Worker: Hello there!");
 self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
@@ -23,6 +23,7 @@ self.addEventListener('install', (e) => {
             }));
         })
     );
+    console.log("Service Worker: Done installing!");
 });
 self.addEventListener('fetch', function(event) {
     console.log("Service Worker: We got a (no, not fish) fetch! " + event.request.url);
