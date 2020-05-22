@@ -25,7 +25,9 @@ def hello():
 for file in ['/welcome.css', '/install.js']:
     app.add_url_rule(file, file, make_sender(file, "related"))
 # ============== API ================
-
+@app.route('/ping')
+def ping():
+    return "hi"
 # ========== BROWSER FILES ==========
 for file in ['/robots.txt', '/android-icon-36x36.png',
              '/android-icon-48x48.png', '/android-icon-72x72.png',
