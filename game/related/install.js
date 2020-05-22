@@ -23,8 +23,10 @@ function checkVersion(reg) {
     );
 
     function promptUserToRefresh(reg) {
+        console.log("I think it's time to update.");
         if (!confirming) {
             confirming = true;
+            console.log("Confirming...");
             if (window.confirm("Refresh all tabs now and get the latest version of the ClueCard?")) {
                 reg.waiting.postMessage('skipWaiting');
             }
@@ -38,7 +40,7 @@ if ("serviceWorker" in navigator) {
         navigator.serviceWorker
             .register("/sw.js")
             .then(function(reg) {
-                setTimeout(5000, checkVersion, reg);
+                setInterval(5000, checkVersion, reg);
             }).catch (err => console.log("service worker not registered", err));
     });
 }
