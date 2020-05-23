@@ -5,7 +5,7 @@ self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             console.log('Service Worker: Caching caches...');
-            return cache.addAll(['/', '/welcome.css', '/install.js',
+            return cache.addAll(['/', '/welcome.css',
                 '/sw.js', '/favicon.ico', '/manifest.json',
                 '/maskable_icon.png', '/r_maskable_icon(1).png',
                 '/r_maskable_icon(2).png', '/r_maskable_icon.png',
