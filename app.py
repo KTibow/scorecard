@@ -17,7 +17,7 @@ def walk():
     for p, d, f in os.walk('game'):
         for file in f:
             if 'html' not in file:
-                pys.append([p.replace("game/", ""), file])
+                pys.append([p.replace("game/", ""), "/"+file])
     return pys
 @app.before_request
 def http_redir():
