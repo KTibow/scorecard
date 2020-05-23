@@ -28,9 +28,6 @@ def http_redir():
 @app.route('/')
 def hello():
     return open("game/welcome.html", "r").read()
-# ===== RELATED TO WEB INTERFACE ====
-for file in ['/welcome.css']:
-    app.add_url_rule(file, file, make_sender(file, "related"))
 # ============== API ================
 @app.route('/ping')
 def ping():

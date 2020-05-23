@@ -5,11 +5,26 @@ self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             console.log('Service Worker: Caching caches...');
-            return cache.addAll(['/', '/welcome.css',
-                '/sw.js', '/favicon.ico', '/manifest.json',
-                '/maskable_icon.png', '/r_maskable_icon(1).png',
-                '/r_maskable_icon(2).png', '/r_maskable_icon.png',
-                '/favicon-16x16.png', 'favicon-32x32.png'
+            return cache.addAll(['/', '/open-sans.woff',
+                '/open-sans.woff2', '/open-sans.svg', '/open-sans.eot',
+                '/open-sans.ttf', '/sw.js', '/favicon-64x64.png',
+                '/android-icon-144x144.png', '/ms-icon-310x310.png',
+                '/android-icon-96x96.png', '/favicon-512x512.png',
+                '/android-icon-192x192.png', '/apple-icon.png',
+                '/favicon-32x32.png', '/manifest.json',
+                '/android-icon-36x36.png', '/favicon-118x118.png',
+                '/favicon-96x96.png', '/apple-icon-76x76.png',
+                '/favicon-16x16.png', '/ms-icon-150x150.png',
+                '/favicon-80x80.png', '/ms-icon-144x144.png',
+                '/apple-icon-152x152.png', '/favicon-1000x1000.png',
+                '/apple-icon-120x120.png', '/apple-icon-precomposed.png',
+                '/apple-icon-114x114.png', '/apple-icon-60x60.png',
+                '/apple-icon-72x72.png', '/apple-icon-57x57.png',
+                '/robots.txt', '/ms-icon-70x70.png',
+                '/apple-icon-180x180.png', '/android-icon-48x48.png',
+                '/browserconfig.xml', '/favicon.ico',
+                '/android-icon-72x72.png', '/apple-icon-144x144.png',
+                '/welcome.css'
             ]);
         })
     );
