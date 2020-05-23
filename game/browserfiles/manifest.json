@@ -6,27 +6,34 @@
   "lang": "en-US",
   "icons": [
     {
-      "src": "/r_maskable_icon(1).png",
+      "src": "/ms-icon-70x70.png",
       "type": "image/png",
-      "sizes": "284x284",
+      "sizes": "70x70",
       "purpose": "any maskable"
     },
     {
-      "src": "/r_maskable_icon(2).png",
+      "src": "/ms-icon-150x150.png",
       "type": "image/png",
-      "sizes": "426x426",
+      "sizes": "150x150",
       "purpose": "any maskable"
     },
     {
-      "src": "/maskable_icon.png",
+      "src": "/ms-icon-310x310.png",
       "type": "image/png",
-      "sizes": "568x568",
+      "sizes": "310x310",
       "purpose": "any maskable"
     },
     {
-      "src": "/r_maskable_icon.png",
+      "src": "/favicon-512x512.png",
       "type": "image/png",
-      "sizes": "142x142"
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-1000x1000.png",
+      "type": "image/png",
+      "sizes": "1000x1000",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "/",
