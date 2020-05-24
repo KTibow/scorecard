@@ -4,3 +4,4 @@ User-agent: Bingbot
 Disallow:
 User-agent: Googlebot
 Disallow:
+Sitemap: https://tank-scorecard.herokuapp.com/sitemap.txt
