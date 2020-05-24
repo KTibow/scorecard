@@ -1,0 +1,1 @@
+https://tank-scorecard.herokuapp.com/
