@@ -3,10 +3,10 @@
     <head>
         <link rel='stylesheet' href='welcome.css' type='text/css' />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Open ClueCard, the electronic score card for the beta tank clue game!">
+        <meta name="description" content="ClueCard is the electronic score card for a beta tank clue game!">
         <meta name="msvalidate.01" content="0B5D718961F147D87584052452B21483" />
         <meta name="google-site-verification" content="XrxTG1Lps1aI8DQ_9cPdK8Vqfu0yVEa5LlMtGgO9qbA" />
-        <title>ClueCard</title>
+        <title>ClueCard | E-ScoreCard for game clues</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -94,26 +94,20 @@
                             globreg = reg;
                             console.log("Service worker: installed! (install.js)", reg);
                         }).catch (err => console.log("Service worker: not registered (install.js)", err));
-                }
+                } 
                 setTimeout(2000, checkVersion, globreg);
                 let deferredPrompt;
                 const addBtn = document.getElementById("add2hs");
-                const addAlt = document.getElementById("add2hsalt");
-                addBtn.style.display = 'none';
-                addAlt.style.opacity = 0;
-                addAlt.style.transitionDuration = '2s';
                 window.addEventListener('beforeinstallprompt', (e) => {
                     // Prevent Chrome 67 and earlier from automatically showing the prompt
                     e.preventDefault();
                     // Stash the event so it can be triggered later.
                     deferredPrompt = e;
                     // Update UI to notify the user they can add to home screen
-                    addBtn.style.display = 'block';
-                    addAlt.style.opacity = 1;
+                    addBtn.style.setProperty("display", "inline-block", "important")
                     addBtn.addEventListener('click', (e) => {
                         // hide our user interface that shows our A2HS button
-                        addBtn.style.display = 'none';
-                        addAlt.style.opacity = 0;
+                        addBtn.style.setProperty("display", "none", "important")
                         // Show the prompt
                         deferredPrompt.prompt();
                         // Wait for the user to respond to the prompt
@@ -131,15 +125,8 @@
         </script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <h1>Welcome...</h1>
-        <h3>You've accepted the invitation. Now it's time to start going.</h3>
+        <h3>You've opened the electronic scorecard. Now it's time to start going.</h3>
         <button id="start">Let's do this.</button><br/>
-        <button id="add2hs">Add E-Scorecard to Home Screen</button>
-        <div id="add2hsalt">
-        It's completely fine to add the E-Scorecard because:
-            <ul>
-                <li>It's tiny! It doesn't really take up any space on your phone or computer.</li>
-                <li>It's just as safe to add E-Scorecard to your home screen as visiting E-Scorecard in your web browser.</li>
-            </ul>
-        </div>
+        <button id="add2hs" style="display: none;">Add E-Scorecard to Home Screen</button>
     </body>
 </html>
