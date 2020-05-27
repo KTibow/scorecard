@@ -31,6 +31,7 @@ def hello():
 # ============== API ================
 @app.route('/makeid/<username>')
 def genid(username):
+    username = username.lower()
     try:
         idDB = json.load(open("ids.db", "r"))
     except FileNotFoundError:
