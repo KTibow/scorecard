@@ -1,6 +1,6 @@
 # ============== INIT ==============
 from flask import Flask, send_from_directory, request, redirect
-import os, magic
+import os, magic, json
 app = Flask(__name__)
 def make_sender(path, dir):
     def f():
@@ -29,9 +29,18 @@ def http_redir():
 def hello():
     return open("game/welcome.html", "r").read()
 # ============== API ================
-@app.route('/ping')
-def ping():
-    return "hi"
+@app.route('/makeid/<username>')
+def genid(username):
+    try:
+        idDB = json.load(open("ids.db", "r"))
+    except FileNotFoundError:
+        open("ids.db", "w").close()
+        idDB = json.load(open("ids.db", "r"))
+    # First ID, then PIN
+    idDB[username] = [random.randint(0, 9999), random.randint(0, 9999)]
+    print(idDB)
+    json.dump(idDB, open("ids.db", "w"))
+    return idDB[username]
 # ========== BROWSER FILES ==========
 for file in walk():
     app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
