@@ -1,4 +1,4 @@
-flask
-gunicorn
-python-magic
-flask-minify
+flask==1.1.2
+gunicorn==20.0.4
+python-magic==0.4.18
+flask-minify==0.19
