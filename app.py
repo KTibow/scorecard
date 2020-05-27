@@ -34,8 +34,7 @@ def genid(username):
     try:
         idDB = json.load(open("ids.db", "r"))
     except FileNotFoundError:
-        open("ids.db", "w").close()
-        idDB = json.load(open("ids.db", "r"))
+        idDB = {}
     # First ID, then PIN
     idDB[username] = [random.randint(0, 9999), random.randint(0, 9999)]
     print(idDB)
