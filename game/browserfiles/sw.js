@@ -1,4 +1,4 @@
-var cacheName = "clue-card-v4";
+var cacheName = "clue-card-v5";
 console.log("Service Worker: Hello there!");
 self.addEventListener('install', (e) => {
     console.log('Service Worker: Installing...');
