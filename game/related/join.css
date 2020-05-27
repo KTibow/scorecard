@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/open-sans.eot');
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+    url('/open-sans.eot?#iefix') format('embedded-opentype'),
+    url('/open-sans.woff2') format('woff2'),
+    url('/open-sans.woff') format('woff'),
+    url('/open-sans.ttf') format('truetype'),
+    url('/open-sans.svg#OpenSans') format('svg');
+}
+* {
+  font-family: Open Sans;
+}
+button {
+  background-color: #7000FF;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.1s, transform 0.1s;
+  box-shadow: 4px 4px 2px #A030FF;
+}
+button:hover {
+  background-color: #5000DF;
+}
+button:active {
+  background-color: #4000CF;
+  box-shadow: 2px 2px 1px #A030FF;
+  transform: translateY(2px) translateX(2px);
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #390070;
+  margin-left: 16px;
+}
+input {
+  border: 3px solid #A030FF;
+  border-radius: 10px;
+  padding: 4px;
+  outline: 0;
+  box-shadow: 2px 2px 3px #A030FF;
+  transition-duration: 0.2s;
+}
+input:focus {
+  border: 3px solid #6000E0;
+  box-shadow: 1px 1px 2px #6000E0;
+  transform: translate(1px, 1px);
+}
+input::placeholder {
+ color: #A030FF;
+}
+input:focus::placeholder {
+ color: #6000E0;
+}
