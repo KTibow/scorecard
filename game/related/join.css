@@ -34,7 +34,7 @@ button:hover {
 button:active {
   background-color: #4000CF;
   box-shadow: 2px 2px 1px #A030FF;
-  transform: translateY(2px) translateX(2px);
+  transform: translate(2px, 2px);
 }
 h1, h2, h3, h4, h5, h6 {
   color: #390070;
@@ -52,11 +52,13 @@ input {
 input:focus {
   border: 5px solid #6000E0;
   box-shadow: 2px 2px 1px #6000E0;
-  transform: translate(1px, 1px);
+  transform: translate(2px, 2px);
 }
 input::placeholder {
- color: #A030FF;
+  color: #A030FF;
+  font-weight: bold !important;
 }
 input:focus::placeholder {
- color: #6000E0;
+  color: #6000E0;
+  font-weight: bold !important;
 }
