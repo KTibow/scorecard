@@ -47,6 +47,7 @@ input {
   outline: 0;
   box-shadow: 2px 2px 3px #A030FF;
   transition-duration: 0.2s;
+  margin: 15px;
 }
 input:focus {
   border: 3px solid #6000E0;
