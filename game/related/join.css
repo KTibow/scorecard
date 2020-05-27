@@ -41,17 +41,17 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 16px;
 }
 input {
-  border: 3px solid #A030FF;
+  border: 5px solid #A030FF;
   border-radius: 10px;
-  padding: 4px;
+  padding: 10px 27px;
   outline: 0;
-  box-shadow: 2px 2px 3px #A030FF;
+  box-shadow: 4px 4px 2px #A030FF;
   transition-duration: 0.2s;
   margin: 15px;
 }
 input:focus {
-  border: 3px solid #6000E0;
-  box-shadow: 1px 1px 2px #6000E0;
+  border: 5px solid #6000E0;
+  box-shadow: 2px 2px 1px #6000E0;
   transform: translate(1px, 1px);
 }
 input::placeholder {
