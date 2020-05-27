@@ -1,6 +1,6 @@
 # ============== INIT ==============
 from flask import Flask, send_from_directory, request, redirect
-import os, magic, json
+import os, magic, json, random
 app = Flask(__name__)
 def make_sender(path, dir):
     def f():
