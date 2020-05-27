@@ -39,7 +39,7 @@ def genid(username):
     idDB[username] = [random.randint(0, 9999), random.randint(0, 9999)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return idDB[username]
+    return ",".join(idDB[username])
 # ========== BROWSER FILES ==========
 for file in walk():
     app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
