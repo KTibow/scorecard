@@ -28,6 +28,10 @@ def http_redir():
 @app.route('/')
 def hello():
     return open("game/welcome.html", "r").read()
+# join
+@app.route('/join')
+def join():
+    return open("game/join.html", "r").read()
 # ============== API ================
 @app.route('/makeid/<username>')
 def genid(username):
