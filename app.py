@@ -36,7 +36,7 @@ def join():
     return open("game/join.html", "r").read()
 # card
 @app.route('/cluecard/<theid>/<thepin>')
-def join(theid, thepin):
+def card(theid, thepin):
     return "Your ID and PIN are "+theid+", "+thepin
 # ============== API ================
 @app.route('/makeid/<username>')
