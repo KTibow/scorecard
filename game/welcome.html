@@ -83,6 +83,9 @@
                     }
                 }
                 listenForWaitingServiceWorker(reg, promptUserToRefresh);
+                function join() {
+                    window.location.href = "/join";
+                }
             }
             setInterval(5000, checkVersion, globreg);
             window.addEventListener("load", function() {
@@ -126,7 +129,7 @@
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <h1>Welcome...</h1>
         <h3>You've opened the electronic scorecard. Now it's time to start going.</h3>
-        <button id="start" onClick="window.location.href = \"/join\"">Let's do this.</button><br/>
+        <button id="start" onClick="join()">Let's do this.</button><br/>
         <button id="add2hs" style="display: none;">Add E-Scorecard to Home Screen</button>
     </body>
 </html>
