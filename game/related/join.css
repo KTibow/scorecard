@@ -45,7 +45,9 @@ button:active {
 }
 h1, h2, h3, h4, h5, h6 {
   color: #390070;
-  margin-left: 16px;
+  margin: 0px !important;
+  margin-left: 16px !important;
+  margin-bottom: 0.67em !important;
 }
 input {
   border: 5px solid #A030FF;
