@@ -36,7 +36,7 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "/join",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",
