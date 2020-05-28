@@ -16,7 +16,7 @@
 }
 img {
   height: 7.5vmin;
-  margin-bottom: 1vmin;
+  margin: 1vmin 0vmin 1vmin 1vmin;
 }
 button {
   background-color: #7000FF;
