@@ -17,6 +17,9 @@
 img {
   height: 6.5vmin;
   padding: 2vmin;
+  padding-top: 1vmin;
+  padding-bottom: 0vmin;
+  margin-bottom: 0.5vmin;
 }
 button {
   background-color: #7000FF;
