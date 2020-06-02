@@ -17,10 +17,21 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    
+    # Uses last time's cache
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: pip-packs-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          pip-packs-
 
     # Runs a single command using the runners shell
     - name: Install requirements
-      run: pip3 install -r requirements.txt
+      run: |
+        sudo apt-get install python3-setuptools
+        pip3 install -U pip setuptools
+        pip3 install -r requirements.txt
 
     # Runs a single command using the runners shell
     - name: Test booting the server
