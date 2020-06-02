@@ -29,7 +29,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Install requirements
       run: |
-        sudo apt-get install python3-setuptools
         pip3 install -U pip setuptools
         pip3 install -r requirements.txt
 
