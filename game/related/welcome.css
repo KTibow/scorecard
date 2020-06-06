@@ -27,6 +27,7 @@ button {
   border-radius: 8px;
   transition: background-color 0.3s, box-shadow 0.1s, transform 0.1s;
   box-shadow: 4px 4px 2px #A030FF;
+  cursor: pointer;
 }
 button:hover {
   background-color: #5000DF;
@@ -39,4 +40,7 @@ button:active {
 h1, h2, h3, h4, h5, h6 {
   color: #390070;
   margin-left: 16px;
+}
+#add2hs {
+  transition: opacity 0.5s;
 }
