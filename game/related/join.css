@@ -14,11 +14,6 @@
 * {
   font-family: Open Sans;
 }
-img {
-  height: 6vmin;
-  margin: 12px 0px 3vmin 12px;
-  border-radius: 20px;
-}
 button {
   background-color: #7000FF;
   border: none;
@@ -71,4 +66,13 @@ input:focus::placeholder {
 }
 #add2hs {
   transition: opacity 1s;
+}
+.homebutton {
+  padding: 15px 32px;
+  margin: 20px 15px;
+}
+.homebutton > img {
+  height: 2.3em;
+  margin: 0;
+  border-radius: 20px;
 }
