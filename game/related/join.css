@@ -69,3 +69,6 @@ input:focus::placeholder {
   color: #6000E0;
   font-weight: bold !important;
 }
+#add2hs {
+  transition: opacity 1s;
+}
