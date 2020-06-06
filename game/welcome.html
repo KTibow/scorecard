@@ -107,10 +107,10 @@
                     // Stash the event so it can be triggered later.
                     deferredPrompt = e;
                     // Update UI to notify the user they can add to home screen
-                    addBtn.style.setProperty("display", "inline-block", "important")
+                    addBtn.style.setProperty("opacity", "1", "important")
                     addBtn.addEventListener('click', (e) => {
                         // hide our user interface that shows our A2HS button
-                        addBtn.style.setProperty("display", "none", "important")
+                        addBtn.style.setProperty("opacity", "0", "important")
                         // Show the prompt
                         deferredPrompt.prompt();
                         // Wait for the user to respond to the prompt
@@ -133,6 +133,6 @@
         <h1>Welcome...</h1>
         <h3>You've opened the electronic scorecard. Now it's time to start going.</h3>
         <button id="start" onClick="join()">Let's do this.</button><br/>
-        <button id="add2hs" style="display: none;">Add E-Scorecard to Home Screen</button>
+        <button id="add2hs" style="opacity: 0;">Add E-Scorecard to Home Screen</button>
     </body>
 </html>
