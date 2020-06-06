@@ -43,6 +43,9 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 16px !important;
   margin-bottom: 0.67em !important;
 }
+h1 {
+  font-size: 2.3em;
+}
 input {
   border: 5px solid #A030FF;
   border-radius: 10px;
