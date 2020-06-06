@@ -1,4 +1,12 @@
 flask==1.1.2
+click==7.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+Werkzeug==1.0.1
 gunicorn==20.0.4
+setuptools==47.1.1
 python-magic==0.4.18
 flask-minify==0.20
+pyyaml==5.3.1
+ua-parser==0.10.0
+user-agents==2.1
