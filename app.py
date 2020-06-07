@@ -66,5 +66,10 @@ def makeserviceworker():
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append((url, rule.endpoint))
-    print(links)
+            links.append("'"+rule.endpoint+"'")
+    swlist = ""
+    for i, link in enumerate(links):
+        swlist += link
+        if len(links) - 1 != i:
+            swlist += ", "
+    return open("game/browserfiles/sw.js", "r").read().replace("INSERT URLS", swlist)
