@@ -1,9 +1,11 @@
 # ============== INIT ==============
 from flask import Flask, send_from_directory, request, redirect, url_for
 from flask_minify import minify
+from github.MainClass import Github
 import os, magic, json, random
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 def make_sender(path, dir):
     def f():
         mimetype = magic.from_file(os.path.join(app.root_path, 'game/'+dir+path), mime=True)
@@ -62,6 +64,7 @@ for file in walk():
 # ========= SERVICE WORKER =========
 @app.route("/sw.js")
 def makeserviceworker():
+    print(len(gg.getrepo("KTibow/tank-scorecard").get_commits()))
     links = []
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
