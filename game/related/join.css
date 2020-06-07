@@ -72,6 +72,14 @@ input:focus::placeholder {
   transition: opacity 0.35s;
 }
 .homebutton {
-  background: #7000FF url("/back-arrow-alone-light.png") no-repeat top left;
-  padding-left: 30px;
+  background: #7000FF url("/back-arrow-alone-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
+}
+.homebutton:hover {
+  background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
+}
+.homebutton:active {
+  background: #4000CF url("/back-arrow-active-light.png") no-repeat center left;
 }
