@@ -64,7 +64,6 @@ for file in walk():
 # ========= SERVICE WORKER =========
 @app.route("/sw.js")
 def makeserviceworker():
-    print(len(gg.getrepo("KTibow/tank-scorecard").get_commits()))
     links = []
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
@@ -75,4 +74,4 @@ def makeserviceworker():
         swlist += link
         if len(links) - 1 != i:
             swlist += ", "
-    return open("game/browserfiles/sw.js", "r").read().replace("INSERT URLS", swlist)
+    return open("game/browserfiles/sw.js", "r").read().replace("INSERT URLS", swlist).replace("INSERT VERSION", str(len(gg.getrepo("KTibow/tank-scorecard").get_commits())))
