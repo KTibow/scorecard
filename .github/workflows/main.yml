@@ -30,10 +30,16 @@ jobs:
         restore-keys: |
           pip-packs-
 
-    # Upgrades and installs from requirements
-    - name: Install requirements
-      run: |
-        pip3 install -U pip setuptools wheel
+    # Upgrades
+    - name: Update prexisting packages
+      run: pip3 install -U pip setuptools wheel
+    
+    # List what's been installed
+    - name: List dependencies
+      run: pip3 freeze
+    
+    # Installs from requirements
+    - name: Install from requirements
         pip3 install -r requirements.txt
     
     # List what's been installed
