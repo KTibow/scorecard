@@ -69,7 +69,7 @@ input:focus::placeholder {
   font-weight: bold !important;
 }
 #add2hs {
-  transition: opacity 0.5s;
+  transition: opacity 0.35s;
 }
 .homebutton {
   padding: 15px;
