@@ -1,5 +1,5 @@
 # ============== INIT ==============
-from flask import Flask, send_from_directory, request, redirect
+from flask import Flask, send_from_directory, request, redirect, url_for
 from flask_minify import minify
 import os, magic, json, random
 app = Flask(__name__)
@@ -53,5 +53,14 @@ def genid(username):
     return "/cluecard/"+str(idDB[username][0])+"/"+str(idDB[username][1])
 # ========== BROWSER FILES ==========
 for file in walk():
-    print(file)
-    app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
+    if file[1] != "/sw.js":
+        app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
+# ========= SERVICE WORKER =========
+@app.route("/sw.js")
+def makeserviceworker():
+    links = []
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            links.append((url, rule.endpoint))
+    print(links)
