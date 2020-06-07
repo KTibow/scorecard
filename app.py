@@ -66,7 +66,7 @@ def makeserviceworker():
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append("'"+rule.endpoint+"'")
+            links.append("'"+url+"'")
     swlist = ""
     for i, link in enumerate(links):
         swlist += link
