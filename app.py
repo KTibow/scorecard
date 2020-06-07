@@ -53,4 +53,5 @@ def genid(username):
     return "/cluecard/"+str(idDB[username][0])+"/"+str(idDB[username][1])
 # ========== BROWSER FILES ==========
 for file in walk():
+    print(file)
     app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
