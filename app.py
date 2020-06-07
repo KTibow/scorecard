@@ -74,4 +74,4 @@ def makeserviceworker():
         swlist += link
         if len(links) - 1 != i:
             swlist += ", "
-    return open("game/browserfiles/sw.js", "r").read().replace("INSERT URLS", swlist).replace("INSERT VERSION", str(len(gg.getrepo("KTibow/tank-scorecard").get_commits())))
+    return open("game/browserfiles/sw.js", "r").read().replace("INSERT URLS", swlist).replace("INSERT VERSION", str(len(gg.get_repo("KTibow/tank-scorecard").get_commits())))
