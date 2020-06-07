@@ -30,11 +30,15 @@ jobs:
         restore-keys: |
           pip-packs-
 
-    # Runs a single command using the runners shell
+    # Upgrades and installs from requirements
     - name: Install requirements
       run: |
-        pip3 install -U pip setuptools
+        pip3 install -U pip setuptools wheel
         pip3 install -r requirements.txt
+    
+    # List what's been installed
+    - name: List dependencies
+      run: pip3 freeze
 
     # Runs a single command using the runners shell
     - name: Test booting the server
