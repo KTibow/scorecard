@@ -4,6 +4,7 @@ from flask_minify import minify
 from user_agents import parse as ua_parse
 from github.MainClass import Github
 import os, magic, json, random, requests
+from urllib.parse import quote
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 gg = Github(os.getenv("GITHUB_VERSION_PAT"))
@@ -35,12 +36,15 @@ def track_view(page, ip, agent):
         "cid": "555",
         "t": "pageview",
         "dh": "tank-scorecard.herokuapp.com",
-        "dp": page
+        "dp": quote(page),
+        "npa": "1",
+        "ds": "server%20web",
+        "z": str(int(random.random() * pow(10, 25)))
     }
     if ip is not None:
         data['uip'] = ip
     if agent is not None:
-        data['ua'] = agent
+        data['ua'] = quote(agent)
     response = requests.post(
         'https://www.google-analytics.com/collect', data=data)
     response.raise_for_status()
