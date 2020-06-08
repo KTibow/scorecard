@@ -53,9 +53,8 @@ def before_req():
     if "User-Agent" in request.headers:
         ua = request.headers["User-Agent"]
         ua_add = ", "+str(ua_parse(ua))
-    ip = request.remote_addr
+    ip = request.headers["X-Forwarded-For"]
     print("Hit from "+ip+ua_add)
-    print(request.headers)
     chunks = request.url.split("/")
     track_view("/".join(chunks[3:len(chunks)]), ip, ua)
     
