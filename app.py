@@ -39,7 +39,7 @@ def track_view(page, ip, agent):
     }
     if ip is not None:
         data['uip'] = ip
-    if ua is not None:
+    if agent is not None:
         data['ua'] = agent
     response = requests.post(
         'https://www.google-analytics.com/collect', data=data)
