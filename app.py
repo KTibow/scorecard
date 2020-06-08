@@ -55,7 +55,8 @@ def before_req():
         ua_add = ", "+str(ua_parse(ua))
     ip = request.remote_addr
     print("Hit from "+ip+ua_add)
-    track_view(request.url
+    chunks = request.url.split("/")
+    track_view("/".join(chunks[3:len(chunks)]), ip, ua)
     
 # ========== WEB INTERFACE ==========
 # home
