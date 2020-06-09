@@ -70,6 +70,15 @@ input:focus::placeholder {
 }
 #add2hs {
   transition: opacity 0.35s;
+  background-color: #04bbd3;
+  box-shadow: 4px 4px 2px #34ebff;
+}
+#add2hs:hover {
+  background-color: #049bb3;
+}
+#add2hs:active {
+  background-color: #048ba3;
+  box-shadow: 2px 2px 1px #34ebff;
 }
 .homebutton {
   background: #7000FF url("/back-arrow-alone-light.png") no-repeat center left;
