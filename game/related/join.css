@@ -69,7 +69,7 @@ input:focus::placeholder {
   font-weight: bold !important;
 }
 #add2hs {
-  transition: opacity 0.35s;
+  transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
   background-color: #04bbd3;
   box-shadow: 4px 4px 2px #34ebff;
 }
