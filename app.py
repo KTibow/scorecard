@@ -3,7 +3,7 @@ from flask import Flask, send_from_directory, request, redirect, url_for
 from flask_minify import minify
 from user_agents import parse as ua_parse
 from github.MainClass import Github
-import os, magic, json, random, requests, mimetypes
+import os, json, random, requests, mimetypes
 from urllib.parse import quote
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
