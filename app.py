@@ -10,7 +10,9 @@ minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 def make_sender(path, dir):
     def f():
-        mimetype = mimetypes.guess_type(os.path.join(app.root_path, "game/"+dir+path))
+        path = os.path.join(app.root_path, "game/"+dir+path)
+        print("Path: "+str(path))
+        mimetype = mimetypes.guess_type(path)
         print("Mime: "+str(mimetype))
         return send_from_directory(os.path.join(app.root_path, "game/"+dir),
                                    path.replace("/", ""), mimetype=mimetype)
