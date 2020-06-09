@@ -36,3 +36,21 @@ self.addEventListener('fetch', function(event) {
 addEventListener('message', messageEvent => {
   if (messageEvent.data === 'skipWaiting') return skipWaiting();
 });
+console.log('Service Worker: Pre-installing...');
+e.waitUntil(
+    caches.open(cacheName).then((cache) => {
+        console.log('Service Worker: Caching caches...');
+        return cache.addAll([INSERT URLS]);
+    })
+);
+e.waitUntil(
+    caches.keys().then((keyList) => {
+        return Promise.all(keyList.map((key) => {
+            if (key !== cacheName) {
+                console.log("Service Worker: Bye-Bye " + key);
+                return caches.delete(key);
+            }
+        }));
+    })
+);
+console.log("Service Worker: Done installing!");
