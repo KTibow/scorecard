@@ -11,7 +11,7 @@ gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 def make_sender(path, dir):
     def f():
         mimetype = mimetypes.guess_type(os.path.join(app.root_path, "game/"+dir+path))
-        print("Mime: "+mimetype)
+        print("Mime: "+str(mimetype))
         return send_from_directory(os.path.join(app.root_path, "game/"+dir),
                                    path.replace("/", ""), mimetype=mimetype)
     return f
