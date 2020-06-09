@@ -79,7 +79,13 @@ input:focus::placeholder {
 }
 .homebutton:hover {
   background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
 }
 .homebutton:active {
   background: #4000CF url("/back-arrow-active-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
 }
