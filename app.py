@@ -12,11 +12,8 @@ def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
     def f():
-        print(pathy, directy)
         dpathy = os.path.join(app.root_path, "game/"+directy+pathy)
-        print("Path: "+str(dpathy))
-        mimetype = mimetypes.guess_type(pathy)
-        print("Mime: "+str(mimetype))
+        mimetype = mimetypes.guess_type(pathy)[0]
         return send_from_directory(os.path.join(app.root_path, "game/"+directy),
                                    pathy.replace("/", ""), mimetype=mimetype)
     return f
