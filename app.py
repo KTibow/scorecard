@@ -8,15 +8,17 @@ from urllib.parse import quote
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 gg = Github(os.getenv("GITHUB_VERSION_PAT"))
-def make_sender(path, direct):
+def make_sender(pathy, directy):
+    pathy = pathy
+    directy = directy
     def f():
-        print(direct, path)
-        path = os.path.join(app.root_path, "game/"+direct+path)
-        print("Path: "+str(path))
-        mimetype = mimetypes.guess_type(path)
+        print(pathy, directy)
+        dpathy = os.path.join(app.root_path, "game/"+directy+pathy)
+        print("Path: "+str(dpathy))
+        mimetype = mimetypes.guess_type(pathy)
         print("Mime: "+str(mimetype))
-        return send_from_directory(os.path.join(app.root_path, "game/"+direct),
-                                   path.replace("/", ""), mimetype=mimetype)
+        return send_from_directory(os.path.join(app.root_path, "game/"+directy),
+                                   pathy.replace("/", ""), mimetype=mimetype)
     return f
 def walk():
     pys = []
