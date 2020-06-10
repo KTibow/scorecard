@@ -109,4 +109,6 @@ def makeserviceworker():
     commits = list(gg.get_repo("KTibow/scorecard").get_commits())
     cacheid = str(len(commits))
     sw = sw.replace("INSERT VERSION", cacheid)
-    return sw
+    respo = app.make_response(sw)
+    respo.mimetype = "application/javascript"
+    return respo
