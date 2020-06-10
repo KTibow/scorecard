@@ -37,12 +37,10 @@ addEventListener('message', messageEvent => {
   if (messageEvent.data === 'skipWaiting') return skipWaiting();
 });
 console.log('Service Worker: Pre-installing...');
-e.waitUntil(
-    caches.open(cacheName).then((cache) => {
-        console.log('Service Worker: Caching caches...');
-        return cache.addAll([INSERT URLS]);
-    })
-);
+caches.open(cacheName).then((cache) => {
+    console.log('Service Worker: Caching caches...');
+    return cache.addAll([INSERT URLS]);
+})
 e.waitUntil(
     caches.keys().then((keyList) => {
         return Promise.all(keyList.map((key) => {
