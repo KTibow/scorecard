@@ -3,12 +3,16 @@
     {
       "url": "heroku/python"
     }
-  ]
-  "description": "This Heroku Flask app is a web server / database for a scorecard game, with touches like neat CSS and a PWA."
+  ],
+  "description": "This Heroku Flask app is a web server / database for a scorecard game, with touches like neat CSS and a PWA.",
   "env": {
     "GITHUB_VERSION_PAT": {
-      "description": "A Github PAT (Personal Access Token) to get the latest commit.",
+      "description": "A Github PAT (Personal Access Token, no special permissions) to get the latest commit.",
       "default": "nope"
+    },
+    "REPO_NAME": {
+      "description": "Name of your repo on GitHub to get the latest commit, in my case KTibow/scorecard.",
+      "default": "KTibow/scorecard"
     }
   }
 }
