@@ -7,7 +7,10 @@ import os, json, random, requests, mimetypes
 from urllib.parse import quote
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
-gg = Github(os.getenv("GITHUB_VERSION_PAT"))
+if os.getenv("GITHUB_VERSION_PAT") != None and os.getenv("GITHUB_VERSION_PAT") != "nope":
+    gg = Github(os.getenv("GITHUB_VERSION_PAT"))
+else:
+    gg = Github()
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
