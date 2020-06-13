@@ -12,7 +12,7 @@ if os.getenv("GITHUB_VERSION_PAT") != None and os.getenv("GITHUB_VERSION_PAT") !
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 else:
     gg = Github()
-pprint.pprint(dict(os.environ))
+pprint(dict(os.environ))
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
