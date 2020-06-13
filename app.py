@@ -32,24 +32,25 @@ def has_no_empty_params(rule):
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 def track_view(page, ip, agent):
-    data = {
-        "v": "1",
-        "tid": "UA-165004437-2",
-        "cid": "555",
-        "t": "pageview",
-        "dh": "tank-scorecard.herokuapp.com",
-        "dp": quote(page),
-        "npa": "1",
-        "ds": "server%20web",
-        "z": str(int(random.random() * pow(10, 25)))
-    }
-    if ip is not None:
-        data['uip'] = ip
-    if agent is not None:
-        data['ua'] = quote(agent)
-    response = requests.post(
-        'https://www.google-analytics.com/collect', data=data)
-    response.raise_for_status()
+    if os.getenv("GA_ON") == "yes":
+        data = {
+            "v": "1",
+            "tid": "UA-165004437-2",
+            "cid": "555",
+            "t": "pageview",
+            "dh": "tank-scorecard.herokuapp.com",
+            "dp": quote(page),
+            "npa": "1",
+            "ds": "server%20web",
+            "z": str(int(random.random() * pow(10, 25)))
+        }
+        if ip is not None:
+            data['uip'] = ip
+        if agent is not None:
+            data['ua'] = quote(agent)
+        response = requests.post(
+            'https://www.google-analytics.com/collect', data=data)
+        response.raise_for_status()
 @app.before_request
 def before_req():
     if request.headers["X-Forwarded-Proto"] == "http":
@@ -109,7 +110,10 @@ def makeserviceworker():
             swlist += ", "
     sw = open("game/browserfiles/sw.js", "r").read()
     sw = sw.replace("INSERT URLS", swlist)
-    commits = list(gg.get_repo("KTibow/scorecard").get_commits())
+    repname = os.getenv("REPO_NAME")
+    if repname is None:
+        repname = "KTibow/scorecard"
+    commits = list(gg.get_repo(repname).get_commits())
     cacheid = str(len(commits))
     sw = sw.replace("INSERT VERSION", cacheid)
     respo = app.make_response(sw)
