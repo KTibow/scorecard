@@ -5,12 +5,14 @@ from user_agents import parse as ua_parse
 from github.MainClass import Github
 import os, json, random, requests, mimetypes
 from urllib.parse import quote
+from pprint import pprint
 app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 if os.getenv("GITHUB_VERSION_PAT") != None and os.getenv("GITHUB_VERSION_PAT") != "nope":
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 else:
     gg = Github()
+pprint.pprint(dict(os.environ))
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
