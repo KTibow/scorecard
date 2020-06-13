@@ -1,0 +1,14 @@
+{
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+  "description": "This Heroku Flask app is a web server / database for a scorecard game, with touches like neat CSS and a PWA."
+  "env": {
+    "GITHUB_VERSION_PAT": {
+      "description": "A Github PAT (Personal Access Token) to get the latest commit.",
+      "default": "nope"
+    }
+  }
+}
