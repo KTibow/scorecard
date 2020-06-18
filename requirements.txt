@@ -18,7 +18,7 @@ pyga==2.6.1
 PyGithub==1.51
 PyJWT==1.7.1
 PyYAML==5.3.1
-requests==2.23.0
+requests==2.24.0
 setuptools==47.3.1
 six==1.15.0
 ua-parser==0.10.0
