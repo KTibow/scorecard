@@ -81,7 +81,7 @@
                 }
                 listenForWaitingServiceWorker(reg, promptUserToRefresh);
             }
-            setInterval(5000, checkVersion, globreg);
+            setInterval(checkVersion, 5000, globreg);
             window.addEventListener("load", function() {
                 if ("serviceWorker" in navigator) {
                     console.log("Trying to install service worker... (install.js)");
@@ -92,7 +92,7 @@
                             console.log("Service worker: installed! (install.js)", reg);
                         }).catch (err => console.log("Service worker: not registered (install.js)", err));
                 } 
-                setTimeout(2000, checkVersion, globreg);
+                setTimeout(checkVersion, 2000, globreg);
                 let deferredPrompt;
                 const addBtn = document.getElementById("add2hs");
                 window.addEventListener('beforeinstallprompt', (e) => {
