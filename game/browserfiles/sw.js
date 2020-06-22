@@ -35,9 +35,6 @@ self.addEventListener('fetch', function(event) {
         })
     );
 });
-addEventListener('message', messageEvent => {
-  if (messageEvent.data === 'skipWaiting') return skipWaiting();
-});
 if (!alreadyinstalled) {
     console.log('Service Worker: Cache stuff...');
     caches.open(cacheName).then((cache) => {
