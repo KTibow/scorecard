@@ -1,8 +1,10 @@
 var cacheName = "clue-card-vINSERT VERSION";
 console.log("Service Worker: Hello there!");
-var alreadyinstalled = false;
 self.addEventListener('install', (e) => {
-    alreadyinstalled = true;
+    if (navigator.onLine) {
+        console.log("Online, skip wait");
+        self.skipWaiting();
+    }
     console.log('Service Worker: Installing...');
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
@@ -35,21 +37,3 @@ self.addEventListener('fetch', function(event) {
         })
     );
 });
-if (!alreadyinstalled) {
-    console.log('Service Worker: Cache stuff...');
-    caches.open(cacheName).then((cache) => {
-        console.log('Service Worker: Caching caches...');
-        return cache.addAll([INSERT URLS]);
-    })
-    if (!alreadyinstalled) {
-        caches.keys().then((keyList) => {
-            return Promise.all(keyList.map((key) => {
-                if (key !== cacheName) {
-                    console.log("Service Worker: Bye-Bye " + key);
-                    return caches.delete(key);
-                }
-            }));
-        })
-        console.log("Service Worker: Done with cache stuff!");
-    }
-}
