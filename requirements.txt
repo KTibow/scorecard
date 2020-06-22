@@ -27,4 +27,4 @@ user-agents==2.1
 Werkzeug==1.0.1
 wheel==0.34.2
 wrapt==1.12.1
-xxhash==1.4.3
+xxhash==1.4.4
