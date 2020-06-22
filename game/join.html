@@ -28,71 +28,16 @@
     <body>
         <script>
             var confirming = false;
-            var globreg = 0;
             console.log("Running... (install.js)");
-
-            function checkVersion(reg) {
-                if (globreg == 0) return;
-                console.log("checkVersion started... (install.js)");
-
-                function listenForWaitingServiceWorker(reg, callback) {
-                    function awaitStateChange() {
-                        console.log("Awaiting state change.");
-                        reg.installing.addEventListener('statechange', function() {
-                            if (this.state === 'installed') {
-                                console.log("Prompting user to refresh.");
-                                callback(reg);
-                            }
-                        });
-                    }
-                    if (!reg) {
-                        console.log("Error: Reg isn't working (install.js)");
-                        return;
-                    }
-                    if (reg.waiting) {
-                        console.log("Prompting user to refresh. (install.js)");
-                        return callback(reg);
-                    }
-                    if (reg.installing) {
-                        awaitStateChange();
-                    }
-                    reg.addEventListener('updatefound', awaitStateChange);
-                }
-                var refreshing;
-                navigator.serviceWorker.addEventListener('controllerchange',
-                    function() {
-                        if (refreshing) return;
-                        refreshing = true;
-
-                        window.location.reload();
-                    }
-                );
-
-                function promptUserToRefresh(reg) {
-                    console.log("I think it's time to update. (install.js)");
-                    if (!confirming) {
-                        confirming = true;
-                        console.log("Confirming...");
-                        if (window.confirm("Refresh all tabs now and get the latest version of the ClueCard?")) {
-                            reg.waiting.postMessage('skipWaiting');
-                        }
-                        confirming = false;
-                    }
-                }
-                listenForWaitingServiceWorker(reg, promptUserToRefresh);
-            }
-            setInterval(checkVersion, 5000, globreg);
             window.addEventListener("load", function() {
                 if ("serviceWorker" in navigator) {
                     console.log("Trying to install service worker... (install.js)");
                     navigator.serviceWorker
                         .register("/sw.js")
                         .then(function(reg) {
-                            globreg = reg;
                             console.log("Service worker: installed! (install.js)", reg);
                         }).catch (err => console.log("Service worker: not registered (install.js)", err));
-                } 
-                setTimeout(checkVersion, 2000, globreg);
+                }
                 let deferredPrompt;
                 const addBtn = document.getElementById("add2hs");
                 window.addEventListener('beforeinstallprompt', (e) => {
