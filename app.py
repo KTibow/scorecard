@@ -69,7 +69,8 @@ def before_req():
 def after_req(response):
     response.headers["Content-Security-Policy"] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
     response.headers["Content-Security-Policy-Report-Only"] = "default-src https:"
-    response.headers["Strict-Transport-Security"] = "max-age=172800; includeSubDomains; preload"
+    if response.status_code == 200:
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
