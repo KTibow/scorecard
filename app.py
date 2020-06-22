@@ -52,7 +52,6 @@ def track_view(page, ip, agent):
             data['ua'] = quote(agent)
         response = requests.post(
             'https://www.google-analytics.com/collect', data=data)
-        response.raise_for_status()
 @app.before_request
 def before_req():
     if request.headers["X-Forwarded-Proto"] == "http":
@@ -74,6 +73,7 @@ def after_req(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
 # ========== WEB INTERFACE ==========
 # home
 @app.route('/')
