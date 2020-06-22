@@ -66,7 +66,14 @@ def before_req():
     print("Hit from "+ip+ua_add)
     chunks = request.url.split("/")
     track_view("/".join(chunks[3:len(chunks)]), ip, ua)
-    
+@app.after_request
+def after_req(response):
+    response.headers["Content-Security-Policy"] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
+    response.headers["Content-Security-Policy-Report-Only"] = "default-src https:"
+    response.headers["Strict-Transport-Security"] = "max-age=172800; includeSubDomains; preload"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
 # ========== WEB INTERFACE ==========
 # home
 @app.route('/')
