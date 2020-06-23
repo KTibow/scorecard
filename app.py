@@ -1,18 +1,17 @@
 # ============== INIT ==============
-from flask import Flask, send_from_directory, request, redirect, url_for, render_template
+from flask import Flask, send_from_directory, request, redirect, url_for, render_template, g
 from flask_minify import minify
 from user_agents import parse as ua_parse
 from github.MainClass import Github
 import os, json, random, requests, mimetypes
 from urllib.parse import quote
-from pprint import pprint
+from time import time
 app = Flask(__name__, template_folder="game")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
-if os.getenv("GITHUB_VERSION_PAT") != None and os.getenv("GITHUB_VERSION_PAT") != "nope":
+if os.getenv("GITHUB_VERSION_PAT") != None:
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
 else:
     gg = Github()
-pprint(dict(os.environ))
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
@@ -53,6 +52,10 @@ def track_view(page, ip, agent):
         'https://www.google-analytics.com/collect', data=data)
 @app.before_request
 def before_req():
+    g.before_before_request_time = time()
+    g.middle_before_request_time = time()
+    g.after_before_request_time = time()
+    g.after_after_request_time = time()
     if request.headers["X-Forwarded-Proto"] == "http":
         return redirect(request.url.replace("http", "https"), code=301)
     ua = None
@@ -61,9 +64,11 @@ def before_req():
         ua = request.headers["User-Agent"]
         ua_add = ", "+str(ua_parse(ua))
     ip = request.headers["X-Forwarded-For"]
-    print("Hit from "+ip+ua_add)
+    print("Hit from " + ip + ua_add)
     chunks = request.url.split("/")
+    g.middle_before_request_time = time()
     track_view("/".join(chunks[3:len(chunks)]), ip, ua)
+    g.after_before_request_time = time()
 @app.after_request
 def after_req(response):
     response.headers["Content-Security-Policy"] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
@@ -73,6 +78,13 @@ def after_req(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    g.after_after_request_time = time()
+    response.headers["Server-Timing"] = "beforereq;desc='Process redirect and log';dur="
+    response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 2))
+    response.headers["Server-Timing"] += ", track;desc='Track pageview with Google Analytics';dur="
+    response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 2))
+    response.headers["Server-Timing"] += ", process;desc='Render stuff';dur="
+    response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 2))
     return response
 # ========== WEB INTERFACE ==========
 # home
