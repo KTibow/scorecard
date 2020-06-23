@@ -61,8 +61,8 @@ def find_commit(id):
             print(e)
             sleep(240)
         sleep(60)
-fc = Thread(target=find_commit, daemon=True, args=(0,))
-fc.start()
+#fc = Thread(target=find_commit, daemon=True, args=(0,))
+#fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
