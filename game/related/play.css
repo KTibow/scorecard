@@ -104,3 +104,11 @@ input:focus::placeholder {
   background-size: 32px;
   background-position-x: 16px;
 }
+@media all and (orientation: landscape) {
+  .homebutton {
+    width: 50%;
+  }
+  #add2hs {
+    width: 50%;
+  }
+}
