@@ -1,11 +1,23 @@
 # ============== INIT ==============
+# Flask
 from flask import Flask, send_from_directory, request, redirect, url_for, render_template, g
 from flask_minify import minify
-from user_agents import parse as ua_parse
+# Various
+import os
+import random
+# sw.js
 from github.MainClass import Github
-import os, json, random, requests, mimetypes
+# Database
+import json
+# Static files
+import mimetypes
+# Tracking
 from urllib.parse import quote
+import requests
+from user_agents import parse as ua_parse
+# Server-side timing
 from time import time
+# Init flask
 app = Flask(__name__, template_folder="game")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 if os.getenv("GITHUB_VERSION_PAT") != None:
