@@ -33,47 +33,37 @@ def sleep(timefor):
     for i in range(round(timefor * 16.0)):
         tm_sleep(1 / 16)
 comm_num = 0
-started = False
 def find_commit():
-    wtime = randint(0, 64) / 32.0
-    print("Waiting", wtime)
-    sleep(wtime)
-    print("Done waiting")
-    global started
-    print("Started:", started)
-    if not started:
-        started = True
-        print("Started:", started)
-        print("Starting commit finder")
-        global comm_num
-        global gg
-        prevcomm = -1
-        while True:
-            ratey = gg.rate_limiting
-            print("We've used up", ratey[1] - ratey[0], "interactions so far")
-            print("In an hour, we'll be back to", ratey[1], "remaining")
-            prevcomm = comm_num
-            try:
-                if ratey[1] - ratey[0] < 4000:
-                    stint = ratey[1] - ratey[0]
-                    comm_num = rep.get_commits().totalCount
-                    ratey = gg.rate_limiting
-                    endint = ratey[1] - ratey[0]
-                    if endint <= 2000:
-                        print("Getting commits went from", stint, "interactions to", endint, "interactions")
-                    else:
-                        print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
-                    if prevcomm != comm_num:
-                        print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-                    if endint > 2000:
-                        sleep(30)
+    print("Starting commit finder")
+    global comm_num
+    global gg
+    prevcomm = -1
+    while True:
+        ratey = gg.rate_limiting
+        print("We've used up", ratey[1] - ratey[0], "interactions so far")
+        print("In an hour, we'll be back to", ratey[1], "remaining")
+        prevcomm = comm_num
+        try:
+            if ratey[1] - ratey[0] < 4000:
+                stint = ratey[1] - ratey[0]
+                comm_num = rep.get_commits().totalCount
+                ratey = gg.rate_limiting
+                endint = ratey[1] - ratey[0]
+                if endint <= 2000:
+                    print("Getting commits went from", stint, "interactions to", endint, "interactions")
                 else:
-                    print("Pausing fetch commits")
-                    sleep(120)
-            except Exception as e:
-                print(e)
-                sleep(240)
-            sleep(60)
+                    print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
+                if prevcomm != comm_num:
+                    print("We updated from", prevcomm, "commits to", comm_num, "commits!")
+                if endint > 2000:
+                    sleep(30)
+            else:
+                print("Pausing fetch commits")
+                sleep(120)
+        except Exception as e:
+            print(e)
+            sleep(240)
+        sleep(60)
 fc = Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
