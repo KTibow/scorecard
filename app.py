@@ -8,7 +8,7 @@ from random import randint
 # sw.js
 from github.MainClass import Github
 from time import sleep as tm_sleep
-from threading import Thread
+import threading
 # Database
 import json
 # Static files
@@ -34,7 +34,7 @@ def sleep(timefor):
         tm_sleep(1 / 16)
 comm_num = 0
 def find_commit():
-    print("Starting commit finder")
+    print("Starting commit finder", threading.enumerate())
     global comm_num
     global gg
     prevcomm = -1
@@ -64,7 +64,7 @@ def find_commit():
             print(e)
             sleep(240)
         sleep(60)
-fc = Thread(target=find_commit, daemon=True)
+fc = threading.Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
