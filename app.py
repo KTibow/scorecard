@@ -39,7 +39,7 @@ def find_commit():
         comm_num = len(list(rep.get_commits()))
         if prevcomm != comm_num:
             print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-            print("We've used up", gg.rate_limiting[0], "interactions so far")
+            print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
         sleep(10)
 fc = Thread(target=find_commit, daemon=True)
 fc.start()
