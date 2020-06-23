@@ -150,7 +150,10 @@ def join():
 @app.route("/cluecard/<theid>/<thepin>")
 def card(theid, thepin):
     return render_template("play.html")
-#    return "Your ID and PIN are "+theid+", "+thepin
+# 404
+@app.errorhandler(404)
+def err404():
+    return render_template("404.html")
 # ============== API ================
 @app.route("/makeid/<username>")
 def genid(username):
