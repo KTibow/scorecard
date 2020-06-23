@@ -7,7 +7,7 @@ import os
 from random import randint
 # sw.js
 from github.MainClass import Github
-from time import sleep
+from time import sleep as tm_sleep
 from threading import Thread
 # Database
 import json
@@ -29,6 +29,9 @@ if os.getenv("GITHUB_VERSION_PAT") != None:
 else:
     gg = Github()
     rep = gg.get_repo("KTibow/scorecard")
+def sleep(timefor):
+    for i in range(round(timefor * 2)):
+        tm_sleep(0.5)
 comm_num = 0
 def find_commit(id):
     print("My ID is", id)
