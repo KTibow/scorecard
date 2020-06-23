@@ -36,8 +36,8 @@ self.addEventListener('fetch', function(event) {
     }
     event.respondWith(
         fetch(event.request).catch(function() {
-            console.log('Service Worker: Returning cache', event.request, '...');
-            return caches.match(event.request).then(function(resty) {
+            console.log('Service Worker: Returning cache for', event.request, '...');
+            return caches.match(event.request.url).then(function(resty) {
                 if (!resty) {
                     console.log("Not found");
                     return caches.match("/404")
