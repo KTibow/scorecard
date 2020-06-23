@@ -1,8 +1,8 @@
-var cacheName = "clue-card-vINSERT VERSION";
-console.log("Service Worker: Hello there!");
+var cacheName = 'clue-card-vINSERT VERSION';
+console.log('Service Worker: Hello there!');
 self.addEventListener('install', (e) => {
     if (navigator.onLine) {
-        console.log("Online, skip wait");
+        console.log('Online, skip wait');
         self.skipWaiting();
     }
     console.log('Service Worker: Installing...');
@@ -16,16 +16,16 @@ self.addEventListener('install', (e) => {
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map((key) => {
                 if (key !== cacheName) {
-                    console.log("Service Worker: Bye-Bye " + key);
+                    console.log('Service Worker: Bye-Bye', key);
                     return caches.delete(key);
                 }
             }));
         })
     );
-    console.log("Service Worker: Done installing!");
+    console.log('Service Worker: Done installing!');
 });
 self.addEventListener('fetch', function(event) {
-    console.log("Service Worker: We got a (no, not fish) fetch! " + event.request.url);
+    console.log('Service Worker: We got a (no, not fish) fetch!', event.request);
     caches.open(cacheName).then(function(cache) {
             console.log('Service Worker: Trying to cache ' + event.request.url + '...');
             cache.add(event.request.url);
