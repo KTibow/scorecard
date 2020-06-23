@@ -154,6 +154,8 @@ def card(theid, thepin):
 @app.errorhandler(404)
 def err404(e):
     return render_template("404.html")
+@app.route("/404"):
+    return render_template("404.html")
 # ============== API ================
 @app.route("/makeid/<username>")
 def genid(username):
