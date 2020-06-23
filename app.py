@@ -41,7 +41,7 @@ def find_commit():
     while True:
         ratey = gg.rate_limiting
         if (((ratey[1] - ratey[0]) % 10) == 0):
-            print("We've used up", str(ratey[1] - ratey[0]) + "/" + ratey[1], "interactions so far")
+            print("We've used up", str(ratey[1] - ratey[0]) + "/" + str(ratey[1]), "interactions so far")
         prevcomm = comm_num
         try:
             if ratey[1] - ratey[0] < 4000:
