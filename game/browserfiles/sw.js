@@ -38,6 +38,7 @@ self.addEventListener('fetch', function(event) {
         fetch(event.request).catch(function() {
             console.log('Service Worker: Returning cache ' + event.request.url + '...');
             return caches.match(event.request).catch(function() {
+                console.log('Service Worker: Returning 404 error...');
                 return caches.match('/404');
             });
         })
