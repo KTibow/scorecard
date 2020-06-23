@@ -106,9 +106,9 @@ input:focus::placeholder {
 }
 @media all and (orientation: landscape) {
   .homebutton {
-    width: 50%;
+    width: unset;
   }
   #add2hs {
-    width: 50%;
+    width: unset;
   }
 }
