@@ -81,8 +81,11 @@ def after_req(response):
     g.after_after_request_time = time()
     response.headers["Server-Timing"] = "beforereq;desc=\"Process redirect and log\";dur="
     response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 2))
-    response.headers["Server-Timing"] += ", track;desc=\"Track pageview with Google Analytics\";dur="
+    response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
     response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 2))
+    if hasattr(g, "fetchcommits"):
+        response.headers["Server-Timing"] += ", process;desc=\"Fetch commits\";dur="
+        response.headers["Server-Timing"] += str(round(g.fetchcommits, 2))
     response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
     response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 2))
     return response
@@ -112,7 +115,7 @@ def genid(username):
     idDB[username] = [random.randint(0, 9999), random.randint(0, 9999)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/"+str(idDB[username][0])+"/"+str(idDB[username][1])
+    return "/cluecard/" + str(idDB[username][0]) + "/" + str(idDB[username][1])
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
@@ -133,7 +136,9 @@ def makeserviceworker():
     sw = open("game/browserfiles/sw.js", "r").read()
     sw = sw.replace("INSERT URLS", swlist)
     repname = "KTibow/scorecard"
+    commdly = time()
     commits = list(gg.get_repo(repname).get_commits())
+    g.fetchcommits = time() - commdly
     cacheid = str(len(commits))
     sw = sw.replace("INSERT VERSION", cacheid)
     respo = app.make_response(sw)
