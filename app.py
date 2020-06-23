@@ -1,12 +1,12 @@
 # ============== INIT ==============
-from flask import Flask, send_from_directory, request, redirect, url_for
+from flask import Flask, send_from_directory, request, redirect, url_for, render_template
 from flask_minify import minify
 from user_agents import parse as ua_parse
 from github.MainClass import Github
 import os, json, random, requests, mimetypes
 from urllib.parse import quote
 from pprint import pprint
-app = Flask(__name__)
+app = Flask(__name__, template_folder="game")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 if os.getenv("GITHUB_VERSION_PAT") != None and os.getenv("GITHUB_VERSION_PAT") != "nope":
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
@@ -34,24 +34,23 @@ def has_no_empty_params(rule):
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 def track_view(page, ip, agent):
-    if os.getenv("GA_ON") == "yes":
-        data = {
-            "v": "1",
-            "tid": "UA-165004437-2",
-            "cid": "555",
-            "t": "pageview",
-            "dh": "tank-scorecard.herokuapp.com",
-            "dp": quote(page),
-            "npa": "1",
-            "ds": "server%20web",
-            "z": str(int(random.random() * pow(10, 25)))
-        }
-        if ip is not None:
-            data['uip'] = ip
-        if agent is not None:
-            data['ua'] = quote(agent)
-        response = requests.post(
-            'https://www.google-analytics.com/collect', data=data)
+    data = {
+        "v": "1",
+        "tid": "UA-165004437-2",
+        "cid": "555",
+        "t": "pageview",
+        "dh": "tank-scorecard.herokuapp.com",
+        "dp": quote(page),
+        "npa": "1",
+        "ds": "server%20web",
+        "z": str(int(random.random() * pow(10, 25)))
+    }
+    if ip is not None:
+        data['uip'] = ip
+    if agent is not None:
+        data['ua'] = quote(agent)
+    response = requests.post(
+        'https://www.google-analytics.com/collect', data=data)
 @app.before_request
 def before_req():
     if request.headers["X-Forwarded-Proto"] == "http":
@@ -87,7 +86,8 @@ def join():
 # card
 @app.route('/cluecard/<theid>/<thepin>')
 def card(theid, thepin):
-    return "Your ID and PIN are "+theid+", "+thepin
+    return render_template("play.html")
+#    return "Your ID and PIN are "+theid+", "+thepin
 # ============== API ================
 @app.route('/makeid/<username>')
 def genid(username):
@@ -120,9 +120,7 @@ def makeserviceworker():
             swlist += ", "
     sw = open("game/browserfiles/sw.js", "r").read()
     sw = sw.replace("INSERT URLS", swlist)
-    repname = os.getenv("REPO_NAME")
-    if repname is None:
-        repname = "KTibow/scorecard"
+    repname = "KTibow/scorecard"
     commits = list(gg.get_repo(repname).get_commits())
     cacheid = str(len(commits))
     sw = sw.replace("INSERT VERSION", cacheid)
