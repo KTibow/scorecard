@@ -141,9 +141,7 @@ def after_req(response):
 # home
 @app.route("/")
 def hello():
-    rend = render_template("welcome.html")
-    print(rend)
-    return rend
+    return render_template("welcome.html")
 # join
 @app.route("/join")
 def join():
@@ -186,11 +184,8 @@ def makeserviceworker():
         swlist += link
         if len(links) - 1 != i:
             swlist += ", "
-    sw = open("game/browserfiles/sw.js", "r").read()
-    sw = sw.replace("INSERT URLS", swlist)
     global comm_num
-    cacheid = str(comm_num)
-    sw = sw.replace("INSERT VERSION", cacheid)
+    sw = render_template("browserfiles/sw.js", urls=swlist, version=str(comm_num))
     respo = app.make_response(sw)
     respo.mimetype = "application/javascript"
     return respo
