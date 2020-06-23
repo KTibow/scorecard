@@ -87,6 +87,8 @@ input:focus::placeholder {
   padding-left: 64px;
   background-size: 32px;
   background-position-x: 16px;
+  position: sticky;
+  top: 0;
 }
 .homebutton:hover {
   background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
