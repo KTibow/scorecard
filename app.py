@@ -30,11 +30,12 @@ else:
     gg = Github()
     rep = gg.get_repo("KTibow/scorecard")
 def sleep(timefor):
-    for i in range(round(timefor * 2)):
-        tm_sleep(0.5)
+    for i in range(round(timefor * 16)):
+        tm_sleep(1 / 16)
 comm_num = 0
 started = False
 def find_commit():
+    sleep(randint(0, 16) / 16)
     global started
     if not started:
         started = True
