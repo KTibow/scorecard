@@ -34,7 +34,7 @@ def sleep(timefor):
         tm_sleep(1 / 16)
 comm_num = 0
 def find_commit():
-    print("Starting commit finder", threading.enumerate())
+    print("Starting commit finder")
     global comm_num
     global gg
     prevcomm = -1
@@ -45,17 +45,13 @@ def find_commit():
         prevcomm = comm_num
         try:
             if ratey[1] - ratey[0] < 4000:
-                stint = ratey[1] - ratey[0]
                 comm_num = rep.get_commits().totalCount
                 ratey = gg.rate_limiting
                 endint = ratey[1] - ratey[0]
-                if endint <= 2000:
-                    print("Getting commits went from", stint, "interactions to", endint, "interactions")
-                else:
-                    print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
                 if prevcomm != comm_num:
-                    print("We updated from", prevcomm, "commits to", comm_num, "commits!")
+                    print("We updated from", prevcomm, "commits to", comm_num, "commits! (So far we've used", endint, "interactions out of", ratey[1])
                 if endint > 2000:
+                    print("(sleeping extra 30 seconds in commit fetcher)")
                     sleep(30)
             else:
                 print("Pausing fetch commits")
