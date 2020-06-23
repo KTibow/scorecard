@@ -35,15 +35,19 @@ def find_commit():
     global gg
     prevcomm = -1
     while True:
+        ratey = gg.rate_limiting
+        print("We've used up", ratey[1] - ratey[0], "interactions so far")
+        print("In an hour, we'll be back to", ratey[1], "remaining")
         prevcomm = comm_num
         try:
-            if gg.rate_limiting[1] - gg.rate_limiting[0] < 4000:
+            if ratey[1] - ratey[0] < 4000:
+                print("Getting commits at", ratey[1] - ratey[0], "interactions")
                 comm_num = len(list(rep.get_commits()))
+                ratey = gg.rate_limiting
+                print("Done getting commits at", ratey[1] - gg.rate_limiting[0], "interactions")
                 if prevcomm != comm_num:
                     print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-                print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
-                print("In an hour, we'll be back to", gg.rate_limiting[1], "remaining")
-                if gg.rate_limiting[1] - gg.rate_limiting[0] > 2000:
+                if ratey[1] - ratey[0] > 2000:
                     print("Greater than 2000, waiting extra 30 seconds")
                     sleep(30)
             else:
