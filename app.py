@@ -42,6 +42,7 @@ def find_commit():
     global started
     if not started:
         started = True
+        print("Started:", started)
         print("Starting commit finder")
         global comm_num
         global gg
