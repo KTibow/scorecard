@@ -1,4 +1,4 @@
-var cacheName = 'clue-card-vINSERT VERSION';
+var cacheName = 'clue-card-v{{version}}';
 console.log('Service Worker: Hello there!');
 self.addEventListener('install', (e) => {
     if (navigator.onLine) {
@@ -9,7 +9,7 @@ self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             console.log('Service Worker: Caching caches...');
-            return cache.addAll([INSERT URLS]);
+            return cache.addAll([{{urls}}]);
         })
     );
     e.waitUntil(
