@@ -48,12 +48,12 @@
                     // Stash the event so it can be triggered later.
                     deferredPrompt = e;
                     // Update UI to notify the user they can add to home screen
-                    addBtn.style.setProperty("opacity", "1", "important")
-                    addBtn.style.setProperty("visibility", "visible", "important")
+                    addBtn.style.setProperty("opacity", "1", "important");
+                    addBtn.style.setProperty("visibility", "visible", "important");
                     addBtn.addEventListener('click', (e) => {
                         // hide our user interface that shows our A2HS button
-                        addBtn.style.setProperty("opacity", "0", "important")
-                        addBtn.style.setProperty("visibility", "hidden", "important")
+                        addBtn.style.setProperty("opacity", "0", "important");
+                        addBtn.style.setProperty("visibility", "hidden", "important");
                         // Show the prompt
                         deferredPrompt.prompt();
                         // Wait for the user to respond to the prompt
