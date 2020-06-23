@@ -4,9 +4,11 @@ from flask import Flask, send_from_directory, request, redirect, url_for, render
 from flask_minify import minify
 # Various
 import os
-import random
+from random import randint
 # sw.js
 from github.MainClass import Github
+from time import sleep
+from threading import Thread
 # Database
 import json
 # Static files
@@ -20,10 +22,27 @@ from time import time
 # Init flask
 app = Flask(__name__, template_folder="game")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+# Init github
 if os.getenv("GITHUB_VERSION_PAT") != None:
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
+    rep = gg.get_repo("KTibow/scorecard")
 else:
     gg = Github()
+    rep = gg.get_repo("KTibow/scorecard")
+comm_num = 0
+def find_commit():
+    global comm_num
+    global gg
+    prevcomm = -1
+    while True:
+        prevcomm = comm_num
+        comm_num = len(list(rep.get_commits()))
+        if prevcomm != comm_num:
+            print("We updated from", prevcomm, "commits to", comm_num, "commits!")
+            print("We've used up", gg.rate_limiting[0], "interactions so far")
+        sleep(10)
+fc = Thread(target=comm_num)
+fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
@@ -54,7 +73,7 @@ def track_view(page, ip, agent):
         "dp": quote(page),
         "npa": "1",
         "ds": "server%20web",
-        "z": str(int(random.random() * pow(10, 25)))
+        "z": str(randint(0, 999999999999999))
     }
     if ip is not None:
         data["uip"] = ip
@@ -124,7 +143,7 @@ def genid(username):
     except FileNotFoundError:
         idDB = {}
     # First ID, then PIN
-    idDB[username] = [random.randint(0, 9999), random.randint(0, 9999)]
+    idDB[username] = [randint(0, 9999), randint(0, 9999)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
     return "/cluecard/" + str(idDB[username][0]) + "/" + str(idDB[username][1])
@@ -147,11 +166,8 @@ def makeserviceworker():
             swlist += ", "
     sw = open("game/browserfiles/sw.js", "r").read()
     sw = sw.replace("INSERT URLS", swlist)
-    repname = "KTibow/scorecard"
-    commdly = time() * 1000
-    commits = list(gg.get_repo(repname).get_commits())
-    g.fetchcommits = time() * 1000 - commdly
-    cacheid = str(len(commits))
+    global comm_num
+    cacheid = str(comm_num)
     sw = sw.replace("INSERT VERSION", cacheid)
     respo = app.make_response(sw)
     respo.mimetype = "application/javascript"
