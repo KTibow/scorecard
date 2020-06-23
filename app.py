@@ -34,7 +34,7 @@ def sleep(timefor):
         tm_sleep(0.5)
 comm_num = 0
 def find_commit(id):
-    print("My ID is", id)
+    print("Starting commit finder")
     global comm_num
     global gg
     prevcomm = -1
@@ -46,7 +46,7 @@ def find_commit(id):
         try:
             if ratey[1] - ratey[0] < 4000:
                 stint = ratey[1] - ratey[0]
-                comm_num = len(list(rep.get_commits()))
+                comm_num = rep.get_commits().totalCount
                 ratey = gg.rate_limiting
                 endint = ratey[1] - ratey[0]
                 if endint <= 2000:
@@ -64,7 +64,7 @@ def find_commit(id):
             print(e)
             sleep(240)
         sleep(60)
-fc = Thread(target=find_commit, args=(0,))
+fc = Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
