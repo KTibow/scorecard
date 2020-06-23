@@ -45,11 +45,11 @@ def track_view(page, ip, agent):
         "z": str(int(random.random() * pow(10, 25)))
     }
     if ip is not None:
-        data['uip'] = ip
+        data["uip"] = ip
     if agent is not None:
-        data['ua'] = quote(agent)
+        data["ua"] = quote(agent)
     response = requests.post(
-        'https://www.google-analytics.com/collect', data=data)
+        "https://www.google-analytics.com/collect", data=data)
 @app.before_request
 def before_req():
     g.before_before_request_time = time()
@@ -79,29 +79,29 @@ def after_req(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     g.after_after_request_time = time()
-    response.headers["Server-Timing"] = "beforereq;desc='Process redirect and log';dur="
+    response.headers["Server-Timing"] = "beforereq;desc=\"Process redirect and log\";dur="
     response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 2))
-    response.headers["Server-Timing"] += ", track;desc='Track pageview with Google Analytics';dur="
+    response.headers["Server-Timing"] += ", track;desc=\"Track pageview with Google Analytics\";dur="
     response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 2))
-    response.headers["Server-Timing"] += ", process;desc='Render stuff';dur="
+    response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
     response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 2))
     return response
 # ========== WEB INTERFACE ==========
 # home
-@app.route('/')
+@app.route("/")
 def hello():
     return open("game/welcome.html", "r").read()
 # join
-@app.route('/join')
+@app.route("/join")
 def join():
     return open("game/join.html", "r").read()
 # card
-@app.route('/cluecard/<theid>/<thepin>')
+@app.route("/cluecard/<theid>/<thepin>")
 def card(theid, thepin):
     return render_template("play.html")
 #    return "Your ID and PIN are "+theid+", "+thepin
 # ============== API ================
-@app.route('/makeid/<username>')
+@app.route("/makeid/<username>")
 def genid(username):
     username = username.lower()
     try:
