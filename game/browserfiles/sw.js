@@ -26,10 +26,14 @@ self.addEventListener('install', (e) => {
 });
 self.addEventListener('fetch', function(event) {
     console.log('Service Worker: We got a (no, not fish) fetch!', event.request);
-    caches.open(cacheName).then(function(cache) {
-            console.log('Service Worker: Trying to cache ' + event.request.url + '...');
+    if (!event.request.url.includes("makeid")) {
+        caches.open(cacheName).then(function(cache) {
+            console.log('Service Worker: Trying to cache', event.request.url + '...');
             cache.add(event.request.url);
-        }).catch(function() {return;});
+        }).catch(function() {
+            console.log('Error caching', event.request.url);
+        });
+    }
     event.respondWith(
         fetch(event.request).catch(function() {
             console.log('Service Worker: Returning cache ' + event.request.url + '...');
