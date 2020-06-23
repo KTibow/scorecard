@@ -30,38 +30,38 @@ else:
     gg = Github()
     rep = gg.get_repo("KTibow/scorecard")
 comm_num = 0
-def find_commit():
-    global comm_num
-    global gg
-    prevcomm = -1
-    while True:
-        ratey = gg.rate_limiting
-        print("We've used up", ratey[1] - ratey[0], "interactions so far")
-        print("In an hour, we'll be back to", ratey[1], "remaining")
-        prevcomm = comm_num
-        try:
-            if ratey[1] - ratey[0] < 4000:
-                stint = ratey[1] - ratey[0]
-                comm_num = len(list(rep.get_commits()))
-                ratey = gg.rate_limiting
-                endint = ratey[1] - ratey[0]
-                if endint <= 2000:
-                    print("Getting commits went from", stint, "interactions to", endint, "interactions")
-                else:
-                    print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
-                if prevcomm != comm_num:
-                    print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-                if endint > 2000:
-                    sleep(30)
-            else:
-                print("Pausing fetch commits")
-                sleep(120)
-        except Exception as e:
-            print(e)
-            sleep(240)
-        sleep(60)
-fc = Thread(target=find_commit, daemon=True)
-fc.start()
+#def find_commit():
+#    global comm_num
+#    global gg
+#    prevcomm = -1
+#    while True:
+#        ratey = gg.rate_limiting
+#        print("We've used up", ratey[1] - ratey[0], "interactions so far")
+#        print("In an hour, we'll be back to", ratey[1], "remaining")
+#        prevcomm = comm_num
+#        try:
+#            if ratey[1] - ratey[0] < 4000:
+#                stint = ratey[1] - ratey[0]
+#                comm_num = len(list(rep.get_commits()))
+#                ratey = gg.rate_limiting
+#                endint = ratey[1] - ratey[0]
+#                if endint <= 2000:
+#                    print("Getting commits went from", stint, "interactions to", endint, "interactions")
+#                else:
+#                    print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
+#                if prevcomm != comm_num:
+#                    print("We updated from", prevcomm, "commits to", comm_num, "commits!")
+#                if endint > 2000:
+#                    sleep(30)
+#            else:
+#                print("Pausing fetch commits")
+#                sleep(120)
+#        except Exception as e:
+#            print(e)
+#            sleep(240)
+#        sleep(60)
+#fc = Thread(target=find_commit, daemon=True)
+#fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
     directy = directy
