@@ -86,12 +86,12 @@ def track_view(page, ip, agent):
     data = {
         "v": "1",
         "tid": "UA-165004437-2",
-        "cid": "555",
+        "cid": hashlib.md5((str(ip) + str(agent)).encode()).hexdigest(),
         "t": "pageview",
         "dh": "tank-scorecard.herokuapp.com",
         "dp": quote(page),
         "npa": "1",
-        "ds": "server%20web",
+        "ds": "server",
         "z": str(randint(0, 999999999999999))
     }
     if ip is not None:
@@ -118,7 +118,7 @@ def before_req():
     print("Hit from " + ip + ua_add)
     chunks = request.url.split("/")
     g.middle_before_request_time = time() * 1000
-    track_view("/".join(chunks[3:len(chunks)]), ip, ua)
+    track_view("/".join(chunks[2:len(chunks)]), ip, ua)
     g.after_before_request_time = time() * 1000
 @app.after_request
 def after_req(response):
