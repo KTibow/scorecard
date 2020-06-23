@@ -41,14 +41,17 @@ def find_commit():
         prevcomm = comm_num
         try:
             if ratey[1] - ratey[0] < 4000:
-                print("Getting commits at", ratey[1] - ratey[0], "interactions")
+                stint = ratey[1] - ratey[0]
                 comm_num = len(list(rep.get_commits()))
                 ratey = gg.rate_limiting
-                print("Done getting commits at", ratey[1] - gg.rate_limiting[0], "interactions")
+                endint = ratey[1] - ratey[0]
+                if endint <= 2000:
+                    print("Getting commits went from", stint, "interactions to", endint, "interactions")
+                else:
+                    print("Getting commits went from", stint, "interactions to", endint, "interactions (sleeping extra 30 seconds)")
                 if prevcomm != comm_num:
                     print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-                if ratey[1] - ratey[0] > 2000:
-                    print("Greater than 2000, waiting extra 30 seconds")
+                if endint > 2000:
                     sleep(30)
             else:
                 print("Pausing fetch commits")
@@ -56,7 +59,7 @@ def find_commit():
         except Exception as e:
             print(e)
             sleep(240)
-        sleep(30)
+        sleep(60)
 fc = Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
