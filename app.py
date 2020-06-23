@@ -33,7 +33,7 @@ def sleep(timefor):
     for i in range(round(timefor * 2)):
         tm_sleep(0.5)
 comm_num = 0
-def find_commit(id):
+def find_commit():
     print("Starting commit finder")
     global comm_num
     global gg
