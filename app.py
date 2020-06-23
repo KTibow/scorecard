@@ -35,7 +35,9 @@ def sleep(timefor):
 comm_num = 0
 started = False
 def find_commit():
-    sleep(randint(0, 16) / 16)
+    wtime = randint(0, 16) / 16.0
+    print("Waiting", wtime)
+    sleep(wtime)
     global started
     if not started:
         started = True
