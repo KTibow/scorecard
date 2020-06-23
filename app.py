@@ -141,18 +141,18 @@ def after_req(response):
 # home
 @app.route("/")
 def hello():
-    return open("game/welcome.html", "r").read()
+    return render_template("welcome.html")
 # join
 @app.route("/join")
 def join():
-    return open("game/join.html", "r").read()
+    return render_template("join.html")
 # card
 @app.route("/cluecard/<theid>/<thepin>")
 def card(theid, thepin):
     return render_template("play.html")
 # 404
 @app.errorhandler(404)
-def err404():
+def err404(e):
     return render_template("404.html")
 # ============== API ================
 @app.route("/makeid/<username>")
