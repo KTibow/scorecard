@@ -74,6 +74,7 @@ input:focus::placeholder {
   box-shadow: 4px 4px 2px #34ebff;
   position: sticky;
   bottom: 0;
+  width: 90%;
 }
 #add2hs:hover {
   background-color: #049bb3;
@@ -89,6 +90,7 @@ input:focus::placeholder {
   background-position-x: 16px;
   position: sticky;
   top: 0;
+  width: 90%;
 }
 .homebutton:hover {
   background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
