@@ -72,6 +72,8 @@ input:focus::placeholder {
   transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
   background-color: #04bbd3;
   box-shadow: 4px 4px 2px #34ebff;
+  position: sticky;
+  bottom: 0;
 }
 #add2hs:hover {
   background-color: #049bb3;
