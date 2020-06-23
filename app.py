@@ -40,6 +40,7 @@ def find_commit():
     sleep(wtime)
     print("Done waiting")
     global started
+    print("Started:", started)
     if not started:
         started = True
         print("Started:", started)
