@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/open-sans.eot');
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+    url('/open-sans.eot?#iefix') format('embedded-opentype'),
+    url('/open-sans.woff2') format('woff2'),
+    url('/open-sans.woff') format('woff'),
+    url('/open-sans.ttf') format('truetype'),
+    url('/open-sans.svg#OpenSans') format('svg');
+}
+* {
+  font-family: Open Sans;
+}
+button {
+  background-color: #7000FF;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
+  box-shadow: 4px 4px 2px #A030FF;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #5000DF;
+}
+button:active {
+  background-color: #4000CF;
+  box-shadow: 2px 2px 1px #A030FF;
+  transform: translate(2px, 2px);
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #390070;
+  margin: 0px !important;
+  margin-left: 16px !important;
+  margin-bottom: 0.67em !important;
+}
+h1 {
+  font-size: 2.3em;
+}
+input {
+  border: 5px solid #A030FF;
+  border-radius: 10px;
+  padding: 10px 27px;
+  outline: 0;
+  box-shadow: 4px 4px 2px #A030FF;
+  transition-duration: 0.2s;
+  margin: 15px;
+}
+input:focus {
+  border: 5px solid #6000E0;
+  box-shadow: 2px 2px 1px #6000E0;
+  transform: translate(2px, 2px);
+}
+input::placeholder {
+  color: #A030FF;
+  font-weight: bold !important;
+}
+input:focus::placeholder {
+  color: #6000E0;
+  font-weight: bold !important;
+}
+#add2hs {
+  transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
+  background-color: #04bbd3;
+  box-shadow: 4px 4px 2px #34ebff;
+}
+#add2hs:hover {
+  background-color: #049bb3;
+}
+#add2hs:active {
+  background-color: #048ba3;
+  box-shadow: 2px 2px 1px #34ebff;
+}
+.homebutton {
+  background: #7000FF url("/back-arrow-alone-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
+}
+.homebutton:hover {
+  background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
+}
+.homebutton:active {
+  background: #4000CF url("/back-arrow-active-light.png") no-repeat center left;
+  padding-left: 64px;
+  background-size: 32px;
+  background-position-x: 16px;
+}
