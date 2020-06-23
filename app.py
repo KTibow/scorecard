@@ -16,6 +16,7 @@ import mimetypes
 # Tracking
 from urllib.parse import quote
 import requests
+import hashlib
 from user_agents import parse as ua_parse
 # Server-side timing
 from time import time
@@ -98,7 +99,6 @@ def track_view(page, ip, agent):
         data["uip"] = ip
     if agent is not None:
         data["ua"] = quote(agent)
-    print(data)
     response = requests.post(
         "https://www.google-analytics.com/collect", data=data)
 @app.before_request
