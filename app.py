@@ -35,17 +35,19 @@ def find_commit():
     global gg
     prevcomm = -1
     while True:
+        prevcomm = comm_num
         try:
             if gg.rate_limiting[1] - gg.rate_limiting[0] < 4000:
-                prevcomm = comm_num
                 comm_num = len(list(rep.get_commits()))
                 if prevcomm != comm_num:
                     print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-                    print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
-                    print("In an hour, we'll be back to", gg.rate_limiting[1], "remaining")
+                print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
+                print("In an hour, we'll be back to", gg.rate_limiting[1], "remaining")
                 if gg.rate_limiting[1] - gg.rate_limiting[0] > 2000:
+                    print("Greater than 2000, waiting extra 30 seconds")
                     sleep(30)
             else:
+                print("Pausing fetch commits")
                 sleep(120)
         except Exception as e:
             print(e)
@@ -124,9 +126,6 @@ def after_req(response):
     response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 1))
     response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
     response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 1))
-    if hasattr(g, "fetchcommits"):
-        response.headers["Server-Timing"] += ", process;desc=\"Fetch commits\";dur="
-        response.headers["Server-Timing"] += str(round(g.fetchcommits, 1))
     response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
     response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 1))
     return response
