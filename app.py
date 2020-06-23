@@ -41,7 +41,7 @@ def find_commit():
             print("We updated from", prevcomm, "commits to", comm_num, "commits!")
             print("We've used up", gg.rate_limiting[0], "interactions so far")
         sleep(10)
-fc = Thread(target=comm_num)
+fc = Thread(target=comm_num, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
     pathy = pathy
