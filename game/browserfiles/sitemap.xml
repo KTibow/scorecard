@@ -3,4 +3,7 @@
 	<url>
 		<loc>https://tank-scorecard.herokuapp.com/</loc>
 	</url>
+	<url>
+		<loc>https://tank-scorecard.herokuapp.com/join</loc>
+	</url>
 </urlset>
