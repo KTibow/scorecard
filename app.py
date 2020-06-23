@@ -50,7 +50,7 @@ def find_commit():
                 ratey = gg.rate_limiting
                 endint = ratey[1] - ratey[0]
                 if prevcomm != comm_num:
-                    print("We updated from", prevcomm, "commits to", comm_num, "commits! (So far we've used", endint, "interactions out of", ratey[1])
+                    print("We updated from", prevcomm, "commits to", comm_num, "commits! (So far we've used", endint, "interactions out of", str(ratey[1]) + ")")
                 if endint > 2000:
                     print("(sleeping extra 30 seconds in commit fetcher)")
                     sleep(30)
@@ -141,7 +141,9 @@ def after_req(response):
 # home
 @app.route("/")
 def hello():
-    return render_template("welcome.html")
+    rend = render_template("welcome.html")
+    print(rend)
+    return rend
 # join
 @app.route("/join")
 def join():
