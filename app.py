@@ -35,13 +35,22 @@ def find_commit():
     global gg
     prevcomm = -1
     while True:
-        prevcomm = comm_num
-        comm_num = len(list(rep.get_commits()))
-        if prevcomm != comm_num:
-            print("We updated from", prevcomm, "commits to", comm_num, "commits!")
-            print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
-            print("In an hour, we'll be back to", gg.rate_limiting[1], "remaining")
-        sleep(10)
+        try:
+            if gg.rate_limiting[1] - gg.rate_limiting[0] < 4000:
+                prevcomm = comm_num
+                comm_num = len(list(rep.get_commits()))
+                if prevcomm != comm_num:
+                    print("We updated from", prevcomm, "commits to", comm_num, "commits!")
+                    print("We've used up", gg.rate_limiting[1] - gg.rate_limiting[0], "interactions so far")
+                    print("In an hour, we'll be back to", gg.rate_limiting[1], "remaining")
+                if gg.rate_limiting[1] - gg.rate_limiting[0] > 2000:
+                    sleep(30)
+            else:
+                sleep(120)
+        except Exception as e:
+            print(e)
+            sleep(240)
+        sleep(30)
 fc = Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
