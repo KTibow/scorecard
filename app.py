@@ -157,6 +157,13 @@ def err404(e):
 @app.route("/404")
 def ex404():
     return render_template("404.html")
+# 500
+@app.errorhandler(500)
+def err500(e):
+    return render_template("500.html")
+@app.route("/500")
+def ex500():
+    throw Exception("Just testing")
 # ============== API ================
 @app.route("/makeid/<username>")
 def genid(username):
