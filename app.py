@@ -35,32 +35,43 @@ def sleep(timefor):
         tm_sleep(1 / 16)
 comm_num = 0
 def find_commit():
+    # Declarations
     print("Starting commit finder")
     global comm_num
     global gg
     prevcomm = -1
     while True:
+        # Get rate limiting and log if it's divisible by 10
         ratey = gg.rate_limiting
         if (((ratey[1] - ratey[0]) % 10) == 0):
             print("We've used up", str(ratey[1] - ratey[0]) + "/" + str(ratey[1]), "interactions so far")
         prevcomm = comm_num
         try:
-            if ratey[1] - ratey[0] < 4000:
+            if ratey[1] - ratey[0] < ratey[1] * 0.8:
+                # Try (prevent exceptions) if there are less than 4/5 interactions used
+                # Get commit number (DO NOT use len(list(rep.get_commits())) )
                 comm_num = rep.get_commits().totalCount
+                # Get rate limiting and get used interactions
                 ratey = gg.rate_limiting
                 endint = ratey[1] - ratey[0]
+                # Log if updated
                 if prevcomm != comm_num:
                     print("We updated from", prevcomm, "commits to", comm_num, "commits! (So far we've used", endint, "interactions out of", str(ratey[1]) + ")")
-                if endint > 2000:
+                if endint > ratey[1] * 0.4:
+                    # If more than 2/5 interactions used, log and sleep
                     print("(sleeping extra 30 seconds in commit fetcher)")
                     sleep(30)
             else:
+                # Pause until next reset
                 print("Pausing fetch commits")
                 sleep(120)
         except Exception as e:
+            # Log exception and wait (in case of other rate limit)
             print(e)
             sleep(240)
+        # Sleep (don't use up rate limit)
         sleep(60)
+# Start async commit checker
 fc = threading.Thread(target=find_commit, daemon=True)
 fc.start()
 def make_sender(pathy, directy):
@@ -169,15 +180,32 @@ def genid(username):
         idDB = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         idDB = {}
+    nid = randint(0, 99999)
+    if username in idDB:
+        oid = idDB[username][0]
+        try:
+            groupDB = json.load(open("groups.db", "r"))
+        except FileNotFoundError:
+            groupDB = []
+        for gy in groupDB:
+            groupDB[groupDB.index(gy)] = [x if x != oid else nid for x in gy]
+        print(groupDB)
+        json.dump(groupDB, open("groups.db", "w"))
     # First ID, then PIN
-    idDB[username] = [randint(0, 9999), randint(0, 9999)]
+    idDB[username] = [nid, randint(0, 99999)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/" + str(idDB[username][0]).zfill(4) + "/" + str(idDB[username][1]).zfill(4)
+    return "/cluecard/" + str(idDB[username][0]).zfill(5) + "/" + str(idDB[username][1]).zfill(5)
 @app.route("/addid/<exist>/<new>")
 def addid(exist, new):
-    exist = exist.zfill(4)
-    new = new.zfill(4)
+    exist = exist.zfill(5)
+    new = new.zfill(5)
+    try:
+        aids = [a for a, b in json.load(open("ids.db", "r"))]
+    except:
+        aids = []
+    if exist not in aids or new not in aids:
+        return "notreal"
     try:
         groupDB = json.load(open("groups.db", "r"))
     except FileNotFoundError:
