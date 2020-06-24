@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel='stylesheet' href='/error.css' type='text/css' />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>500 error on ClueCard | E-ScoreCard for game clues</title>
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="310x310" href="/ms-icon-310x310.png">
+        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
+        <link rel="icon" type="image/png" sizes="1000x1000" href="/favicon-1000x1000.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <meta name="msapplication-TileColor" content="#7000FF">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#7000FF">
+        <link rel="manifest" href="/manifest.json">
+    </head>
+    <body>
+        <script>
+            console.log("Running... (install.js)");
+            window.addEventListener("load", function() {
+                if ("serviceWorker" in navigator) {
+                    console.log("Trying to install service worker... (install.js)");
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .then(function(reg) {
+                            console.log("Service worker: installed! (install.js)", reg);
+                        }).catch (err => console.log("Service worker: not registered (install.js)", err));
+                }
+            });
+        </script>
+        <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
+        <h1>500! ☹</h1>
+        <h3>We've got an error in our server. Hmm... Maybe the <a href="/">homepage</a> will work.</h3>
+    </body>
+</html>
