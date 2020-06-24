@@ -167,7 +167,7 @@ def err404(e):
     return render_template("404.html"), 404
 @app.route("/404")
 def ex404():
-    return render_template("404.html"), 404
+    return render_template("404.html")
 # 500
 @app.errorhandler(500)
 def err500(e):
