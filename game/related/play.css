@@ -111,4 +111,8 @@ input:focus::placeholder {
   #add2hs {
     width: unset;
   }
+  body {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
