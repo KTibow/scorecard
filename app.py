@@ -149,7 +149,7 @@ def join():
 # card
 @app.route("/cluecard/<theid>/<thepin>")
 def card(theid, thepin):
-    return render_template("play.html")
+    return render_template("play.html", uid=theid, upin=thepin)
 # 404
 @app.errorhandler(404)
 def err404(e):
