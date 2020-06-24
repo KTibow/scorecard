@@ -71,7 +71,7 @@
 
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        window.location.href = this.responseText;
+                        console.log(this.responseText);
                     }
                 };
                 xmlhttp.open("GET", url, true);
@@ -85,7 +85,7 @@
         <button onClick="goHome();" class="homebutton">Home</button>
         <h1>Play...</h1>
         <h3>You're in the game. Let's make this happen.</h3>
-        <h4>(Your ID is {{uid}} and your PIN is {{upin}}.)</h4>
+        <h4>(Your ID is {{uid}} and your PIN is {{upin}}. <span id="gstat">You currently don't have anyone in your group.</span>)</h4>
         <input id="cardname" type="text" placeholder="Card name"><br/>
         <button onClick="registerUser()">Add card</button><br/>
         <input id="username" type="text" placeholder="User ID"><br/>
