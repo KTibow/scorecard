@@ -22,7 +22,7 @@ from user_agents import parse as ua_parse
 from time import time
 # Init flask
 app = Flask(__name__, template_folder="game")
-#minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") != None:
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
@@ -173,7 +173,50 @@ def genid(username):
     idDB[username] = [randint(0, 9999), randint(0, 9999)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/" + str(idDB[username][0]) + "/" + str(idDB[username][1])
+    return "/cluecard/" + str(idDB[username][0]).zfill(4) + "/" + str(idDB[username][1]).zfill(4)
+@app.route("/addid/<exist>/<new>")
+def addid(exist, new):
+    exist = exist.zfill(4)
+    new = new.zfill(4)
+    try:
+        groupDB = json.load(open("groups.db", "r"))
+    except FileNotFoundError:
+        groupDB = []
+    for gy in groupDB:
+        if exist in gy and new in gy:
+            return "already"
+    comp = [i for x in groupDB for i in x]
+    if exist in comp and new in comp:
+        newgp = []
+        for gy in groupDB:
+            if new in gy:
+                newgp = gy
+        for gy in groupDB:
+            if exist in gy:
+                groupDB[groupDB.index(gy)] = gy + newgp
+                groupDB.remove(newgp)
+                print(groupDB)
+                json.dump(groupDB, open("groups.db", "w"))
+                return "merge"
+    elif exist in comp and new not in comp:
+        for gy in groupDB:
+            if exist in gy:
+                groupDB[groupDB.index(gy)].append(new)
+                print(groupDB)
+                json.dump(groupDB, open("groups.db", "w"))
+                return "addnew"
+    elif exist not in comp and new in comp:
+        for gy in groupDB:
+            if new in gy:
+                groupDB[groupDB.index(gy)].append(exist)
+                print(groupDB)
+                json.dump(groupDB, open("groups.db", "w"))
+                return "addexist"
+    else:
+        groupDB.append([exist, new])
+        print(groupDB)
+        json.dump(groupDB, open("groups.db", "w"))
+        return "makenew"
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
