@@ -161,9 +161,6 @@ def ex404():
 @app.errorhandler(500)
 def err500(e):
     return render_template("500.html")
-@app.route("/500")
-def ex500():
-    raise Exception("Just testing")
 # ============== API ================
 @app.route("/makeid/<username>")
 def genid(username):
