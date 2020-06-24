@@ -65,9 +65,9 @@
                     });
                 });
             });
-            function registerUser() {
+            function registerGroup() {
                 var xmlhttp = new XMLHttpRequest();
-                var url = "/makeid/"+document.getElementById("username").value;
+                var url = "/addid/" + {{uid}} + "/" + document.getElementById("username").value;
 
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -86,8 +86,10 @@
         <h1>Play...</h1>
         <h3>You're in the game. Let's make this happen.</h3>
         <h4>(Your ID is {{uid}} and your PIN is {{upin}}.)</h4>
-        <input id="username" type="text" placeholder="Card name"><br/>
-        <button id="start" onClick="registerUser()">Add card</button><br/>
+        <input id="cardname" type="text" placeholder="Card name"><br/>
+        <button onClick="registerUser()">Add card</button><br/>
+        <input id="username" type="text" placeholder="User ID"><br/>
+        <button onClick="registerGroup()">Add to group</button><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;">Add E-Scorecard to Home Screen</button>
     </body>
 </html>
