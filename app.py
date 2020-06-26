@@ -205,6 +205,7 @@ def addid(exist, new):
     except:
         aids = []
     if exist not in aids or new not in aids:
+        print("notreal", aids)
         return "notreal"
     try:
         groupDB = json.load(open("groups.db", "r"))
