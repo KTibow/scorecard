@@ -141,13 +141,14 @@ def after_req(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    g.after_after_request_time = time() * 1000
-    response.headers["Server-Timing"] = "beforereq;desc=\"Process redirect and log\";dur="
-    response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 1))
-    response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
-    response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 1))
-    response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
-    response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 1))
+    if "debuggy" not in globals():
+        g.after_after_request_time = time() * 1000
+        response.headers["Server-Timing"] = "beforereq;desc=\"Process redirect and log\";dur="
+        response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 1))
+        response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
+        response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 1))
+        response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
+        response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 1))
     return response
 # ========== WEB INTERFACE ==========
 # home
