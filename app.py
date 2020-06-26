@@ -245,6 +245,24 @@ def addid(exist, new):
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
         return "makenew"
+@app.route("/gids/<uid>")
+def fids(uid):
+    try:
+        groupDB = json.load(open("groups.db", "r"))
+    except FileNotFoundError:
+        groupDB = []
+    comp = [i for x in groupDB for i in x]
+    if uid not in comp:
+        return "You currently don't have anyone in your group."
+    for gy in groupDB:
+        if uid in gy:
+            try:
+                idDB = json.load(open("ids.db", "r"))
+            except FileNotFoundError:
+                idDB = {}
+            inv_map = {v[0]: k for k, v in idDB.items()}
+            mgy = [inv_map[g] for g in gy.copy()]
+            return "In your group, there's these people: " + ", ".join(mgy)
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
