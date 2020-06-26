@@ -16,11 +16,10 @@
   font-style: normal;
   font-weight: 400;
   src: url(/material-icons.eot);
-  src: local('Material Icons'),
-       local('MaterialIcons-Regular'),
-       url(/material-icons.woff2) format('woff2'),
-       url(/material-icons.woff) format('woff'),
-       url(/material-icons.ttf) format('truetype');
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+   url(/material-icons.woff2) format('woff2'),
+   url(/material-icons.woff) format('woff'),
+   url(/material-icons.ttf) format('truetype');
 }
 
 .material-icons {
