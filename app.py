@@ -147,7 +147,7 @@ def after_req(response):
         response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 1))
         response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
         response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 1))
-        response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
+        response.headers["Server-Timing"] += ", p43240rocess;desc=\"Render stuff\";dur="
         response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 1))
     return response
 # ========== WEB INTERFACE ==========
@@ -203,7 +203,7 @@ def addid(exist, new):
     exist = exist.zfill(5)
     new = new.zfill(5)
     try:
-        aids = [b[1] for a, b in json.load(open("ids.db", "r")).values()]
+        aids = [a for a, b in json.load(open("ids.db", "r")).values()]
     except Exception as e:
         print(e)
         aids = []
