@@ -118,7 +118,7 @@ def before_req():
     g.middle_before_request_time = time() * 1000
     g.after_before_request_time = time() * 1000
     g.after_after_request_time = time() * 1000
-    if request.headers["X-Forwarded-Proto"] == "http":
+    if "debuggy" not in globals() and request.headers["X-Forwarded-Proto"] == "http":
         return redirect(request.url.replace("http", "https"), code=301)
     ua = None
     ua_add = ""
