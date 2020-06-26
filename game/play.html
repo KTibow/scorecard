@@ -114,5 +114,21 @@
         <input id="username" type="text" placeholder="User ID"><br/>
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
+        <script>
+            var input = document.getElementById("cardname");
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    registerUser();
+                }
+            });
+            var input = document.getElementById("username");
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    registerGroup();
+                }
+            });
+        </script>
     </body>
 </html>
