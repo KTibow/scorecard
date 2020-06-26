@@ -254,8 +254,8 @@ def fids(uid):
     try:
         groupDB = json.load(open("groups.db", "r"))
     except FileNotFoundError:
-        groupDB = {}
-    comp = list(groupDB.keys())
+        groupDB = []
+    comp = [i for x in groupDB for i in x]
     if uid not in comp:
         return "You currently don't have anyone in your group."
     for gy in groupDB:
