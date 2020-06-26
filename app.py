@@ -208,7 +208,7 @@ def addid(exist, new):
         print(e)
         aids = []
     if exist not in aids or new not in aids:
-        print("These people:", exist, new, "Are not in:", aids, json.load(open("ids.db", "r")))
+        print("These people:", exist, new, "Are not in:", aids, json.load(open("ids.db", "r")), "Exist in:", exist in aids, "New in:", new in aids)
         return "notreal"
     try:
         groupDB = json.load(open("groups.db", "r"))
