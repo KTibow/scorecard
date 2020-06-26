@@ -22,12 +22,16 @@
    url(/material-icons.woff) format('woff'),
    url(/material-icons.ttf) format('truetype');
 }
-.material-icons {
+[data-icon]::before {
+  content: attr(data-icon);
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 32px;
+  font-size: 1em;
   display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
   line-height: 1;
   text-transform: none;
   letter-spacing: normal;
@@ -40,7 +44,7 @@
   font-feature-settings: 'liga';
 }
 * {
-  font-family: Open Sans;
+  font-family: Open Sans, sans-serif;
 }
 button {
   background-color: #7000FF;
