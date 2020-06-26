@@ -16,8 +16,7 @@
   font-style: normal;
   font-weight: 400;
   src: url(/material-icons.eot);
-  src: local('Material Icons'),
-   local('MaterialIcons-Regular'),
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
    url(/material-icons.woff2) format('woff2'),
    url(/material-icons.woff) format('woff'),
    url(/material-icons.ttf) format('truetype');
@@ -27,7 +26,8 @@
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 1em;
+  font-size: 2em;
+  margin: 0 0.5em 0 0;
   display: inline-block;
   vertical-align: middle;
   width: 1em;
@@ -102,37 +102,21 @@ input:focus::placeholder {
 }
 #add2hs {
   transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
-  background-color: #04bbd3;
+  background-color: #049bb3;
   box-shadow: 4px 4px 2px #34ebff;
   position: sticky;
   bottom: 0;
 }
 #add2hs:hover {
-  background-color: #049bb3;
+  background-color: #038195;
 }
 #add2hs:active {
-  background-color: #048ba3;
+  background-color: #026777;
   box-shadow: 2px 2px 1px #34ebff;
 }
 .homebutton {
-  background: #7000FF url("/back-arrow-alone-light.png") no-repeat center left;
-  padding-left: 64px;
-  background-size: 32px;
-  background-position-x: 16px;
   position: sticky;
   top: 0;
-}
-.homebutton:hover {
-  background: #5000DF url("/back-arrow-hover-light.png") no-repeat center left;
-  padding-left: 64px;
-  background-size: 32px;
-  background-position-x: 16px;
-}
-.homebutton:active {
-  background: #4000CF url("/back-arrow-active-light.png") no-repeat center left;
-  padding-left: 64px;
-  background-size: 32px;
-  background-position-x: 16px;
 }
 @media all and (orientation: landscape) {
   .homebutton {
