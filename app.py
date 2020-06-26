@@ -114,23 +114,24 @@ def track_view(page, ip, agent):
         "https://www.google-analytics.com/collect", data=data)
 @app.before_request
 def before_req():
-    g.before_before_request_time = time() * 1000
-    g.middle_before_request_time = time() * 1000
-    g.after_before_request_time = time() * 1000
-    g.after_after_request_time = time() * 1000
-    if "debuggy" not in globals() and request.headers["X-Forwarded-Proto"] == "http":
-        return redirect(request.url.replace("http", "https"), code=301)
-    ua = None
-    ua_add = ""
-    if "User-Agent" in request.headers:
-        ua = request.headers["User-Agent"]
-        ua_add = ", "+str(ua_parse(ua))
-    ip = request.headers["X-Forwarded-For"]
-    print("Hit from " + ip + ua_add)
-    chunks = request.url.split("/")
-    g.middle_before_request_time = time() * 1000
-    track_view("/".join(chunks[2:len(chunks)]), ip, ua)
-    g.after_before_request_time = time() * 1000
+    if "debuggy" not in globals():
+        g.before_before_request_time = time() * 1000
+        g.middle_before_request_time = time() * 1000
+        g.after_before_request_time = time() * 1000
+        g.after_after_request_time = time() * 1000
+        if request.headers["X-Forwarded-Proto"] == "http":
+            return redirect(request.url.replace("http", "https"), code=301)
+        ua = None
+        ua_add = ""
+        if "User-Agent" in request.headers:
+            ua = request.headers["User-Agent"]
+            ua_add = ", "+str(ua_parse(ua))
+        ip = request.headers["X-Forwarded-For"]
+        print("Hit from " + ip + ua_add)
+        chunks = request.url.split("/")
+        g.middle_before_request_time = time() * 1000
+        track_view("/".join(chunks[2:len(chunks)]), ip, ua)
+        g.after_before_request_time = time() * 1000
 @app.after_request
 def after_req(response):
     response.headers["Content-Security-Policy"] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
