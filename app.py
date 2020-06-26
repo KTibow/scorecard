@@ -202,10 +202,11 @@ def addid(exist, new):
     new = new.zfill(5)
     try:
         aids = [a for a, b in json.load(open("ids.db", "r"))]
-    except:
+    except Exception as e:
+        print(e)
         aids = []
     if exist not in aids or new not in aids:
-        print("notreal", aids)
+        print("notreal", aids, json.load(open("ids.db", "r")))
         return "notreal"
     try:
         groupDB = json.load(open("groups.db", "r"))
