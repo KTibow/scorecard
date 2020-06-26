@@ -78,13 +78,6 @@
                 xmlhttp.open("GET", url, true);
                 xmlhttp.send();
             }
-            var input = document.getElementById("username");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    registerUser();
-                }
-            });
             function goHome() {
                 window.location.href = "/";
             }
@@ -96,5 +89,14 @@
         <input id="username" type="text" placeholder="Username" autofocus><br/>
         <button onClick="registerUser()" data-icon="arrow_forward">Let's do this.</button><br/>
         <button id="add2hs" style="opacity: 0; visiblity: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
+        <script>
+            var input = document.getElementById("username");
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    registerUser();
+                }
+            });
+        </script>
     </body>
 </html>
