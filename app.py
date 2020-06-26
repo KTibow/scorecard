@@ -201,7 +201,7 @@ def addid(exist, new):
     exist = exist.zfill(5)
     new = new.zfill(5)
     try:
-        aids = [a for a, b in json.load(open("ids.db", "r"))]
+        aids = [b[1] for a, b in json.load(open("ids.db", "r")).values()]
     except Exception as e:
         print(e)
         aids = []
@@ -252,8 +252,8 @@ def fids(uid):
     try:
         groupDB = json.load(open("groups.db", "r"))
     except FileNotFoundError:
-        groupDB = []
-    comp = [i for x in groupDB for i in x]
+        groupDB = {}
+    comp = list(groupDB.keys())
     if uid not in comp:
         return "You currently don't have anyone in your group."
     for gy in groupDB:
