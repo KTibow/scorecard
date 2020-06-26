@@ -182,7 +182,7 @@ def genid(username):
         idDB = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         idDB = {}
-    nid = randint(0, 99999)
+    nid = str(randint(0, 99999)).zfill(5)
     if username in idDB:
         oid = idDB[username][0]
         try:
@@ -194,10 +194,10 @@ def genid(username):
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
     # First ID, then PIN
-    idDB[username] = [nid, randint(0, 99999)]
+    idDB[username] = [nid, str(randint(0, 99999)).zfill(5)]
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/" + str(idDB[username][0]).zfill(5) + "/" + str(idDB[username][1]).zfill(5)
+    return "/cluecard/" + idDB[username][0] + "/" + idDB[username][1]
 @app.route("/addid/<exist>/<new>")
 def addid(exist, new):
     exist = exist.zfill(5)
