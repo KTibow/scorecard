@@ -268,7 +268,7 @@ def fids(uid):
                 idDB = {}
             inv_map = {v[0]: k for k, v in idDB.items()}
             mgy = [inv_map[g] for g in gy.copy()]
-            return "In your group, there's these people: " + ", ".join(mgy)
+            return "In your group, there's these people: <span class=\"color: deepskyblue;\">" + ", ".join(mgy) + "</span>"
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
