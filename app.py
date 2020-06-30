@@ -166,6 +166,8 @@ def card(theid, thepin):
 # 404
 @app.errorhandler(404)
 def err404(e):
+    if request.url[len(request.url)-1] != "/":
+        return return redirect(request.url + "/", code=301)
     return render_template("404.html"), 404
 @app.route("/404")
 def ex404():
