@@ -91,16 +91,18 @@
                 window.location.href = "/";
             }
             function getGroup() {
-                var xmlhttp = new XMLHttpRequest();
-                var url = "/gids/" + {{uid}};
+                if (document.hasFocus()) {
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "/gids/" + {{uid}};
 
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("gstat").innerHTML = this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("gstat").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET", url, true);
+                    xmlhttp.send();
+                }
             }
             setInterval(getGroup, 300);
         </script>
