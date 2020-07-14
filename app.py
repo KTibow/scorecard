@@ -253,7 +253,14 @@ def addid(exist, new):
         infodict = {"rightnum": randint(0, 9)}
         for tletter in "ABCD":
             for tnumber in range(1, 5):
-                infodict[tletter + str(tnumber)] = randint(0, 2)
+                myoption = randint(0, 15)
+                if myoption < 3:
+                    myoption = "0"
+                else if myoption < 12:
+                    myoption = "1"
+                else:
+                    myoption = "2"
+                infodict[tletter + str(tnumber)] = myoption
         groupDB.append([infodict, exist, new])
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
@@ -277,6 +284,18 @@ def fids(uid):
             inv_map = {v[0]: k for k, v in idDB.items()}
             mgy = [inv_map[g] for g in gy.copy()]
             return "In your group, there's these people: <span style=\"color: deepskyblue;\">" + ", ".join(mgy) + "</span>"
+@app.route("/cardstatus/<uid>/<cardnum>")
+def checkcard(uid, cardnum):
+    try:
+        groupDB = json.load(open("groups.db", "r"))
+    except FileNotFoundError:
+        groupDB = []
+    comp = [i for x in groupDB for i in x]
+    if uid not in comp:
+        return "2"
+    for gy in groupDB:
+        if uid in gy:
+            return gy[0][cardnum]
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
