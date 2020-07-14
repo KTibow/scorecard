@@ -250,10 +250,10 @@ def addid(exist, new):
         # Best: Give you answer, finish game
         # Most: Give you what number isn't
         # Couple: Nothing
-        infodict = {rightnum: randint(0, 9)}
-        for letter in "ABCD":
-            for number in range(1, 5):
-                infodict[letters + str(number)] = randint(0, 2)
+        infodict = {"rightnum": randint(0, 9)}
+        for tletter in "ABCD":
+            for tnumber in range(1, 5):
+                infodict[tletter + str(tnumber)] = randint(0, 2)
         groupDB.append([infodict, exist, new])
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
