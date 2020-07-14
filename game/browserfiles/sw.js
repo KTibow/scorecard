@@ -26,7 +26,10 @@ self.addEventListener('install', (e) => {
 });
 self.addEventListener('fetch', function(event) {
     console.log('Service Worker: We got a (no, not fish) fetch!', event.request);
-    if (!event.request.url.includes("makeid") && !event.request.url.includes("addid") && !event.request.url.includes("gids")) {
+    if (!event.request.url.includes("makeid") &&
+        !event.request.url.includes("addid") &&
+        !event.request.url.includes("gids") &&
+        !event.request.url.includes("cardstatus")) {
         caches.open(cacheName).then(function(cache) {
             console.log('Service Worker: Trying to cache', event.request.url + '...');
             cache.add(event.request.url);
