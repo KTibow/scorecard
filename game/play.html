@@ -111,7 +111,15 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         if (this.responseText == "0") {
-                            alert("You got the right card!");
+                            var xmlhttp2 = new XMLHttpRequest();
+                            var url2 = "/rightnum/" + {{uid}};
+                            xmlhttp2.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    alert("Yup, you're right! The number is " + this.responseText);
+                                }
+                            };
+                            xmlhttp2.open("GET", url2, true);
+                            xmlhttp2.send();
                         } else if (this.responseText == "1") {
                             alert("This is a normal card");
                         } else if (this.responseText == "2") {
