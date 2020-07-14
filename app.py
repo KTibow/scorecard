@@ -273,9 +273,9 @@ def fids(uid):
                 idDB = json.load(open("ids.db", "r"))
             except FileNotFoundError:
                 idDB = {}
+            gy = gy[1: len(gy)]
             inv_map = {v[0]: k for k, v in idDB.items()}
             mgy = [inv_map[g] for g in gy.copy()]
-            mgy = mgy[1: len(mgy)]
             return "In your group, there's these people: <span style=\"color: deepskyblue;\">" + ", ".join(mgy) + "</span>"
 # ========== BROWSER FILES ==========
 for file in walk():
