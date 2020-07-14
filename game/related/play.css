@@ -136,8 +136,8 @@ input:focus::placeholder {
   }
 }
 textarea {
-  width: 90%;
-  padding: 15px 10px;
-  displat: block;
-  margin: 15px auto;
+  width: 85%;
+  padding: 10px 5px;
+  display: block;
+  margin: 5px auto;
 }
