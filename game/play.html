@@ -106,6 +106,7 @@
             }
             setInterval(getGroup, 300);
             function getCard() {
+                document.getElementById("attmpts").innerHTML = String(Number(document.getElementById("attmpts").innerHTML) + 1);
                 var xmlhttp = new XMLHttpRequest();
                 var url = "/cardstatus/" + {{uid}} + "/" + document.getElementById("cardname").value;
                 xmlhttp.onreadystatechange = function() {
@@ -123,7 +124,7 @@
                         } else if (this.responseText == "1") {
                             alert("This is a normal card");
                         } else if (this.responseText == "2") {
-                            alert("This card doesn't help you");
+                            alert("This card doesn't help you.");
                         }
                     }
                 };
@@ -150,7 +151,7 @@
         <button onClick="goHome();" class="homebutton" data-icon="arrow_back">Home</button>
         <h1>Play...</h1>
         <h3>You're in the game. Let's make this happen.</h3>
-        <h4>(Your ID is {{uid}} and your PIN is {{upin}}. <span id="gstat">You currently don't have anyone in your group.</span>)</h4>
+        <h4>(Your ID is {{uid}} and your PIN is {{upin}}. <span id="gstat">You currently don't have anyone in your group.</span> So far, you've done this number of card checks: <span id="attmpts">0</span>)</h4>
         <input id="cardname" type="text" placeholder="Card name"><br/>
         <button onClick="getCard()" data-icon="add">Add card</button><br/>
         <input id="numbername" type="text" placeholder="Target number"><br/>
