@@ -135,3 +135,7 @@ input:focus::placeholder {
     width: 90%;
   }
 }
+textarea {
+  width: 100%;
+  padding: 15px 10px;
+}
