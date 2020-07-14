@@ -296,6 +296,18 @@ def checkcard(uid, cardnum):
     for gy in groupDB:
         if uid in gy:
             return gy[0][cardnum]
+@app.route("/rightnum/<uid>")
+def rightnum(uid):
+    try:
+        groupDB = json.load(open("groups.db", "r"))
+    except FileNotFoundError:
+        groupDB = []
+    comp = [i for x in groupDB for i in x]
+    if uid not in comp:
+        return "-1"
+    for gy in groupDB:
+        if uid in gy:
+            return gy[0]["rightnum"]
 # ========== BROWSER FILES ==========
 for file in walk():
     if file[1] != "/sw.js":
