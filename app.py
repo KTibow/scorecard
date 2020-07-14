@@ -147,7 +147,7 @@ def after_req(response):
         response.headers["Server-Timing"] += str(round(g.middle_before_request_time - g.before_before_request_time, 1))
         response.headers["Server-Timing"] += ", track;desc=\"Track pageview\";dur="
         response.headers["Server-Timing"] += str(round(g.after_before_request_time - g.middle_before_request_time, 1))
-        response.headers["Server-Timing"] += ", p43240rocess;desc=\"Render stuff\";dur="
+        response.headers["Server-Timing"] += ", process;desc=\"Render stuff\";dur="
         response.headers["Server-Timing"] += str(round(g.after_after_request_time - g.after_before_request_time, 1))
     return response
 # ========== WEB INTERFACE ==========
@@ -227,7 +227,7 @@ def addid(exist, new):
                 newgp = gy
         for gy in groupDB:
             if exist in gy:
-                groupDB[groupDB.index(gy)] = gy + newgp
+                groupDB[groupDB.index(gy)] = gy + newgp[1: len(newgp)]
                 groupDB.remove(newgp)
                 print(groupDB)
                 json.dump(groupDB, open("groups.db", "w"))
@@ -247,7 +247,14 @@ def addid(exist, new):
                 json.dump(groupDB, open("groups.db", "w"))
                 return "addexist"
     else:
-        groupDB.append([exist, new])
+        # Best: Give you answer, finish game
+        # Most: Give you what number isn't
+        # Couple: Nothing
+        infodict = {rightnum: randint(0, 9)}
+        for letter in "ABCD":
+            for number in range(1, 5):
+                infodict[letters + str(number)] = randint(0, 2)
+        groupDB.append([infodict, exist, new])
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
         return "makenew"
@@ -268,6 +275,7 @@ def fids(uid):
                 idDB = {}
             inv_map = {v[0]: k for k, v in idDB.items()}
             mgy = [inv_map[g] for g in gy.copy()]
+            mgy = mgy[1: len(mgy)]
             return "In your group, there's these people: <span style=\"color: deepskyblue;\">" + ", ".join(mgy) + "</span>"
 # ========== BROWSER FILES ==========
 for file in walk():
