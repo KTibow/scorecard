@@ -250,15 +250,19 @@ def addid(exist, new):
         # Most: Give you what number isn't
         # Couple: Nothing
         infodict = {"rightnum": str(randint(1, 10))}
+        fyet = False
         for tletter in "ABCD":
             for tnumber in range(1, 5):
                 myoption = randint(0, 15)
                 if myoption < 3:
                     myoption = "0"
+                    fyet = True
                 elif myoption < 12:
                     myoption = "1"
                 else:
                     myoption = "2"
+                if tletter + str(tnumber) == "D4" and not fyet:
+                    myoption = "0"
                 infodict[tletter + str(tnumber)] = myoption
         groupDB.append([infodict, exist, new])
         print(groupDB)
