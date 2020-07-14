@@ -256,7 +256,7 @@ def addid(exist, new):
                 myoption = randint(0, 15)
                 if myoption < 3:
                     myoption = "0"
-                else if myoption < 12:
+                elif myoption < 12:
                     myoption = "1"
                 else:
                     myoption = "2"
