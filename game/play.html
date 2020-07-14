@@ -122,6 +122,21 @@
                 xmlhttp.open("GET", url, true);
                 xmlhttp.send();
             }
+            function checkNumber() {
+                var xmlhttp = new XMLHttpRequest();
+                var url = "/rightnum/" + {{uid}};
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if (this.responseText == document.getElementById("numbername").value) {
+                            alert("YAHOO! You're right! Announce it now!");
+                        } else {
+                            alert("NOPE. You gotta announce that, though!");
+                        }
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
         </script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <button onClick="goHome();" class="homebutton" data-icon="arrow_back">Home</button>
@@ -130,9 +145,12 @@
         <h4>(Your ID is {{uid}} and your PIN is {{upin}}. <span id="gstat">You currently don't have anyone in your group.</span>)</h4>
         <input id="cardname" type="text" placeholder="Card name"><br/>
         <button onClick="getCard()" data-icon="add">Add card</button><br/>
+        <input id="numbername" type="text" placeholder="Target number"><br/>
+        <button onClick="checkNumber()" data-icon="check">Check number</button><br/>
         <input id="username" type="text" placeholder="User ID"><br/>
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
+        <textarea placeholder="Take notes here"></textarea>
         <script>
             var input = document.getElementById("cardname");
             input.addEventListener("keyup", function(event) {
