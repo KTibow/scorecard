@@ -94,7 +94,6 @@
                 if (document.hasFocus()) {
                     var xmlhttp = new XMLHttpRequest();
                     var url = "/gids/" + {{uid}};
-
                     xmlhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
                             document.getElementById("gstat").innerHTML = this.responseText;
@@ -105,6 +104,20 @@
                 }
             }
             setInterval(getGroup, 400);
+            var xmlhttpy = new XMLHttpRequest();
+            var urly = "/rightnum/" + {{uid}};
+            var nopes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            xmlhttpy.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    nopes.pop(Number(this.responseText));
+                }
+            };
+            xmlhttpy.open("GET", url, true);
+            xmlhttpy.send();
+            function choose(choices) {
+                var index = Math.floor(Math.random() * choices.length);
+                return choices[index];
+            }
             function getCard() {
                 document.getElementById("attmpts").innerHTML = String(Number(document.getElementById("attmpts").innerHTML) + 1);
                 var xmlhttp = new XMLHttpRequest();
@@ -122,7 +135,13 @@
                             xmlhttp2.open("GET", url2, true);
                             xmlhttp2.send();
                         } else if (this.responseText == "1") {
-                            alert("This is a normal card");
+                            if (nopes.length < 1) {
+                                alert("Ooops! You missed out on the right one from 1-10.");
+                            } else {
+                                var choice = choose(nopes);
+                                alert("This is a normal card, and it tells you that it's not " + String(choice));
+                                nopes.pop(choice);
+                            }
                         } else if (this.responseText == "2") {
                             alert("This card doesn't help you.");
                         }
