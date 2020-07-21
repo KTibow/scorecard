@@ -159,9 +159,9 @@ def hello():
 def join():
     return render_template("join.html")
 # card
-@app.route("/cluecard/<theid>/<thepin>")
-def card(theid, thepin):
-    return render_template("play.html", uid=theid, upin=thepin)
+@app.route("/cluecard/<theid>")
+def card(theid):
+    return render_template("play.html", uid=theid)
 # 404
 @app.errorhandler(404)
 def err404(e):
@@ -185,7 +185,7 @@ def genid(username):
         idDB = {}
     nid = str(randint(0, 99999)).zfill(5)
     if username in idDB:
-        oid = idDB[username][0]
+        oid = idDB[username]
         try:
             groupDB = json.load(open("groups.db", "r"))
         except FileNotFoundError:
@@ -194,11 +194,11 @@ def genid(username):
             groupDB[groupDB.index(gy)] = [x if x != oid else nid for x in gy]
         print(groupDB)
         json.dump(groupDB, open("groups.db", "w"))
-    # First ID, then PIN
-    idDB[username] = [nid, str(randint(0, 99999)).zfill(5)]
+    # First ID
+    idDB[username] = nid
     print(idDB)
     json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/" + idDB[username][0] + "/" + idDB[username][1]
+    return "/cluecard/" + idDB[username]
 @app.route("/addid/<exist>/<new>")
 def addid(exist, new):
     exist = exist.zfill(5)
@@ -284,7 +284,7 @@ def fids(uid):
             except FileNotFoundError:
                 idDB = {}
             gy = gy[1: len(gy)]
-            inv_map = {v[0]: k for k, v in idDB.items()}
+            inv_map = {value: key for key, value in idDB.items()}
             mgy = [inv_map[g] for g in gy.copy()]
             return "In your group, there's these people: <span style=\"color: deepskyblue;\">" + ", ".join(mgy) + "</span>"
 @app.route("/cardstatus/<uid>/<cardnum>")
