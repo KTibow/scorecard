@@ -204,7 +204,7 @@ def addid(exist, new):
     exist = exist.zfill(5)
     new = new.zfill(5)
     try:
-        aids = [a for a, b in json.load(open("ids.db", "r")).values()]
+        aids = list(json.load(open("ids.db", "r")).values())
     except Exception as e:
         print(e)
         aids = []
