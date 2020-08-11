@@ -106,7 +106,10 @@
             setInterval(getGroup, 400);
             var xmlhttpy = new XMLHttpRequest();
             var urly = "/rightnum/" + {{uid}};
-            var nopes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            var nopes = [];
+            for (var i = 1; i <= 1000; i++) {
+                nopes.push(i);
+            }
             xmlhttpy.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     nopes.pop(Number(this.responseText));
@@ -136,7 +139,7 @@
                             xmlhttp2.send();
                         } else if (this.responseText == "1") {
                             if (nopes.length < 1) {
-                                alert("Ooops! You missed out on the right one from 1-10.");
+                                alert("Ooops! You missed out on the right one from 1-1000.");
                             } else {
                                 var choice = choose(nopes);
                                 alert("This is a normal card, and it tells you that it's not " + String(choice));
