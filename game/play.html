@@ -67,7 +67,7 @@
             });
             function registerGroup() {
                 var xmlhttp = new XMLHttpRequest();
-                var url = "/addid/" + "{{uid}}" + "/" + document.getElementById("username").value;
+                var url = "/addid/{{uid}}/" + document.getElementById("username").value;
 
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -93,10 +93,10 @@
             function getGroup() {
                 if (document.hasFocus()) {
                     var xmlhttp = new XMLHttpRequest();
-                    var url = "/gids/" + {{uid}};
+                    var url = "/gids/{{uid}}";
                     xmlhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("gstat").innerHTML = this.responseText;
+                            document.getElementById("gstat").innerHTML = this.respon" + seText;
                         }
                     };
                     xmlhttp.open("GET", url, true);
@@ -105,7 +105,7 @@
             }
             setInterval(getGroup, 400);
             var xmlhttpy = new XMLHttpRequest();
-            var urly = "/rightnum/" + {{uid}};
+            var urly = "/rightnum/{{uid}}";
             var nopes = [];
             for (var i = 1; i <= 1000; i++) {
                 nopes.push(i);
@@ -124,12 +124,12 @@
             function getCard() {
                 document.getElementById("attmpts").innerHTML = String(Number(document.getElementById("attmpts").innerHTML) + 1);
                 var xmlhttp = new XMLHttpRequest();
-                var url = "/cardstatus/" + {{uid}} + "/" + document.getElementById("cardname").value;
+                var url = "/cardstatus/{uid}}/" + document.getElementById("cardname").value;
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         if (this.responseText == "0") {
                             var xmlhttp2 = new XMLHttpRequest();
-                            var url2 = "/rightnum/" + {{uid}};
+                            var url2 = "/rightnum/{{uid}}";
                             xmlhttp2.onreadystatechange = function() {
                                 if (this.readyState == 4 && this.status == 200) {
                                     alert("That's the right card! The number is " + this.responseText);
@@ -155,7 +155,7 @@
             }
             function checkNumber() {
                 var xmlhttp = new XMLHttpRequest();
-                var url = "/rightnum/" + {{uid}};
+                var url = "/rightnum/{{uid}}";
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         if (this.responseText == document.getElementById("numbername").value) {
