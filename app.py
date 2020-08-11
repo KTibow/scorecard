@@ -249,7 +249,7 @@ def addid(exist, new):
         # Best: Give you answer, finish game
         # Most: Give you what number isn't
         # Couple: Nothing
-        infodict = {"rightnum": str(randint(1, 10))}
+        infodict = {"rightnum": str(randint(1, 1000))}
         fyet = False
         for tletter in "ABCD":
             for tnumber in range(1, 5):
