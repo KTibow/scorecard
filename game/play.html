@@ -96,7 +96,7 @@
                     var url = "/gids/{{uid}}";
                     xmlhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("gstat").innerHTML = this.respon" + seText;
+                            document.getElementById("gstat").innerHTML = this.responseText;
                         }
                     };
                     xmlhttp.open("GET", url, true);
