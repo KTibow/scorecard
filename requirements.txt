@@ -25,6 +25,6 @@ ua-parser==0.10.0
 urllib3==1.25.10
 user-agents==2.1
 Werkzeug==1.0.1
-wheel==0.34.2
+wheel==0.35.0
 wrapt==1.12.1
 xxhash==2.0.0
