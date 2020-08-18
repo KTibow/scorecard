@@ -15,7 +15,7 @@ MarkupSafe==1.1.1
 pip==20.2.2
 ply==3.11
 pyga==2.6.1
-PyGithub==1.52
+PyGithub==1.53
 PyJWT==1.7.1
 PyYAML==5.3.1
 requests==2.24.0
