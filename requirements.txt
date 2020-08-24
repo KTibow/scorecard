@@ -23,7 +23,7 @@ setuptools==49.6.0
 six==1.15.0
 ua-parser==0.10.0
 urllib3==1.25.10
-user-agents==2.1
+user-agents==2.2.0
 Werkzeug==1.0.1
 wheel==0.35.1
 wrapt==1.12.1
