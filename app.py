@@ -254,7 +254,7 @@ def addid(exist, new):
         for tletter in "ABCD":
             for tnumber in range(1, 5):
                 myoption = randint(0, 15)
-                if myoption =< 1:
+                if myoption == 0:
                     myoption = "0"
                     fyet = True
                 elif myoption < 12:
