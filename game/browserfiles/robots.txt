@@ -1,9 +1,2 @@
 User-agent: *
 Disallow: /
-User-agent: Bingbot
-Disallow:
-Disallow: /cluecard/
-User-agent: Googlebot
-Disallow:
-Disallow: /cluecard/
-Sitemap: https://tank-scorecard.herokuapp.com/sitemap.xml
