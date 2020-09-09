@@ -12,7 +12,7 @@ Jinja2==2.11.2
 jsmin==2.2.2
 lesscpy==0.14.0
 MarkupSafe==1.1.1
-pip==20.2.2
+pip==20.2.3
 ply==3.11
 pyga==2.6.1
 PyGithub==1.53
