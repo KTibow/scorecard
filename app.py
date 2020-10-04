@@ -98,7 +98,7 @@ def track_view(page, ip, agent):
     data = {
         "v": "1",
         "tid": "UA-165004437-2",
-        "cid": hashlib.md5((str(ip) + str(agent)).encode()).hexdigest(),
+        "cid": hashlib.sha512((str(ip) + str(agent)).encode()).hexdigest(),
         "t": "pageview",
         "dh": "tank-scorecard.herokuapp.com",
         "dp": quote(page),
