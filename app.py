@@ -154,10 +154,6 @@ def after_req(response):
 @app.route("/")
 def hello():
     return render_template("welcome.html")
-# join
-@app.route("/join")
-def join():
-    return render_template("join.html")
 # card
 @app.route("/cluecard/<theid>")
 def card(theid):
