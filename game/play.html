@@ -137,7 +137,13 @@
                             var url2 = "/rightnum/{{uid}}";
                             xmlhttp2.onreadystatechange = function() {
                                 if (this.readyState == 4 && this.status == 200) {
-                                    alert("That's the right card! The number is " + this.responseText);
+                                    document.getElementById("overlay").style.opacity = "1";
+                                    document.getElementById("overlay").style.visibility = "";
+                                    document.getElementById("overlay").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
+                                    setTimeout(function() {
+                                        document.getElementById("overlay").style.opacity = "0";
+                                        document.getElementById("overlay").style.visibility = "hidden";
+                                    }
                                 }
                             };
                             xmlhttp2.open("GET", url2, true);
@@ -187,6 +193,7 @@
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <textarea placeholder="Take notes here"></textarea><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
+        <div class="overlay" id="overlay"></div>
         <script>
             var input = document.getElementById("cardname");
             input.addEventListener("keyup", function(event) {
@@ -202,6 +209,8 @@
                     registerGroup();
                 }
             });
+            document.getElementById("overlay").style.opacity = "0";
+            document.getElementById("overlay").style.visibility = "hidden";
         </script>
     </body>
 </html>
