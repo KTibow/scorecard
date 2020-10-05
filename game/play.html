@@ -71,11 +71,16 @@
 
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText);
                         var attry = document.createAttribute("data-icon");
                         attry.value = "done";
+                        if (this.responseText == "notreal") {
+                            attry.value = "error";
+                        }
                         document.getElementById("adgr").setAttributeNode(attry);
                         document.getElementById("adgr").innerHTML = "Added to group";
+                        if (this.responseText == "notreal") {
+                            document.getElementById("adgr").innerHTML = "Invalid ID.";
+                        }
                         setTimeout(function() {
                             var attry = document.createAttribute("data-icon");
                             attry.value = "group_add";
