@@ -3,7 +3,6 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/open-sans.eot');
   src: local('Open Sans Regular'), local('OpenSans-Regular'),
     url('/open-sans.eot?#iefix') format('embedded-opentype'),
     url('/open-sans.woff2') format('woff2'),
@@ -15,7 +14,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(/material-icons.eot);
+  font-display: swap;
   src: local('Material Icons'), local('MaterialIcons-Regular'),
    url(/material-icons.woff2) format('woff2'),
    url(/material-icons.woff) format('woff'),
