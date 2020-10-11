@@ -4,7 +4,6 @@
   font-weight: 400;
   font-display: swap;
   src: local('Open Sans Regular'), local('OpenSans-Regular'),
-    url('/open-sans.eot?#iefix') format('embedded-opentype'),
     url('/open-sans.woff2') format('woff2'),
     url('/open-sans.woff') format('woff'),
     url('/open-sans.ttf') format('truetype'),
