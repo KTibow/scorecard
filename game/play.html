@@ -193,13 +193,22 @@
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <textarea placeholder="Take notes here"></textarea><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
-        <div class="overlay" id="overlay"></div>
+        <div class="overlay" id="overlay">
+            <button onClick="closeOverlay()" data-icon="close">Close</button>
+        </div>
         <script>
             var input = document.getElementById("cardname");
             input.addEventListener("keyup", function(event) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
-                    registerUser();
+                    getCard();
+                }
+            });
+            input = document.getElementById("numbername");
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    checkNumber();
                 }
             });
             input = document.getElementById("username");
