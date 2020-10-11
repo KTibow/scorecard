@@ -3,9 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/open-sans.eot');
   src: local('Open Sans Regular'), local('OpenSans-Regular'),
-    url('/open-sans.eot?#iefix') format('embedded-opentype'),
     url('/open-sans.woff2') format('woff2'),
     url('/open-sans.woff') format('woff'),
     url('/open-sans.ttf') format('truetype'),
@@ -15,6 +13,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url(/material-icons.eot);
   src: local('Material Icons'), local('MaterialIcons-Regular'),
    url(/material-icons.woff2) format('woff2'),
@@ -111,4 +110,9 @@ input:focus::placeholder {
 #add2hs:active {
   background-color: #026777;
   box-shadow: 2px 2px 1px #34ebff;
+}
+@media all and (orientation: portrait) {
+  button, input {
+    width: 90%;
+  }
 }
