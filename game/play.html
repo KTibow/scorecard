@@ -139,11 +139,7 @@
                                 if (this.readyState == 4 && this.status == 200) {
                                     document.getElementById("overlay").style.opacity = "1";
                                     document.getElementById("overlay").style.visibility = "";
-                                    document.getElementById("overlay").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
-                                    setTimeout(function() {
-                                        document.getElementById("overlay").style.opacity = "0";
-                                        document.getElementById("overlay").style.visibility = "hidden";
-                                    }, 5000);
+                                    document.getElementById("overlay-text").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
                                 }
                             };
                             xmlhttp2.open("GET", url2, true);
@@ -179,6 +175,10 @@
                 xmlhttp.open("GET", url, true);
                 xmlhttp.send();
             }
+            function closeOverlay() {
+                document.getElementById("overlay").style.opacity = "0";
+                document.getElementById("overlay").style.visibility = "hidden";
+            }
         </script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <button onClick="goHome();" class="homebutton" data-icon="arrow_back">Home</button>
@@ -193,8 +193,8 @@
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <textarea placeholder="Take notes here"></textarea><br/>
         <button id="add2hs" class="alt-button" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
-        <div class="overlay">
-            <p id="overlay"></p>
+        <div class="overlay" id="overlay">
+            <p id="overlay-text"></p>
             <button onClick="closeOverlay()" class="alt-button" data-icon="close">Close</button>
         </div>
         <script>
