@@ -131,7 +131,7 @@ input:focus::placeholder {
   }
 }
 @media all and (orientation: portrait) {
-  button {
+  button, input {
     width: 90%;
   }
 }
