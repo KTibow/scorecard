@@ -98,17 +98,17 @@ input:focus::placeholder {
   color: #6000E0;
   font-weight: bold !important;
 }
-.add2hs {
+.alt-button {
   transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s, visibility 0.35s;
   background-color: #049bb3;
   box-shadow: 4px 4px 2px #34ebff;
   position: sticky;
   bottom: 0;
 }
-.add2hs:hover {
+.alt-button:hover {
   background-color: #038195;
 }
-.add2hs:active {
+.alt-button:active {
   background-color: #026777;
   box-shadow: 2px 2px 1px #34ebff;
 }
@@ -120,7 +120,7 @@ input:focus::placeholder {
   .homebutton {
     width: unset;
   }
-  .add2hs {
+  .alt-button {
     width: unset;
   }
   body {
