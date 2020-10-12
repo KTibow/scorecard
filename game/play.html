@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel='stylesheet' href='/play.css' type='text/css' />
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.0/dist/confetti.browser.min.js" defer async></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Play ClueCard | E-ScoreCard for game clues</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
@@ -140,6 +141,15 @@
                                     document.getElementById("overlay").style.opacity = "1";
                                     document.getElementById("overlay").style.visibility = "";
                                     document.getElementById("overlay-text").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
+                                    confetti({
+                                      particleCount: 100,
+                                      startVelocity: 30,
+                                      spread: 360,
+                                      origin: {
+                                        x: Math.random(),
+                                        y: Math.random() - 0.2
+                                      }
+                                    });
                                 }
                             };
                             xmlhttp2.open("GET", url2, true);
