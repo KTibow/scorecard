@@ -141,7 +141,25 @@
                                     document.getElementById("overlay").style.opacity = "1";
                                     document.getElementById("overlay").style.visibility = "";
                                     document.getElementById("overlay-text").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
-                                    confetti({
+                                    setTimeout(confetti, 10, {
+                                      particleCount: 100,
+                                      startVelocity: 30,
+                                      spread: 360,
+                                      origin: {
+                                        x: Math.random(),
+                                        y: Math.random() - 0.2
+                                      }
+                                    });
+                                    setTimeout(confetti, 510, {
+                                      particleCount: 100,
+                                      startVelocity: 30,
+                                      spread: 360,
+                                      origin: {
+                                        x: Math.random(),
+                                        y: Math.random() - 0.2
+                                      }
+                                    });
+                                    setTimeout(confetti, 1010, {
                                       particleCount: 100,
                                       startVelocity: 30,
                                       spread: 360,
