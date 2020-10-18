@@ -129,8 +129,11 @@ input:focus::placeholder {
   }
 }
 @media all and (orientation: portrait) {
-  button, input {
+  button {
     width: 90%;
+  }
+  input {
+    width: calc(90% - 84px);
   }
 }
 textarea {
