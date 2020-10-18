@@ -133,7 +133,7 @@ input:focus::placeholder {
     width: 90%;
   }
   input {
-    width: calc(90% - 84px);
+    width: calc(90% - 74px);
   }
 }
 textarea {
