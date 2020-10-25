@@ -4,6 +4,7 @@ exec(open("app.py", "r").read())
 from multiprocessing import Process
 from time import sleep
 from urllib.request import urlopen
+
 server = Process(target=app.run)
 server.start()
 print("Waiting for 2 seconds...")
