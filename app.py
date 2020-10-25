@@ -41,7 +41,7 @@ else:
 
 
 def sleep(timefor):
-    for i in range(round(timefor * 16.0)):
+    for _i in range(round(timefor * 16.0)):
         tm_sleep(1 / 16)
 
 
@@ -123,10 +123,10 @@ def make_sender(pathy, directy):
 
 def walk():
     pys = []
-    for p, d, f in os.walk("game"):
-        for file in f:
+    for root, _dirs, files in os.walk("game"):
+        for file in files:
             if "html" not in file:
-                pys.append([p.replace("game/", ""), "/" + file])
+                pys.append([root.replace("game/", ""), "/" + file])
     return pys
 
 
@@ -146,7 +146,7 @@ def track_view(page, ip, agent):
         "dp": quote(page),
         "npa": "1",
         "ds": "server",
-        "z": str(randint(0, 999999999999999)),
+        "z": str(randint(0, pow(10, 10))),
     }
     if ip is not None:
         data["uip"] = ip
