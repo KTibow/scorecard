@@ -41,3 +41,9 @@ jobs:
     # Runs a single command using the runners shell
     - name: Test booting the server
       run: python3 testboot.py
+    
+    - name: Install flake stuff
+      run: python3 -m install flake8 wemake-python-styleguide
+    
+    - name: flake8
+      run: flake8 .
