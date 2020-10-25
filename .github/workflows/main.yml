@@ -31,8 +31,16 @@ jobs:
           pip-packs-
 
     # Upgrades
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    
     - name: Update prexisting packages
-      run: pip3 install -U pip setuptools wheel
+      run: python3 -m pip install -U pip setuptools wheel
+    
+    - name: Install flake stuff
+      run: python3 -m pip install -U flake8 wemake-python-styleguide
     
     # Installs from requirements
     - name: Install from requirements
@@ -41,9 +49,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Test booting the server
       run: python3 testboot.py
-    
-    - name: Install flake stuff
-      run: python3 -m pip install flake8 wemake-python-styleguide
     
     - name: flake8
       run: python3 -m flake8 .
