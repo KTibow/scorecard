@@ -291,14 +291,15 @@ def fids(uid):
 def checkcard(uid, cardnum):
     try:
         groupDB = json.load(open("groups.db", "r"))
+        print(groupDB)
     except FileNotFoundError:
         groupDB = []
     comp = [i for x in groupDB for i in x]
     if uid not in comp:
         return "2"
-    for gy in groupDB:
-        if uid in gy:
-            return gy[0][cardnum]
+    for group in groupDB:
+        if uid in group:
+            return group[0][cardnum]
 @app.route("/rightnum/<uid>")
 def rightnum(uid):
     try:
