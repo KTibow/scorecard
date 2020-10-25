@@ -1,4 +1,6 @@
 # ============== INIT ==============
+
+
 # General stuff
 import json
 import mimetypes
@@ -17,15 +19,18 @@ from flask import (
 from flask_minify import minify
 from github.MainClass import Github
 
+
 # Tracking
 from user_agents import parse as ua_parse
 import hashlib
 from urllib.parse import quote
 import requests
 
+
 # Service worker
 from time import sleep as tm_sleep
 import threading
+
 
 # Init flask
 app = Flask(__name__, template_folder="game")
