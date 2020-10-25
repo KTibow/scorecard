@@ -1,26 +1,10 @@
 # ============== INIT ==============
-# Flask
-import hashlib
-
-# Database
+# General stuff
 import json
-
-# Static files
 import mimetypes
-
-# Various
 import os
-import threading
 from random import randint
-
-# Server-side timing
-from time import sleep as tm_sleep
 from time import time
-
-# Tracking
-from urllib.parse import quote
-
-import requests
 from flask import (
     Flask,
     g,
@@ -31,10 +15,17 @@ from flask import (
     url_for,
 )
 from flask_minify import minify
-
-# sw.js
 from github.MainClass import Github
+
+# Tracking
 from user_agents import parse as ua_parse
+import hashlib
+from urllib.parse import quote
+import requests
+
+# Service worker
+from time import sleep as tm_sleep
+import threading
 
 # Init flask
 app = Flask(__name__, template_folder="game")
