@@ -245,25 +245,25 @@ def err500(e):
 def genid(username):
     username = username.lower()
     try:
-        idDB = json.load(open("ids.db", "r"))
+        id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
-        idDB = {}
+        id_database = {}
     nid = str(randint(0, 99999)).zfill(5)
-    if username in idDB:
-        oid = idDB[username]
+    if username in id_database:
+        oid = id_database[username]
         try:
-            groupDB = json.load(open("groups.db", "r"))
+            group_database = json.load(open("groups.db", "r"))
         except FileNotFoundError:
-            groupDB = []
-        for gy in groupDB:
-            groupDB[groupDB.index(gy)] = [x if x != oid else nid for x in gy]
-        print(groupDB)
-        json.dump(groupDB, open("groups.db", "w"))
+            group_database = []
+        for gy in group_database:
+            group_database[group_database.index(gy)] = [x if x != oid else nid for x in gy]
+        print(group_database)
+        json.dump(group_database, open("groups.db", "w"))
     # First ID
-    idDB[username] = nid
-    print(idDB)
-    json.dump(idDB, open("ids.db", "w"))
-    return "/cluecard/" + idDB[username]
+    id_database[username] = nid
+    print(id_database)
+    json.dump(id_database, open("ids.db", "w"))
+    return "/cluecard/" + id_database[username]
 
 
 @app.route("/addid/<exist>/<new>")
@@ -294,38 +294,38 @@ def addid(exist, new):
         )
         return "notreal"
     try:
-        groupDB = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
-        groupDB = []
-    for gy in groupDB:
+        group_database = []
+    for gy in group_database:
         if exist in gy and new in gy:
             return "already"
-    comp = [i for x in groupDB for i in x]
+    comp = [i for x in group_database for i in x]
     if exist in comp and new in comp:
         newgp = []
-        for gy in groupDB:
+        for gy in group_database:
             if new in gy:
                 newgp = gy
-        for gy in groupDB:
+        for gy in group_database:
             if exist in gy:
-                groupDB[groupDB.index(gy)] = gy + newgp[1 : len(newgp)]
-                groupDB.remove(newgp)
-                print(groupDB)
-                json.dump(groupDB, open("groups.db", "w"))
+                group_database[group_database.index(gy)] = gy + newgp[1 : len(newgp)]
+                group_database.remove(newgp)
+                print(group_database)
+                json.dump(group_database, open("groups.db", "w"))
                 return "merge"
     elif exist in comp and new not in comp:
-        for gy in groupDB:
+        for gy in group_database:
             if exist in gy:
-                groupDB[groupDB.index(gy)].append(new)
-                print(groupDB)
-                json.dump(groupDB, open("groups.db", "w"))
+                group_database[group_database.index(gy)].append(new)
+                print(group_database)
+                json.dump(group_database, open("groups.db", "w"))
                 return "addnew"
     elif exist not in comp and new in comp:
-        for gy in groupDB:
+        for gy in group_database:
             if new in gy:
-                groupDB[groupDB.index(gy)].append(exist)
-                print(groupDB)
-                json.dump(groupDB, open("groups.db", "w"))
+                group_database[group_database.index(gy)].append(exist)
+                print(group_database)
+                json.dump(group_database, open("groups.db", "w"))
                 return "addexist"
     else:
         # Best: Give you answer, finish game
@@ -346,29 +346,29 @@ def addid(exist, new):
                 if tletter + str(tnumber) == "D4" and not fyet:
                     myoption = "0"
                 infodict[tletter + str(tnumber)] = myoption
-        groupDB.append([infodict, exist, new])
-        print(groupDB)
-        json.dump(groupDB, open("groups.db", "w"))
+        group_database.append([infodict, exist, new])
+        print(group_database)
+        json.dump(group_database, open("groups.db", "w"))
         return "makenew"
 
 
 @app.route("/gids/<uid>")
 def fids(uid):
     try:
-        groupDB = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
-        groupDB = []
-    comp = [i for x in groupDB for i in x]
+        group_database = []
+    comp = [i for x in group_database for i in x]
     if uid not in comp:
         return "You currently don't have anyone in your group."
-    for gy in groupDB:
+    for gy in group_database:
         if uid in gy:
             try:
-                idDB = json.load(open("ids.db", "r"))
+                id_database = json.load(open("ids.db", "r"))
             except FileNotFoundError:
-                idDB = {}
+                id_database = {}
             gy = gy[1 : len(gy)]
-            inv_map = {value: key for key, value in idDB.items()}
+            inv_map = {value: key for key, value in id_database.items()}
             mgy = [inv_map[g] for g in gy.copy()]
             return (
                 'In your group, there\'s these people: <span style="color: deepskyblue;">'
@@ -380,14 +380,14 @@ def fids(uid):
 @app.route("/cardstatus/<uid>/<cardnum>")
 def checkcard(uid, cardnum):
     try:
-        groupDB = json.load(open("groups.db", "r"))
-        print(groupDB)
+        group_database = json.load(open("groups.db", "r"))
+        print(group_database)
     except FileNotFoundError:
-        groupDB = []
-    comp = [user_id for group in groupDB for user_id in group]
+        group_database = []
+    comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
         return "2"
-    for group in groupDB:
+    for group in group_database:
         if uid in group:
             return group[0][cardnum]
 
@@ -395,13 +395,13 @@ def checkcard(uid, cardnum):
 @app.route("/rightnum/<uid>")
 def rightnum(uid):
     try:
-        groupDB = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
-        groupDB = []
-    comp = [i for x in groupDB for i in x]
+        group_database = []
+    comp = [i for x in group_database for i in x]
     if uid not in comp:
         return "-1"
-    for gy in groupDB:
+    for gy in group_database:
         if uid in gy:
             return gy[0]["rightnum"]
 
