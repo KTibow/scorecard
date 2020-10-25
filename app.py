@@ -294,7 +294,7 @@ def checkcard(uid, cardnum):
         print(groupDB)
     except FileNotFoundError:
         groupDB = []
-    comp = [i for x in groupDB for i in x]
+    comp = [user_id for group in groupDB for user_id in group]
     if uid not in comp:
         return "2"
     for group in groupDB:
