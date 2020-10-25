@@ -43,7 +43,7 @@ jobs:
       run: python3 testboot.py
     
     - name: Install flake stuff
-      run: python3 -m install flake8 wemake-python-styleguide
+      run: python3 -m pip install flake8 wemake-python-styleguide
     
     - name: flake8
       run: flake8 .
