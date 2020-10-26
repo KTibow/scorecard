@@ -6,9 +6,10 @@ inline-quotes = double
 extend-ignore=
     I001
     I004
+    WPS305
     WPS420
     WPS421
-    WPS305
+    WPS515
     C812
     C813
     C814
@@ -17,3 +18,5 @@ extend-ignore=
     E203
     W503
 max-line-length=90
+max-local-variables=10
+max-line-complexity=20

@@ -413,7 +413,7 @@ def rightnum(uid):
         group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
         group_database = []
-    comp = [i for x in group_database for i in x]
+    comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
         return "-1"
     for gy in group_database:
@@ -422,11 +422,18 @@ def rightnum(uid):
 
 
 # ========== BROWSER FILES ==========
-for file in walk():
-    if file[1] != "/sw.js":
-        app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
+for browser_file in walk():
+    print(browser_file)
+    if browser_file[1] != "/sw.js":
+        app.add_url_rule(
+            browser_file[1],
+            browser_file[1],
+            make_sender(browser_file[1], browser_file[0]),
+        )
+
 
 # ========= SERVICE WORKER =========
+
 
 @app.route("/sw.js")
 def make_service_worker():
