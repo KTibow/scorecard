@@ -21,7 +21,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    
+
     # Uses last time's cache
     - uses: actions/cache@v2
       with:
@@ -35,13 +35,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    
+
     - name: Update prexisting packages
       run: python3 -m pip install -U pip setuptools wheel
-    
+
     - name: Install flake stuff
       run: python3 -m pip install -U flake8 wemake-python-styleguide
-    
+
     # Installs from requirements
     - name: Install from requirements
       run: pip3 install -r requirements.txt
@@ -49,6 +49,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Test booting the server
       run: python3 testboot.py
-    
+
     - name: flake8
-      run: python3 -m flake8 --inline-quotes double --statistics --exit-zero --ignore=I001,I004 --count --line-length 90 app.py
+      run: python3 -m flake8 --inline-quotes double --statistics --exit-zero --ignore=I001,I004,WPS420,WPS421,WPS305 --count --line-length 90 app.py
