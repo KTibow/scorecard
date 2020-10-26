@@ -150,7 +150,7 @@ def track_view(page, ip, agent):
         data["uip"] = ip
     if agent is not None:
         data["ua"] = quote(agent)
-    response = requests.post("https://www.google-analytics.com/collect", data=data)
+    requests.post("https://www.google-analytics.com/collect", data=data)
 
 
 @app.before_request
@@ -191,19 +191,29 @@ def after_req(response):
         flask_global.after_after_request_time = time.time() * 1000
         server_timing = 'beforereq;desc="Process redirect and log";dur='
         server_timing += str(
-            round(flask_global.middle_before_request_time - flask_global.before_before_request_time, 1)
+            round(
+                flask_global.middle_before_request_time
+                - flask_global.before_before_request_time,
+                1,
+            )
         )
         server_timing += ', track;desc="Track pageview";dur='
         server_timing += str(
-            round(flask_global.after_before_request_time - flask_global.middle_before_request_time, 1)
+            round(
+                flask_global.after_before_request_time
+                - flask_global.middle_before_request_time,
+                1,
+            )
         )
         server_timing += ', process;desc="Render stuff";dur='
         server_timing += str(
-            round(flask_global.after_after_request_time - flask_global.after_before_request_time, 1)
+            round(
+                flask_global.after_after_request_time
+                - flask_global.after_before_request_time,
+                1,
+            )
         )
-        response.headers[
-            "Server-Timing"
-        ] = server_timing
+        response.headers["Server-Timing"] = server_timing
     return response
 
 
@@ -255,7 +265,9 @@ def genid(username):
         except FileNotFoundError:
             group_database = []
         for gy in group_database:
-            group_database[group_database.index(gy)] = [x if x != oid else nid for x in gy]
+            group_database[group_database.index(gy)] = [
+                x if x != oid else nid for x in gy
+            ]
         print(group_database)
         json.dump(group_database, open("groups.db", "w"))
     # First ID
@@ -307,7 +319,9 @@ def addid(exist, new):
                 newgp = gy
         for gy in group_database:
             if exist in gy:
-                group_database[group_database.index(gy)] = gy + newgp[1 : len(newgp)]
+                group_database[group_database.index(gy)] = (
+                    gy + newgp[1 : len(newgp)]
+                )
                 group_database.remove(newgp)
                 print(group_database)
                 json.dump(group_database, open("groups.db", "w"))
@@ -370,9 +384,8 @@ def fids(uid):
             inv_map = {value: key for key, value in id_database.items()}
             mgy = [inv_map[g] for g in gy.copy()]
             return (
-                'In your group, there\'s these people: <span style="color: deepskyblue;">'
-                + ", ".join(mgy)
-                + "</span>"
+                "In your group, there's these people:"
+                + f'<span style="color: deepskyblue;">{", ".join(mgy)}</span>'
             )
 
 
@@ -415,14 +428,16 @@ def makeserviceworker():
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append("'" + url + "'")
+            links.append(f"'{url}'")
     swlist = ""
     for i, link in enumerate(links):
         swlist += link
         if len(links) - 1 != i:
             swlist += ", "
     global comm_num
-    sw = render_template("browserfiles/sw.js", urls=swlist, version=str(comm_num))
+    sw = render_template(
+        "browserfiles/sw.js", urls=swlist, version=str(comm_num)
+    )
     respo = app.make_response(sw)
     respo.mimetype = "application/javascript"
     return respo
