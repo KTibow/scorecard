@@ -1,3 +1,7 @@
+"""
+This is the scorecard Heroku app. Look at the README for more details.
+"""
+
 # ============== INIT ==============
 
 # General stuff
@@ -421,19 +425,27 @@ def rightnum(uid):
 for file in walk():
     if file[1] != "/sw.js":
         app.add_url_rule(file[1], file[1], make_sender(file[1], file[0]))
+
 # ========= SERVICE WORKER =========
+
 @app.route("/sw.js")
-def makeserviceworker():
+def make_service_worker():
+    """
+    Generate a JS service worker dynamically.
+
+    Returns:
+        The errors to ignore, including the default errors.
+    """
     links = []
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
             links.append(f"'{url}'")
     swlist = ""
-    for i, link in enumerate(links):
+    for index, link in enumerate(links):
+        if len(links) - 1 != index:
+            link = f"{link}, "
         swlist += link
-        if len(links) - 1 != i:
-            swlist += ", "
     global comm_num
     sw = render_template(
         "browserfiles/sw.js", urls=swlist, version=str(comm_num)
