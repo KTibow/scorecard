@@ -51,4 +51,4 @@ jobs:
       run: python3 testboot.py
     
     - name: flake8
-      run: python3 -m flake8 --inline-quotes '"' --statistics --exit-zero --ignore=I001,I004 --count app.py
+      run: python3 -m flake8 --inline-quotes double --statistics --exit-zero --ignore=I001,I004 --count --line-length 90 app.py
