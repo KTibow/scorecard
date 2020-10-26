@@ -1,0 +1,7 @@
+[flake8]
+format = ${yellow_bold}%(row)d${reset}:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
+statistics = True
+count = True
+inline-quotes = double
+ignore=I001,I004,WPS420,WPS421,WPS305
+max-line-length=90
