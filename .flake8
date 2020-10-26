@@ -1,5 +1,5 @@
 [flake8]
-format = ${yellow_bold}%(row)d${reset}:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
+format = ${blue_bold}%(row)d${reset}:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
 statistics = True
 count = True
 inline-quotes = double
