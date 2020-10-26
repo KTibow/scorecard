@@ -6,9 +6,10 @@ import mimetypes
 import os
 from random import randint
 import time
+
 from flask import (
     Flask,
-    g,
+    g as flask_global,
     redirect,
     render_template,
     request,
@@ -31,7 +32,7 @@ import threading
 app = Flask(__name__, template_folder="game")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Init github
-if os.getenv("GITHUB_VERSION_PAT") != None:
+if os.getenv("GITHUB_VERSION_PAT") is not None:
     gg = Github(os.getenv("GITHUB_VERSION_PAT"))
     rep = gg.get_repo("KTibow/scorecard")
 else:
@@ -55,22 +56,21 @@ def find_commit():
     prevcomm = -1
     while True:
         # Get rate limiting and log if it's divisible by 10
-        ratey = gg.rate_limiting
-        if ((ratey[1] - ratey[0]) % 10) == 0:
+        rate_limit = gg.rate_limiting[1]
+        rate_limit_remaining = gg.rate_limiting[0]
+        rate_limit_used = rate_limit - rate_limit_remaining
+        if (rate_limit_used % 10) == 0:
             print(
                 "We've used up",
-                str(ratey[1] - ratey[0]) + "/" + str(ratey[1]),
+                f"{rate_limit_used}/{rate_limit}",
                 "interactions so far",
             )
         prevcomm = comm_num
         try:
-            if ratey[1] - ratey[0] < ratey[1] * 0.8:
+            if rate_limit_used < rate_limit * 0.8:
                 # Try (prevent exceptions) if there are less than 4/5 interactions used
                 # Get commit number (DO NOT use len(list(rep.get_commits())) )
                 comm_num = rep.get_commits().totalCount
-                # Get rate limiting and get used interactions
-                ratey = gg.rate_limiting
-                endint = ratey[1] - ratey[0]
                 # Log if updated
                 if prevcomm != comm_num:
                     print(
@@ -79,11 +79,11 @@ def find_commit():
                         "commits to",
                         comm_num,
                         "commits! (So far we've used",
-                        endint,
+                        rate_limit_used,
                         "interactions out of",
-                        str(ratey[1]) + ")",
+                        str(rate_limit) + ")",
                     )
-                if endint > ratey[1] * 0.4:
+                if rate_limit_used > rate_limit * 0.4:
                     # If more than 2/5 interactions used, log and sleep
                     print("(sleeping extra 30 seconds in commit fetcher)")
                     sleep(30)
@@ -109,7 +109,6 @@ def make_sender(pathy, directy):
     directy = directy
 
     def f():
-        dpathy = os.path.join(app.root_path, "game/" + directy + pathy)
         mimetype = mimetypes.guess_type(pathy)[0]
         return send_from_directory(
             os.path.join(app.root_path, "game/" + directy),
@@ -157,10 +156,10 @@ def track_view(page, ip, agent):
 @app.before_request
 def before_req():
     if "debuggy" not in globals():
-        g.before_before_request_time = time.time() * 1000
-        g.middle_before_request_time = time.time() * 1000
-        g.after_before_request_time = time.time() * 1000
-        g.after_after_request_time = time.time() * 1000
+        flask_global.before_before_request_time = time.time() * 1000
+        flask_global.middle_before_request_time = time.time() * 1000
+        flask_global.after_before_request_time = time.time() * 1000
+        flask_global.after_after_request_time = time.time() * 1000
         if request.headers["X-Forwarded-Proto"] == "http":
             return redirect(request.url.replace("http", "https"), code=301)
         ua = None
@@ -171,9 +170,9 @@ def before_req():
         ip = request.headers["X-Forwarded-For"]
         print("Hit from " + ip + ua_add)
         chunks = request.url.split("/")
-        g.middle_before_request_time = time.time() * 1000
+        flask_global.middle_before_request_time = time.time() * 1000
         track_view("/".join(chunks[2 : len(chunks)]), ip, ua)
-        g.after_before_request_time = time.time() * 1000
+        flask_global.after_before_request_time = time.time() * 1000
 
 
 @app.after_request
@@ -189,18 +188,18 @@ def after_req(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     if "debuggy" not in globals():
-        g.after_after_request_time = time.time() * 1000
+        flask_global.after_after_request_time = time.time() * 1000
         server_timing = 'beforereq;desc="Process redirect and log";dur='
         server_timing += str(
-            round(g.middle_before_request_time - g.before_before_request_time, 1)
+            round(flask_global.middle_before_request_time - flask_global.before_before_request_time, 1)
         )
         server_timing += ', track;desc="Track pageview";dur='
         server_timing += str(
-            round(g.after_before_request_time - g.middle_before_request_time, 1)
+            round(flask_global.after_before_request_time - flask_global.middle_before_request_time, 1)
         )
         server_timing += ', process;desc="Render stuff";dur='
         server_timing += str(
-            round(g.after_after_request_time - g.after_before_request_time, 1)
+            round(flask_global.after_after_request_time - flask_global.after_before_request_time, 1)
         )
         response.headers[
             "Server-Timing"
@@ -381,7 +380,6 @@ def fids(uid):
 def checkcard(uid, cardnum):
     try:
         group_database = json.load(open("groups.db", "r"))
-        print(group_database)
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
