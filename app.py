@@ -43,7 +43,7 @@ else:
 
 
 def sleep(timefor):
-    for _i in range(round(timefor * 16.0)):
+    for _index in range(round(timefor * 16.0)):
         time.sleep(1 / 16)
 
 
@@ -108,10 +108,8 @@ find_commit_thread.start()
 
 
 def make_sender(pathy, directy):
-    pathy = pathy
-    directy = directy
 
-    def f():
+    def sender_function():
         mimetype = mimetypes.guess_type(pathy)[0]
         return send_from_directory(
             os.path.join(app.root_path, "game/" + directy),
@@ -119,15 +117,15 @@ def make_sender(pathy, directy):
             mimetype=mimetype,
         )
 
-    return f
+    return sender_function
 
 
 def walk():
     pys = []
     for root, _dirs, files in os.walk("game"):
-        for file in files:
-            if "html" not in file:
-                pys.append([root.replace("game/", ""), "/" + file])
+        for file_name in files:
+            if "html" not in file_name:
+                pys.append([root.replace("game/", ""), f"/{file_name}"])
     return pys
 
 
