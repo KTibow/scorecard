@@ -81,14 +81,15 @@
       }
       function registerGroup() {
         var xmlhttp = new XMLHttpRequest();
-        var url = "/addid/{{uid}}/" + document.getElementById("username").value;
-        var pos = getPosition(document.getElementById("username"));
+        var idInput = document.getElementById("username");
+        var url = "/addid/{{uid}}/" + idInput.value;
+        var pos = getPosition(idInput);
         confetti({
           particleCount: 100,
           startVelocity: 30,
           spread: 100,
           origin: {
-            x: pos["x"] / window.innerWidth + document.getElementById("username").offsetWidth / 2,
+            x: pos["x"] / window.innerWidth + idInput.offsetWidth / 2,
             y: pos["y"] / window.innerHeight
           }
         });
