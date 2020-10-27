@@ -51,10 +51,11 @@ comm_num = 0
 
 
 def find_commit():
+    """Continously check for new commits, for the service worker version."""
     # Declarations
     print("Starting commit finder")
-    global comm_num
     global github_instance
+    global comm_num
     prevcomm = -1
     while True:
         # Get rate limiting and log if it's divisible by 10
@@ -102,8 +103,8 @@ def find_commit():
 
 
 # Start async commit checker
-fc = threading.Thread(target=find_commit, daemon=True)
-fc.start()
+find_commit_thread = threading.Thread(target=find_commit, daemon=True)
+find_commit_thread.start()
 
 
 def make_sender(pathy, directy):
@@ -136,11 +137,11 @@ def has_no_empty_params(rule):
     return len(defaults) >= len(arguments)
 
 
-def track_view(page, ip, agent):
-    data = {
+def track_view(page, ip_addr, agent):
+    tracking_data = {
         "v": "1",
         "tid": "UA-165004437-2",
-        "cid": hashlib.sha512((str(ip) + str(agent)).encode()).hexdigest(),
+        "cid": hashlib.sha512((str(ip_addr) + str(agent)).encode()).hexdigest(),
         "t": "pageview",
         "dh": "tank-scorecard.herokuapp.com",
         "dp": quote(page),
@@ -148,37 +149,47 @@ def track_view(page, ip, agent):
         "ds": "server",
         "z": str(randint(0, pow(10, 10))),
     }
-    if ip is not None:
-        data["uip"] = ip
+    if ip_addr is not None:
+        tracking_data["uip"] = ip_addr
     if agent is not None:
-        data["ua"] = quote(agent)
-    requests.post("https://www.google-analytics.com/collect", data=data)
+        tracking_data["ua"] = quote(agent)
+    requests.post("https://www.google-analytics.com/collect", data=tracking_data)
 
 
 @app.before_request
 def before_req():
     if "debug_mode_enabled" not in globals():
-        flask_global.before_before_request_time = time.time() * 1000
-        flask_global.middle_before_request_time = time.time() * 1000
-        flask_global.after_before_request_time = time.time() * 1000
-        flask_global.after_after_request_time = time.time() * 1000
+        now_in_ms = time.time() * 1000
+        flask_global.before_before_request_time = now_in_ms
+        flask_global.middle_before_request_time = now_in_ms
+        flask_global.after_before_request_time = now_in_ms
+        flask_global.after_after_request_time = now_in_ms
         if request.headers["X-Forwarded-Proto"] == "http":
             return redirect(request.url.replace("http", "https"), code=301)
-        ua = None
+        user_agent = None
         ua_add = ""
         if "User-Agent" in request.headers:
-            ua = request.headers["User-Agent"]
-            ua_add = ", " + str(ua_parse(ua))
-        ip = request.headers["X-Forwarded-For"]
-        print("Hit from " + ip + ua_add)
+            user_agent = request.headers["User-Agent"]
+            ua_add = ", " + str(ua_parse(user_agent))
+        ip_addr = request.headers["X-Forwarded-For"]
+        print("Hit from " + ip_addr + ua_add)
         chunks = request.url.split("/")
-        flask_global.middle_before_request_time = time.time() * 1000
-        track_view("/".join(chunks[2 : len(chunks)]), ip, ua)
-        flask_global.after_before_request_time = time.time() * 1000
+        flask_global.middle_before_request_time = now_in_ms
+        track_view("/".join(chunks[2 : len(chunks)]), ip_addr, user_agent)
+        flask_global.after_before_request_time = now_in_ms
 
 
 @app.after_request
 def after_req(response):
+    """
+    Do some final tweaks to the request before it gets sent.
+
+    Args:
+        response: The response to modify.
+
+    Returns:
+        The modified response.
+    """
     response.headers[
         "Content-Security-Policy"
     ] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"

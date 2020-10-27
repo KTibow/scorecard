@@ -17,6 +17,7 @@ extend-ignore =
     WPS432 # What's wrong with magic numbers? Everything makes sense when you consider the comments.
     WPS440 # Block variable overlap is unavoidable.
     WPS441 # Block variable overlap is unavoidable.
+    WPS442 # False positives because I call global earlier.
     WPS515 # Using open() without the with keyword is unavoidable.
 min-name-length=3
 max-returns=10
