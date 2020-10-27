@@ -2,6 +2,7 @@
 format = ${blue_bold}%(row)d:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
 statistics = True
 count = True
+use-varnames-strict-mode = True
 inline-quotes = double
 extend-ignore=
     I001
@@ -17,6 +18,8 @@ extend-ignore=
     C816
     E203
     W503
+    S311
 max-line-length=90
 max-local-variables=10
 max-line-complexity=20
+min-name-length=3

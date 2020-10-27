@@ -40,7 +40,7 @@ jobs:
       run: python3 -m pip install -U pip setuptools wheel
 
     - name: Install flake stuff
-      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors
+      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names
 
     # Installs from requirements
     - name: Install from requirements
