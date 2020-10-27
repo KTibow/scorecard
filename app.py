@@ -493,7 +493,7 @@ def fids(uid):
             inv_map = {user_id: name for name, user_id in id_database.items()}
             mgroup = [inv_map[person] for person in group.copy()]
             return (
-                "In your group, there's these people:"
+                "In your group, there's these people: "
                 + f'<span style="color: deepskyblue;">{", ".join(mgroup)}</span>'
             )
 
@@ -518,10 +518,13 @@ def checkcard(uid, cardnum):
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
-        return "2"
+        return "invalid"
     for group in group_database:
         if uid in group:
-            return group[0][cardnum]
+            if cardnum in group[0]:
+                return group[0][cardnum]
+            else:
+                return "invalid"
 
 
 @app.route("/rightnum/<uid>")

@@ -174,14 +174,24 @@
                             xmlhttp2.send();
                         } else if (this.responseText == "1") {
                             if (nopes.length < 1) {
-                                alert("Ooops! You missed out on the right one from 1-1000.");
+                                document.getElementById("overlay").style.opacity = "1";
+                                document.getElementById("overlay").style.visibility = "";
+                                document.getElementById("overlay-text").innerHTML = "Ooops! You missed out on the right one from 1-1000.";
                             } else {
                                 var choice = choose(nopes);
-                                alert("This is a normal card, and it tells you that it's not " + String(choice));
+                                document.getElementById("overlay").style.opacity = "1";
+                                document.getElementById("overlay").style.visibility = "";
+                                document.getElementById("overlay-text").innerHTML = "This is a normal card, and it tells you that it's not " + String(choice);
                                 nopes.pop(choice);
                             }
                         } else if (this.responseText == "2") {
-                            alert("This card doesn't help you.");
+                            document.getElementById("overlay").style.opacity = "1";
+                            document.getElementById("overlay").style.visibility = "";
+                            document.getElementById("overlay-text").innerHTML = "This card doesn't help you.";
+                        } else if (this.responseText == "invalid") {
+                            document.getElementById("overlay").style.opacity = "1";
+                            document.getElementById("overlay").style.visibility = "";
+                            document.getElementById("overlay-text").innerHTML = "That's an invalid card. Make sure you're in a group.";
                         }
                     }
                 };
@@ -194,9 +204,13 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         if (this.responseText == document.getElementById("numbername").value) {
-                            alert("YAHOO! You're right! Announce it now!");
+                            document.getElementById("overlay").style.opacity = "1";
+                            document.getElementById("overlay").style.visibility = "";
+                            document.getElementById("overlay-text").innerHTML = "Yup, this person actually got it!";
                         } else {
-                            alert("NOPE. You gotta announce that, though!");
+                            document.getElementById("overlay").style.opacity = "1";
+                            document.getElementById("overlay").style.visibility = "";
+                            document.getElementById("overlay-text").innerHTML = "That's an invalid number. Double-check it.";
                         }
                     }
                 };
