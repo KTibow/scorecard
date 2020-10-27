@@ -87,7 +87,10 @@
           particleCount: 100,
           startVelocity: 30,
           spread: 360,
-          origin: pos
+          origin: {
+            x: pos["x"] / window.innerWidth,
+            y: pos["y"] / window.innerHeight
+          }
         });
         xmlhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
