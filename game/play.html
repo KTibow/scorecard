@@ -1,268 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel='stylesheet' href='/play.css' type='text/css' />
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.0/dist/confetti.browser.min.js" defer async></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Play ClueCard | E-ScoreCard for game clues</title>
-        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="310x310" href="/ms-icon-310x310.png">
-        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
-        <link rel="icon" type="image/png" sizes="1000x1000" href="/favicon-1000x1000.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <meta name="msapplication-TileColor" content="#7000FF">
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-        <meta name="theme-color" content="#7000FF">
-        <link rel="manifest" href="/manifest.json">
-    </head>
-    <body>
-        <script>
-            console.log("Running... (install.js)");
-            window.addEventListener("load", function() {
-                if ("serviceWorker" in navigator) {
-                    console.log("Trying to install service worker... (install.js)");
-                    navigator.serviceWorker
-                        .register("/sw.js")
-                        .then(function(reg) {
-                            console.log("Service worker: installed! (install.js)", reg);
-                        }).catch (err => console.log("Service worker: not registered (install.js)", err));
-                }
-                let deferredPrompt;
-                const addBtn = document.getElementById("add2hs");
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    // Prevent Chrome 67 and earlier from automatically showing the prompt
-                    e.preventDefault();
-                    // Stash the event so it can be triggered later.
-                    deferredPrompt = e;
-                    // Update UI to notify the user they can add to home screen
-                    addBtn.style.setProperty("opacity", "1", "important");
-                    addBtn.style.setProperty("visibility", "visible", "important");
-                    addBtn.addEventListener('click', (e) => {
-                        // hide our user interface that shows our A2HS button
-                        addBtn.style.setProperty("opacity", "0", "important");
-                        addBtn.style.setProperty("visibility", "hidden", "important");
-                        // Show the prompt
-                        deferredPrompt.prompt();
-                        // Wait for the user to respond to the prompt
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted the A2HS prompt (install.js)');
-                            } else {
-                                console.log('User dismissed the A2HS prompt (install.js)');
-                            }
-                            deferredPrompt = null;
-                        });
-                    });
+  <head>
+    <link rel='stylesheet' href='/play.css' type='text/css' />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.0/dist/confetti.browser.min.js" defer async></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Play ClueCard | E-ScoreCard for game clues</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="310x310" href="/ms-icon-310x310.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="1000x1000" href="/favicon-1000x1000.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#7000FF">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#7000FF">
+    <link rel="manifest" href="/manifest.json">
+  </head>
+  <body>
+    <script>
+      console.log("Running...");
+      window.addEventListener("load", function() {
+        if ("serviceWorker" in navigator) {
+          console.log("Trying to install service worker...");
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function(reg) {
+              console.log("Service worker: installed!", reg);
+            }).catch (err => console.log("Service worker: not registered", err));
+        }
+        let deferredPrompt;
+        const addBtn = document.getElementById("add2hs");
+        window.addEventListener('beforeinstallprompt', (e) => {
+          // Prevent Chrome 67 and earlier from automatically showing the prompt
+          e.preventDefault();
+          // Stash the event so it can be triggered later.
+          deferredPrompt = e;
+          // Update UI to notify the user they can add to home screen
+          addBtn.style.setProperty("opacity", "1", "important");
+          addBtn.style.setProperty("visibility", "visible", "important");
+          addBtn.addEventListener('click', (e) => {
+            // hide our user interface that shows our A2HS button
+            addBtn.style.setProperty("opacity", "0", "important");
+            addBtn.style.setProperty("visibility", "hidden", "important");
+            // Show the prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the A2HS prompt');
+              } else {
+                console.log('User dismissed the A2HS prompt');
+              }
+              deferredPrompt = null;
+            });
+          });
+        });
+      });
+      function getPosition(el) {
+        var xPos = 0;
+        var yPos = 0;
+        while (el) {
+          xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+          yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+          el = el.offsetParent;
+        }
+        return {
+          x: xPos,
+          y: yPos
+        };
+      }
+      function registerGroup() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "/addid/{{uid}}/" + document.getElementById("username").value;
+        var pos = getPosition(document.getElementById("username"));
+        confetti({
+          particleCount: 100,
+          startVelocity: 30,
+          spread: 360,
+          origin: pos
+        });
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var attry = document.createAttribute("data-icon");
+            attry.value = "done";
+            if (this.responseText == "notreal") {
+              attry.value = "error";
+            }
+            document.getElementById("adgr").setAttributeNode(attry);
+            document.getElementById("adgr").innerHTML = "Added to group";
+            if (this.responseText == "notreal") {
+              document.getElementById("adgr").innerHTML = "Invalid ID.";
+            }
+            setTimeout(function() {
+              var attry = document.createAttribute("data-icon");
+              attry.value = "group_add";
+              document.getElementById("adgr").setAttributeNode(attry);
+              document.getElementById("adgr").innerHTML = "Add to group";
+            }, 1000);
+          }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+      }
+      function goHome() {
+        window.location.href = "/";
+      }
+      function getGroup() {
+        if (document.hasFocus()) {
+          var xmlhttp = new XMLHttpRequest();
+          var url = "/gids/{{uid}}";
+          xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("gstat").innerHTML = this.responseText;
+            }
+          };
+          xmlhttp.open("GET", url, true);
+          xmlhttp.send();
+        }
+      }
+      setInterval(getGroup, 400);
+      var xmlhttpy = new XMLHttpRequest();
+      var urly = "/rightnum/{{uid}}";
+      var nopes = [];
+      for (var i = 1; i <= 1000; i++) {
+        nopes.push(i);
+      }
+      xmlhttpy.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          nopes.pop(Number(this.responseText));
+        }
+      };
+      xmlhttpy.open("GET", urly, true);
+      xmlhttpy.send();
+      function choose(choices) {
+        var index = Math.floor(Math.random() * choices.length);
+        return choices[index];
+      }
+      function getCard() {
+        document.getElementById("attmpts").innerHTML = String(Number(document.getElementById("attmpts").innerHTML) + 1);
+        var xmlhttp = new XMLHttpRequest();
+        var url = "/cardstatus/{{uid}}/" + document.getElementById("cardname").value;
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == "0") {
+              var xmlhttp2 = new XMLHttpRequest();
+              var url2 = "/rightnum/{{uid}}";
+              xmlhttp2.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("overlay").style.opacity = "1";
+                document.getElementById("overlay").style.visibility = "";
+                document.getElementById("overlay-text").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
+                setTimeout(confetti, 10, {
+                  particleCount: 100,
+                  startVelocity: 30,
+                  spread: 360,
+                  origin: {
+                    x: Math.random(),
+                    y: Math.random() - 0.2
+                  }
                 });
-            });
-            function registerGroup() {
-                var xmlhttp = new XMLHttpRequest();
-                var url = "/addid/{{uid}}/" + document.getElementById("username").value;
-
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var attry = document.createAttribute("data-icon");
-                        attry.value = "done";
-                        if (this.responseText == "notreal") {
-                            attry.value = "error";
-                        }
-                        document.getElementById("adgr").setAttributeNode(attry);
-                        document.getElementById("adgr").innerHTML = "Added to group";
-                        if (this.responseText == "notreal") {
-                            document.getElementById("adgr").innerHTML = "Invalid ID.";
-                        }
-                        setTimeout(function() {
-                            var attry = document.createAttribute("data-icon");
-                            attry.value = "group_add";
-                            document.getElementById("adgr").setAttributeNode(attry);
-                            document.getElementById("adgr").innerHTML = "Add to group";
-                        }, 1000);
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
+                setTimeout(confetti, 510, {
+                  particleCount: 100,
+                  startVelocity: 30,
+                  spread: 360,
+                  origin: {
+                    x: Math.random(),
+                    y: Math.random() - 0.2
+                  }
+                });
+                setTimeout(confetti, 1010, {
+                  particleCount: 100,
+                  startVelocity: 30,
+                  spread: 360,
+                  origin: {
+                    x: Math.random(),
+                    y: Math.random() - 0.2
+                  }
+                });
+              }
+              };
+              xmlhttp2.open("GET", url2, true);
+              xmlhttp2.send();
+            } else if (this.responseText == "1") {
+              if (nopes.length < 1) {
+                document.getElementById("overlay").style.opacity = "1";
+                document.getElementById("overlay").style.visibility = "";
+                document.getElementById("overlay-text").innerHTML = "Ooops! You missed out on the right one from 1-1000.";
+              } else {
+                var choice = choose(nopes);
+                document.getElementById("overlay").style.opacity = "1";
+                document.getElementById("overlay").style.visibility = "";
+                document.getElementById("overlay-text").innerHTML = "This is a normal card, and it tells you that it's not " + String(choice);
+                nopes.pop(choice);
+              }
+            } else if (this.responseText == "2") {
+              document.getElementById("overlay").style.opacity = "1";
+              document.getElementById("overlay").style.visibility = "";
+              document.getElementById("overlay-text").innerHTML = "This card doesn't help you.";
+            } else if (this.responseText == "invalid") {
+              document.getElementById("overlay").style.opacity = "1";
+              document.getElementById("overlay").style.visibility = "";
+              document.getElementById("overlay-text").innerHTML = "That's an invalid card. Make sure you're in a group.";
             }
-            function goHome() {
-                window.location.href = "/";
+          }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+      }
+      function checkNumber() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "/rightnum/{{uid}}";
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == document.getElementById("numbername").value) {
+              document.getElementById("overlay").style.opacity = "1";
+              document.getElementById("overlay").style.visibility = "";
+              document.getElementById("overlay-text").innerHTML = "Yup, this person actually got it!";
+            } else {
+              document.getElementById("overlay").style.opacity = "1";
+              document.getElementById("overlay").style.visibility = "";
+              document.getElementById("overlay-text").innerHTML = "That's an invalid number. Double-check it.";
             }
-            function getGroup() {
-                if (document.hasFocus()) {
-                    var xmlhttp = new XMLHttpRequest();
-                    var url = "/gids/{{uid}}";
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("gstat").innerHTML = this.responseText;
-                        }
-                    };
-                    xmlhttp.open("GET", url, true);
-                    xmlhttp.send();
-                }
-            }
-            setInterval(getGroup, 400);
-            var xmlhttpy = new XMLHttpRequest();
-            var urly = "/rightnum/{{uid}}";
-            var nopes = [];
-            for (var i = 1; i <= 1000; i++) {
-                nopes.push(i);
-            }
-            xmlhttpy.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    nopes.pop(Number(this.responseText));
-                }
-            };
-            xmlhttpy.open("GET", urly, true);
-            xmlhttpy.send();
-            function choose(choices) {
-                var index = Math.floor(Math.random() * choices.length);
-                return choices[index];
-            }
-            function getCard() {
-                document.getElementById("attmpts").innerHTML = String(Number(document.getElementById("attmpts").innerHTML) + 1);
-                var xmlhttp = new XMLHttpRequest();
-                var url = "/cardstatus/{{uid}}/" + document.getElementById("cardname").value;
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        if (this.responseText == "0") {
-                            var xmlhttp2 = new XMLHttpRequest();
-                            var url2 = "/rightnum/{{uid}}";
-                            xmlhttp2.onreadystatechange = function() {
-                                if (this.readyState == 4 && this.status == 200) {
-                                    document.getElementById("overlay").style.opacity = "1";
-                                    document.getElementById("overlay").style.visibility = "";
-                                    document.getElementById("overlay-text").innerHTML = "That's the right card! The number is " + this.responseText + ". Share it with your friends, and they can verify it!";
-                                    setTimeout(confetti, 10, {
-                                      particleCount: 100,
-                                      startVelocity: 30,
-                                      spread: 360,
-                                      origin: {
-                                        x: Math.random(),
-                                        y: Math.random() - 0.2
-                                      }
-                                    });
-                                    setTimeout(confetti, 510, {
-                                      particleCount: 100,
-                                      startVelocity: 30,
-                                      spread: 360,
-                                      origin: {
-                                        x: Math.random(),
-                                        y: Math.random() - 0.2
-                                      }
-                                    });
-                                    setTimeout(confetti, 1010, {
-                                      particleCount: 100,
-                                      startVelocity: 30,
-                                      spread: 360,
-                                      origin: {
-                                        x: Math.random(),
-                                        y: Math.random() - 0.2
-                                      }
-                                    });
-                                }
-                            };
-                            xmlhttp2.open("GET", url2, true);
-                            xmlhttp2.send();
-                        } else if (this.responseText == "1") {
-                            if (nopes.length < 1) {
-                                document.getElementById("overlay").style.opacity = "1";
-                                document.getElementById("overlay").style.visibility = "";
-                                document.getElementById("overlay-text").innerHTML = "Ooops! You missed out on the right one from 1-1000.";
-                            } else {
-                                var choice = choose(nopes);
-                                document.getElementById("overlay").style.opacity = "1";
-                                document.getElementById("overlay").style.visibility = "";
-                                document.getElementById("overlay-text").innerHTML = "This is a normal card, and it tells you that it's not " + String(choice);
-                                nopes.pop(choice);
-                            }
-                        } else if (this.responseText == "2") {
-                            document.getElementById("overlay").style.opacity = "1";
-                            document.getElementById("overlay").style.visibility = "";
-                            document.getElementById("overlay-text").innerHTML = "This card doesn't help you.";
-                        } else if (this.responseText == "invalid") {
-                            document.getElementById("overlay").style.opacity = "1";
-                            document.getElementById("overlay").style.visibility = "";
-                            document.getElementById("overlay-text").innerHTML = "That's an invalid card. Make sure you're in a group.";
-                        }
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-            }
-            function checkNumber() {
-                var xmlhttp = new XMLHttpRequest();
-                var url = "/rightnum/{{uid}}";
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        if (this.responseText == document.getElementById("numbername").value) {
-                            document.getElementById("overlay").style.opacity = "1";
-                            document.getElementById("overlay").style.visibility = "";
-                            document.getElementById("overlay-text").innerHTML = "Yup, this person actually got it!";
-                        } else {
-                            document.getElementById("overlay").style.opacity = "1";
-                            document.getElementById("overlay").style.visibility = "";
-                            document.getElementById("overlay-text").innerHTML = "That's an invalid number. Double-check it.";
-                        }
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-            }
-            function closeOverlay() {
-                document.getElementById("overlay").style.opacity = "0";
-                document.getElementById("overlay").style.visibility = "hidden";
-            }
-        </script>
-        <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
-        <button onClick="goHome();" class="homebutton" data-icon="arrow_back">Home</button>
-        <h1>Play...</h1>
-        <h3>You're in the game. Let's make this happen.</h3>
-        <h4>(Your ID is {{uid}}.<br><span id="gstat">You currently don't have anyone in your group.</span><br>So far, you've done this number of card checks: <span id="attmpts">0</span>)</h4>
-        <input id="cardname" type="text" placeholder="Clue ID"><br/>
-        <button onClick="getCard()" data-icon="add">Add clue</button><br/>
-        <input id="numbername" type="text" placeholder="Final number"><br/>
-        <button onClick="checkNumber()" data-icon="check">Check number</button><br/>
-        <input id="username" type="text" placeholder="User ID"><br/>
-        <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
-        <textarea placeholder="Take notes here"></textarea><br/>
-        <button id="add2hs" class="alt-button" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
-        <div class="overlay" id="overlay">
-            <p id="overlay-text"></p>
-            <button onClick="closeOverlay()" class="alt-button" data-icon="close">Close</button>
-        </div>
-        <script>
-            var input = document.getElementById("cardname");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    getCard();
-                }
-            });
-            input = document.getElementById("numbername");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    checkNumber();
-                }
-            });
-            input = document.getElementById("username");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    registerGroup();
-                }
-            });
-            document.getElementById("overlay").style.opacity = "0";
-            document.getElementById("overlay").style.visibility = "hidden";
-        </script>
-    </body>
+          }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+      }
+      function closeOverlay() {
+        document.getElementById("overlay").style.opacity = "0";
+        document.getElementById("overlay").style.visibility = "hidden";
+      }
+    </script>
+    <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
+    <button onClick="goHome();" class="homebutton" data-icon="arrow_back">Home</button>
+    <h1>Play...</h1>
+    <h3>You're in the game. Let's make this happen.</h3>
+    <h4>(Your ID is {{uid}}.<br><span id="gstat">You currently don't have anyone in your group.</span><br>So far, you've done this number of card checks: <span id="attmpts">0</span>)</h4>
+    <input id="cardname" type="text" placeholder="Clue ID"><br/>
+    <button onClick="getCard()" data-icon="add">Add clue</button><br/>
+    <input id="numbername" type="text" placeholder="Final number"><br/>
+    <button onClick="checkNumber()" data-icon="check">Check number</button><br/>
+    <input id="username" type="text" placeholder="User ID"><br/>
+    <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
+    <textarea placeholder="Take notes here"></textarea><br/>
+    <button id="add2hs" class="alt-button" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add E-Scorecard to Home Screen</button>
+    <div class="overlay" id="overlay">
+      <p id="overlay-text"></p>
+      <button onClick="closeOverlay()" class="alt-button" data-icon="close">Close</button>
+    </div>
+    <script>
+      var input = document.getElementById("cardname");
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          getCard();
+        }
+      });
+      input = document.getElementById("numbername");
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          checkNumber();
+        }
+      });
+      input = document.getElementById("username");
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          registerGroup();
+        }
+      });
+      document.getElementById("overlay").style.opacity = "0";
+      document.getElementById("overlay").style.visibility = "hidden";
+    </script>
+  </body>
 </html>
