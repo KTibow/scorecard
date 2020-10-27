@@ -1,5 +1,5 @@
 print("Loading...")
-debuggy = True
+debug_mode_enabled = True
 exec(open("app.py", "r").read())
 from multiprocessing import Process
 from time import sleep

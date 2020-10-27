@@ -93,9 +93,9 @@ def find_commit():
                 # Pause until next reset
                 print("Pausing fetch commits")
                 sleep(120)
-        except Exception as e:
+        except Exception as github_error:
             # Log exception and wait (in case of other rate limit)
-            print(e)
+            print(github_error)
             sleep(240)
         # Sleep (don't use up rate limit)
         sleep(60)
@@ -157,7 +157,7 @@ def track_view(page, ip, agent):
 
 @app.before_request
 def before_req():
-    if "debugithub_instancey" not in globals():
+    if "debug_mode_enabled" not in globals():
         flask_global.before_before_request_time = time.time() * 1000
         flask_global.middle_before_request_time = time.time() * 1000
         flask_global.after_before_request_time = time.time() * 1000
@@ -189,7 +189,7 @@ def after_req(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    if "debugithub_instancey" not in globals():
+    if "debug_mode_enabled" not in globals():
         flask_global.after_after_request_time = time.time() * 1000
         server_timing = 'beforereq;desc="Process redirect and log";dur='
         server_timing += str(
@@ -223,97 +223,139 @@ def after_req(response):
 # home
 @app.route("/")
 def hello():
+    """
+    Render the home page.
+
+    Returns:
+        HTML home page.
+    """
     return render_template("welcome.html")
 
 
 # card
 @app.route("/cluecard/<theid>")
 def card(theid):
+    """
+    Render the cluecard.
+
+    Args:
+        theid: ID of the user.
+
+    Returns:
+        HTML clue card.
+    """
     return render_template("play.html", uid=theid)
 
 
 # 404
 @app.errorhandler(404)
-def err404(e):
+def err404(_error):
+    """
+    Render the 404 error page.
+
+    Returns:
+        HTML page for when a page isn't found.
+    """
     if request.url[len(request.url) - 1] == "/":
-        return redirect(request.url[0 : len(request.url) - 1], code=301)
+        return redirect(request.url[: len(request.url) - 1], code=301)
     return render_template("404.html"), 404
 
 
 @app.route("/404")
 def ex404():
+    """
+    Render the 404 error page, for the service worker.
+
+    Returns:
+        HTML page for when a page isn't found.
+    """
     return render_template("404.html")
 
 
 # 500
 @app.errorhandler(500)
-def err500(e):
+def err500(_error):
+    """
+    Render the 500 error page.
+
+    Returns:
+        HTML page for when there's an exception.
+    """
     return render_template("500.html"), 500
 
 
 # ============== API ================
 @app.route("/makeid/<username>")
-def genid(username):
+def genew_id(username):
+    """
+    Create an ID for a user.
+
+    Args:
+        username: Username for the user.
+
+    Returns:
+        Where to redirect to with the ID.
+    """
     username = username.lower()
     try:
         id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         id_database = {}
-    nid = str(randint(0, 99999)).zfill(5)
+    new_id = str(randint(0, 99999)).zfill(5)
     if username in id_database:
-        oid = id_database[username]
+        old_id = id_database[username]
         try:
             group_database = json.load(open("groups.db", "r"))
         except FileNotFoundError:
             group_database = []
         for group in group_database:
             group_database[group_database.index(group)] = [
-                x if x != oid else nid for x in group
+                new_id if user_id == old_id else user_id for user_id in group
             ]
         print(group_database)
         json.dump(group_database, open("groups.db", "w"))
     # First ID
-    id_database[username] = nid
+    id_database[username] = new_id
     print(id_database)
     json.dump(id_database, open("ids.db", "w"))
-    return "/cluecard/" + id_database[username]
+    return f"/cluecard/{id_database[username]}"
 
 
 @app.route("/addid/<exist>/<new>")
 def addid(exist, new):
+    """
+    Group mechanic: Add two IDs together.
+
+    Args:
+        exist: The ID that's sending the add request.
+        new: The ID to be added on.
+
+    Returns:
+        Whether it worked, and if it worked, what happened in order to merge.
+    """
     exist = exist.zfill(5)
     new = new.zfill(5)
     try:
         aids = list(json.load(open("ids.db", "r")).values())
-    except Exception as e:
-        print(e)
+    except Exception:
         aids = []
     if exist not in aids or new not in aids:
         try:
             json.load(open("ids.db", "r"))
         except Exception:
             json.dump({}, open("ids.db", "w"))
-        print(
-            "These people:",
-            exist,
-            new,
-            "Are not in:",
-            aids,
-            json.load(open("ids.db", "r")),
-            "Exist in:",
-            exist in aids,
-            "New in:",
-            new in aids,
-        )
+        print(f"{exist} or {new} are not in {aids}")
+        print(f'exist {"is" if exist in aids else "is not"} in ids')
+        print(f'new {"is" if new in aids else "is not"} in ids')
         return "notreal"
     try:
         group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
         group_database = []
+    comp = [user_id for group in group_database for user_id in group]
     for group in group_database:
         if exist in group and new in group:
             return "already"
-    comp = [user_id for group in group_database for user_id in group]
     if exist in comp and new in comp:
         newgp = []
         for group in group_database:
@@ -343,7 +385,8 @@ def addid(exist, new):
                 json.dump(group_database, open("groups.db", "w"))
                 return "addexist"
     else:
-        # The best make you win, most tell you what it's not, and some don't give you anything.
+        # The best make you win, most tell you what it's not,
+        # and some don't give you anything.
         infodict = {"rightnum": str(randint(1, 1000))}
         fyet = False
         for tletter in "ABCD":

@@ -4,22 +4,24 @@ statistics = True
 count = True
 use-varnames-strict-mode = True
 inline-quotes = double
-extend-ignore=
-    I001
-    I004
-    WPS305
-    WPS420
-    WPS421
-    WPS515
-    C812
-    C813
-    C814
-    C815
-    C816
-    E203
-    W503
-    S311
-max-line-length=90
-max-local-variables=10
-max-line-complexity=20
+extend-ignore =
+    C812 # Trailing commas don't work with black.
+    E203 # No whitespace around colons doesn't work with black.
+    I # Isort messes everything up, I've done the best I can to make it make sense anyway.
+    S311 # So it's not secure to use the built-in random method? So what? It's just a game.
+    WPS226 # String constants over-use is unavoidable.
+    WPS305 # What's wrong with f-strings?
+    WPS336 # What's wrong with string concat?
+    WPS420 # What's wrong with global?
+    WPS421 # What's wrong with print?
+    WPS432 # What's wrong with magic numbers? Everything makes sense when you consider the comments.
+    WPS440 # Block variable overlap is unavoidable.
+    WPS441 # Block variable overlap is unavoidable.
+    WPS515 # Using open() without the with keyword is unavoidable.
 min-name-length=3
+max-returns=10
+max-local-variables=15
+max-expressions=20
+max-line-complexity=20
+max-line-length=90
+max-cognitive-score=100
