@@ -43,6 +43,12 @@ else:
 
 
 def sleep(timefor):
+    """
+    Sleep, but catch interrupts and whatever.
+
+    Args:
+        timefor: The amount of time to sleep in seconds.
+    """
     for _index in range(round(timefor * 16.0)):
         time.sleep(1 / 16)
 
@@ -108,6 +114,16 @@ find_commit_thread.start()
 
 
 def make_sender(pathy, directy):
+    """
+    Generate a file sender function.
+
+    Args:
+        pathy: The path of it.
+        directy: The directory of it.
+
+    Returns:
+        The sender function.
+    """
 
     def sender_function():
         mimetype = mimetypes.guess_type(pathy)[0]
@@ -121,6 +137,15 @@ def make_sender(pathy, directy):
 
 
 def walk():
+    """
+    Walk the game folder files, and return a 2D list.
+
+    Returns:
+        A list of files, something like this:
+        [["related/", "play.css"],
+        ["related/", "welcome.css"],
+        ["fonts/", "open-sans.ttf"]]
+    """
     pys = []
     for root, _dirs, files in os.walk("game"):
         for file_name in files:
@@ -130,12 +155,29 @@ def walk():
 
 
 def has_no_empty_params(rule):
+    """
+    Check whether a flask rule has no empty paramaters.
+
+    Args:
+        rule: The rule to check.
+
+    Returns:
+        True or False.
+    """
     defaults = rule.defaults if rule.defaults is not None else ()
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 
 
 def track_view(page, ip_addr, agent):
+    """
+    Send a web request to Google Analytics to track a page view.
+
+    Args:
+        page: The URL for it.
+        ip_addr: The IP of the user.
+        agent: The user agent of the user.
+    """
     tracking_data = {
         "v": "1",
         "tid": "UA-165004437-2",
@@ -156,6 +198,12 @@ def track_view(page, ip_addr, agent):
 
 @app.before_request
 def before_req():
+    """
+    Goes to HTTPS, does stuff with user-agent, and tracks time.
+
+    Returns:
+        None usually, but if it's HTTP, it returns a redirect to HTTPS.
+    """
     if "debug_mode_enabled" not in globals():
         now_in_ms = time.time() * 1000
         flask_global.before_before_request_time = now_in_ms
