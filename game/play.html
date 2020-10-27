@@ -86,9 +86,9 @@
         confetti({
           particleCount: 100,
           startVelocity: 30,
-          spread: 360,
+          spread: 100,
           origin: {
-            x: pos["x"] / window.innerWidth,
+            x: pos["x"] / window.innerWidth + document.getElementById("username").offsetWidth / 2,
             y: pos["y"] / window.innerHeight
           }
         });
