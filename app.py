@@ -574,7 +574,7 @@ def sendfinished(user_id):
     except FileNotFoundError:
         done_database = {}
     if user_id not in done_database:
-        done_database[user_id] = "🏁"
+        done_database[user_id] = " (🏁 finished)"
     json.dump(done_database, open("done.db", "w"))
     return f"done {done_database}"
 
