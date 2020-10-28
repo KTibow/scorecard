@@ -32,7 +32,7 @@ import threading
 
 # Init flask
 app = Flask(__name__, template_folder="game")
-#minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
@@ -193,7 +193,9 @@ def track_view(page, ip_addr, agent):
         tracking_data["uip"] = ip_addr
     if agent is not None:
         tracking_data["ua"] = quote(agent)
-    requests.post("https://www.google-analytics.com/collect", data=tracking_data)
+    requests.post(
+        "https://www.google-analytics.com/collect", data=tracking_data
+    )
 
 
 @app.before_request
@@ -480,6 +482,10 @@ def fids(uid):
         group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
         group_database = []
+    try:
+        done_database = json.load(open("done.db", "r"))
+    except FileNotFoundError:
+        done_database = []
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
         return "You currently don't have anyone in your group."
@@ -491,7 +497,10 @@ def fids(uid):
                 id_database = {}
             group = group[1 : len(group)]
             inv_map = {user_id: name for name, user_id in id_database.items()}
-            mgroup = [inv_map[person] for person in group.copy()]
+            mgroup = [
+                inv_map[person] + "🏁" if person in done_database else ""
+                for person in group.copy()
+            ]
             return (
                 "In your group, there's these people: "
                 + f'<span style="color: deepskyblue;">{", ".join(mgroup)}</span>'
@@ -523,8 +532,7 @@ def checkcard(uid, cardnum):
         if uid in group:
             if cardnum in group[0]:
                 return group[0][cardnum]
-            else:
-                return "invalid"
+            return "invalid"
 
 
 @app.route("/rightnum/<uid>")
@@ -548,6 +556,27 @@ def rightnum(uid):
     for group in group_database:
         if uid in group:
             return group[0]["rightnum"]
+
+
+@app.route("/finished/<uid>")
+def sendfinished(user_id):
+    """
+    Add a user ID to the finished database.
+
+    Args:
+        user_id: The user ID to be added.
+
+    Returns:
+        "done" and the current database.
+    """
+    try:
+        done_database = json.load(open("done.db", "r"))
+    except FileNotFoundError:
+        done_database = []
+    if user_id not in done_database:
+        done_database.append(user_id)
+    json.dump(done_database, open("done.db", "w"))
+    return f"done {done_database}"
 
 
 # ========== BROWSER FILES ==========
