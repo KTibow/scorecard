@@ -199,6 +199,10 @@
                       y: Math.random() - 0.2
                     }
                   });
+                  var xmlhttp3 = new XMLHttpRequest();
+                  var url3 = "/finished/{{uid}}";
+                  xmlhttp3.open("GET", url3, true);
+                  xmlhttp3.send();
                 }
               };
               xmlhttp2.open("GET", url2, true);

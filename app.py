@@ -559,7 +559,7 @@ def rightnum(uid):
 
 
 @app.route("/finished/<user_id>")
-def sendfinished(user_id):
+def send_finished(user_id):
     """
     Add a user ID to the finished database.
 
