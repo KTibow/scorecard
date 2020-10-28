@@ -485,7 +485,7 @@ def fids(uid):
     try:
         done_database = json.load(open("done.db", "r"))
     except FileNotFoundError:
-        done_database = []
+        done_database = {}
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
         return "You currently don't have anyone in your group."
@@ -498,7 +498,7 @@ def fids(uid):
             group = group[1 : len(group)]
             inv_map = {user_id: name for name, user_id in id_database.items()}
             mgroup = [
-                inv_map[person] + "🏁" if person in done_database else ""
+                inv_map[person] + done_database.get(person, "")
                 for person in group.copy()
             ]
             return (
@@ -558,7 +558,7 @@ def rightnum(uid):
             return group[0]["rightnum"]
 
 
-@app.route("/finished/<uid>")
+@app.route("/finished/<user_id>")
 def sendfinished(user_id):
     """
     Add a user ID to the finished database.
@@ -572,9 +572,9 @@ def sendfinished(user_id):
     try:
         done_database = json.load(open("done.db", "r"))
     except FileNotFoundError:
-        done_database = []
+        done_database = {}
     if user_id not in done_database:
-        done_database.append(user_id)
+        done_database[user_id] = "🏁"
     json.dump(done_database, open("done.db", "w"))
     return f"done {done_database}"
 
