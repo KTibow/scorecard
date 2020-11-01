@@ -1,6 +1,6 @@
 {
   "short_name": "ClueCard",
-  "name": "Cluecard Electronic scorecard for clues",
+  "name": "Cluecard",
   "description": "Electronic scorecard for clues",
   "categories": ["game", "clue", "clue game", "scoreboard", "leaderboard"],
   "lang": "en-US",
@@ -36,7 +36,7 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/join",
+  "start_url": "/",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",
