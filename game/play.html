@@ -84,26 +84,28 @@
         var idInput = document.getElementById("username");
         var url = "/addid/{{uid}}/" + idInput.value;
         var pos = getPosition(idInput);
-        confetti({
-          particleCount: 100,
-          startVelocity: 30,
-          spread: 100,
-          origin: {
-            x: (pos["x"] + idInput.offsetWidth / 2) / window.innerWidth,
-            y: pos["y"] / window.innerHeight
-          }
-        });
         xmlhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             var attry = document.createAttribute("data-icon");
-            attry.value = "done";
             if (this.responseText == "notreal") {
               attry.value = "error";
+            } else {
+              attry.value = "done";
+              confetti({
+                particleCount: 100,
+                startVelocity: 30,
+                spread: 100,
+                origin: {
+                  x: (pos["x"] + idInput.offsetWidth / 2) / window.innerWidth,
+                  y: pos["y"] / window.innerHeight
+                }
+              });
             }
             document.getElementById("adgr").setAttributeNode(attry);
-            document.getElementById("adgr").innerHTML = "Added to group";
             if (this.responseText == "notreal") {
               document.getElementById("adgr").innerHTML = "Invalid ID.";
+            } else {
+              document.getElementById("adgr").innerHTML = "Added to group";
             }
             setTimeout(function() {
               var attry = document.createAttribute("data-icon");
