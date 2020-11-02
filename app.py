@@ -18,7 +18,6 @@ from flask import (
     send_from_directory,
     url_for,
 )
-from flask_minify import minify
 from github.MainClass import Github
 
 # Tracking
@@ -32,7 +31,6 @@ import threading
 
 # Init flask
 app = Flask(__name__, template_folder="game")
-minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
