@@ -481,9 +481,9 @@ def fids(uid):
     except FileNotFoundError:
         group_database = []
     try:
-        done_database = json.load(open("done.db", "r"))
+        metadata_database = json.load(open("metadata.db", "r"))
     except FileNotFoundError:
-        done_database = {}
+        metadata_database = {}
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
         return "You currently don't have anyone in your group."
@@ -496,7 +496,7 @@ def fids(uid):
             group = group[1 : len(group)]
             inv_map = {user_id: name for name, user_id in id_database.items()}
             mgroup = [
-                inv_map[person] + done_database.get(person, "")
+                inv_map[person] + metadata_database.get(person, "")
                 for person in group.copy()
             ]
             return (
@@ -568,13 +568,13 @@ def send_finished(user_id):
         "done" and the current database.
     """
     try:
-        done_database = json.load(open("done.db", "r"))
+        metadata_database = json.load(open("metadata.db", "r"))
     except FileNotFoundError:
-        done_database = {}
-    if user_id not in done_database:
-        done_database[user_id] = " (🏁 finished)"
-    json.dump(done_database, open("done.db", "w"))
-    return f"done {done_database}"
+        metadata_database = {}
+    if user_id not in metadata_database:
+        metadata_database[user_id] = " (🏁 finished)"
+    json.dump(metadata_database, open("metadata.db", "w"))
+    return f"done {metadata_database}"
 
 
 # ========== BROWSER FILES ==========
