@@ -1,6 +1,12 @@
 * {
   font-family: Open Sans, sans-serif;
-  --primary-color: #7000FF;
+  --primary-color-h: 266;
+  --primary-color-s: 100%;
+  --primary-color-lighter: hsl(var(--primary-color-h), var(--primary-color-s), 70%);
+  --primary-color-light:   hsl(var(--primary-color-h), var(--primary-color-s), 60%);
+  --primary-color:         hsl(var(--primary-color-h), var(--primary-color-s), 50%);
+  --primary-color-dark:    hsl(var(--primary-color-h), var(--primary-color-s), 40%);
+  --primary-color-darker:  hsl(var(--primary-color-h), var(--primary-color-s), 30%);
 }
 button {
   background-color: var(--primary-color);
@@ -14,20 +20,19 @@ button {
   font-size: 16px;
   border-radius: 8px;
   transition: background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
-  box-shadow: 4px 4px 2px var(--primary-color);
+  box-shadow: 4px 4px 2px var(--primary-color-light);
   cursor: pointer;
 }
 button:hover {
-  filter: brightness(0.9);
+  background-color: var(--primary-color-dark);
 }
 button:active {
-  filter: brightness(0.8);
-  box-shadow: 2px 2px 1px var(--primary-color);
+  background-color: var(--primary-color-darker)
+  box-shadow: 2px 2px 1px var(--primary-color-dark);
   transform: translate(2px, 2px);
 }
 h1, h2, h3, h4, h5, h6 {
-  color: var(--primary-color);
-  filter: brightness(0.5);
+  color: var(--primary-color-darker);
   margin: 0px !important;
   margin-left: 16px !important;
   margin-bottom: 0.67em !important;
@@ -40,37 +45,37 @@ input {
   border-radius: 10px;
   padding: 10px 27px;
   outline: 0;
-  box-shadow: 4px 4px 2px var(--primary-color);
+  box-shadow: 4px 4px 2px var(--primary-color-light);
   transition-duration: 0.2s;
   margin: 15px;
 }
 input:focus {
-  filter: brightness(0.9);
+  background-color: var(--primary-color-dark)
   box-shadow: 2px 2px 1px var(--primary-color);
   transform: translate(2px, 2px);
 }
 input::placeholder {
-  color: var(--primary-color);
+  color: var(--primary-color-darker);
   font-weight: bold !important;
 }
 .alt-button {
   transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s, visibility 0.35s;
   background-color: var(--primary-color);
-  box-shadow: 4px 4px 2px var(--primary-color);
+  box-shadow: 4px 4px 2px var(--primary-color-light);
   filter: hue-rotate(-90deg);
 }
 .alt-button:hover {
-  filter: hue-rotate(-90deg) brightness(0.9);
+  filter: hue-rotate(-90deg);
 }
 .alt-button:active {
-  filter: hue-rotate(-90deg) brightness(0.8);
+  filter: hue-rotate(-90deg);
   box-shadow: 2px 2px 1px var(--primary-color);
 }
 @media all and (orientation: portrait) {
-	  button {	
-	    width: 90%;
-	  }
-	  input {
-	    width: calc(90% - 74px);
-	  }
+  button {
+	  width: 90%;
+	}
+	input {
+	  width: calc(90% - 74px);
+	}
 }
