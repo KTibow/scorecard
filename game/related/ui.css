@@ -50,12 +50,16 @@ input {
   margin: 15px;
 }
 input:focus {
-  box-shadow: 2px 2px 1px var(--primary-color);
+  box-shadow: 2px 2px 1px var(--primary-color-light);
+  border: 5px solid var(--primary-color-dark);
   transform: translate(2px, 2px);
 }
 input::placeholder {
-  color: var(--primary-color-darker);
+  color: var(--primary-color);
   font-weight: bold !important;
+}
+input:focus::placeholder {
+  color: var(--primary-color-dark);
 }
 .alt-button {
   transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s, visibility 0.35s;

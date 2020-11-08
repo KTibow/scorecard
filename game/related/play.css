@@ -14,12 +14,6 @@
     margin: 0 auto;
   }
 }
-textarea {
-  width: 85%;
-  padding: 10px 5px;
-  display: block;
-  margin: 5px auto;
-}
 div.overlay {
   background: #7000FF;
   z-index: 2;
