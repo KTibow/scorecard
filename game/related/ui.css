@@ -1,0 +1,76 @@
+* {
+  font-family: Open Sans, sans-serif;
+  --primary-color: #7000FF;
+}
+button {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
+  box-shadow: 4px 4px 2px var(--primary-color);
+  cursor: pointer;
+}
+button:hover {
+  filter: brightness(0.9);
+}
+button:active {
+  filter: brightness(0.8);
+  box-shadow: 2px 2px 1px var(--primary-color);
+  transform: translate(2px, 2px);
+}
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+  filter: brightness(0.5);
+  margin: 0px !important;
+  margin-left: 16px !important;
+  margin-bottom: 0.67em !important;
+}
+h1 {
+  font-size: 2.3em;
+}
+input {
+  border: 5px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 10px 27px;
+  outline: 0;
+  box-shadow: 4px 4px 2px var(--primary-color);
+  transition-duration: 0.2s;
+  margin: 15px;
+}
+input:focus {
+  filter: brightness(0.9);
+  box-shadow: 2px 2px 1px var(--primary-color);
+  transform: translate(2px, 2px);
+}
+input::placeholder {
+  color: var(--primary-color);
+  font-weight: bold !important;
+}
+.alt-button {
+  transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s, visibility 0.35s;
+  background-color: var(--primary-color);
+  box-shadow: 4px 4px 2px var(--primary-color);
+  filter: hue-rotate(-90deg);
+}
+.alt-button:hover {
+  filter: hue-rotate(-90deg) brightness(0.9);
+}
+.alt-button:active {
+  filter: hue-rotate(-90deg) brightness(0.8);
+  box-shadow: 2px 2px 1px var(--primary-color);
+}
+@media all and (orientation: portrait) {
+	  button {	
+	    width: 90%;
+	  }
+	  input {
+	    width: calc(90% - 74px);
+	  }
+}
