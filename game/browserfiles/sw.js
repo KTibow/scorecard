@@ -6,16 +6,16 @@ function log_message(message, color, object) {
     "color: coral;",
     "color: " + color);
 }
-log_message("Hello there! 👋", "green");
+log_message("👋 Hello there!", "green");
 self.addEventListener('install', (e) => {
     if (navigator.onLine) {
-        log_message("Online, not waiting.", "blue");
+        log_message("⏭️ Online, not waiting.", "blue");
         self.skipWaiting();
     }
     log_message("⬇ Installing ...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            log_message("Caching caches...", "coral", [{{urls}}]);
+            log_message("⬇ Caching caches...", "coral", [{{urls}}]);
             return cache.addAll([{{urls}}]);
         })
     );
@@ -29,10 +29,10 @@ self.addEventListener('install', (e) => {
             }));
         })
     );
-    log_message("Done installing!", "green");
+    log_message("✅ Done installing!", "green");
 });
 self.addEventListener('fetch', function(event) {
-    log_message("🌎 We got a (no, not 🐟) fetch!", "green", event.request);
+    log_message("🌎 We got a (no, not 🐟) fetch!", "blue", event.request);
     if (!event.request.url.includes("makeid") &&
         !event.request.url.includes("addid") &&
         !event.request.url.includes("gids") &&
@@ -41,15 +41,15 @@ self.addEventListener('fetch', function(event) {
             log_message("⬇ Caching for later use:", "green", event.request.url);
             cache.add(event.request.url);
         }).catch(function() {
-            log_message("❌ Error caching", "green", event.request.url);
+            log_message("❌ Error caching", "red", event.request.url);
         });
     }
     event.respondWith(
         fetch(event.request).catch(function() {
-            console.log('sw.js: Returning cache for', event.request, '...');
+            log_message("↩ Returning cache for", "blue", event.request.url);
             return caches.match(event.request.url).then(function(resty) {
                 if (!resty) {
-                    console.log("sw.js: Not found");
+                    log_message("❌ Page not found:", "red", event.request.url);
                     return caches.match("/404")
                 }
             })
