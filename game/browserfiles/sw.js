@@ -1,16 +1,15 @@
 var cacheName = 'clue-card-v{{version}}';
 function log_message(message, color, object) {
   console.log(
-    "%c sw.js: %c" + message + "%c",
-    "color: coral;",
+    "%c sw.js: %c" + message,
+    "color: orange;",
     "color: " + color,
-    object || "",
-    "color: " + color);
+    object || "");
 }
 log_message("👋 Hello there!", "green");
 self.addEventListener('install', (e) => {
     if (navigator.onLine) {
-        log_message("⏭️ Online, not waiting.", "blue");
+        log_message("⏭️ Online, not waiting.", "darkslateblue");
         self.skipWaiting();
     }
     log_message("🔻 Installing ...", "yellow");
@@ -33,7 +32,7 @@ self.addEventListener('install', (e) => {
     log_message("✅ Done installing!", "green");
 });
 self.addEventListener('fetch', function(event) {
-    log_message("🌎 We got a (no, not 🐟) fetch!", "blue", event.request);
+    log_message("🌎 We got a (no, not 🐟) fetch!", "slateblue", event.request);
     if (!event.request.url.includes("makeid") &&
         !event.request.url.includes("addid") &&
         !event.request.url.includes("gids") &&
