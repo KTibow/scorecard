@@ -1,14 +1,21 @@
 var cacheName = 'clue-card-v{{version}}';
-console.log('Service Worker: Hello there!');
+function log_message(message, color, object) {
+  console.log(
+    "%csw.js: %c" + message,
+    object || "",
+    "color: coral;",
+    "color: " + color);
+}
+log_message("Hello there! 👋", "green");
 self.addEventListener('install', (e) => {
     if (navigator.onLine) {
-        console.log('Online, skip wait');
+        log_message("Online, not waiting.", "blue");
         self.skipWaiting();
     }
-    console.log('Service Worker: Installing...');
+    log_message("⬇ Installing ...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            console.log('Service Worker: Caching caches...');
+            log_message("Caching caches...", "coral", [{{urls}}]);
             return cache.addAll([{{urls}}]);
         })
     );
@@ -16,33 +23,33 @@ self.addEventListener('install', (e) => {
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map((key) => {
                 if (key !== cacheName) {
-                    console.log('Service Worker: Bye-Bye', key);
+                    log_message("👋 See you later " + key, "coral");
                     return caches.delete(key);
                 }
             }));
         })
     );
-    console.log('Service Worker: Done installing!');
+    log_message("Done installing!", "green");
 });
 self.addEventListener('fetch', function(event) {
-    console.log('Service Worker: We got a (no, not fish) fetch!', event.request);
+    log_message("🌎 We got a (no, not 🐟) fetch!", "green", event.request);
     if (!event.request.url.includes("makeid") &&
         !event.request.url.includes("addid") &&
         !event.request.url.includes("gids") &&
         !event.request.url.includes("cardstatus")) {
         caches.open(cacheName).then(function(cache) {
-            console.log('Service Worker: Trying to cache', event.request.url + '...');
+            log_message("⬇ Caching for later use:", "green", event.request.url);
             cache.add(event.request.url);
         }).catch(function() {
-            console.log('Error caching', event.request.url);
+            log_message("❌ Error caching", "green", event.request.url);
         });
     }
     event.respondWith(
         fetch(event.request).catch(function() {
-            console.log('Service Worker: Returning cache for', event.request, '...');
+            console.log('sw.js: Returning cache for', event.request, '...');
             return caches.match(event.request.url).then(function(resty) {
                 if (!resty) {
-                    console.log("Not found");
+                    console.log("sw.js: Not found");
                     return caches.match("/404")
                 }
             })
