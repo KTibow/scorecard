@@ -48,6 +48,7 @@ input {
   box-shadow: 4px 4px 2px var(--primary-color-light);
   transition-duration: 0.2s;
   margin: 15px;
+  transition: all 0.4s;
 }
 input:focus {
   box-shadow: 2px 2px 1px var(--primary-color-light);
