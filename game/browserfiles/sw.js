@@ -1,9 +1,10 @@
 var cacheName = 'clue-card-v{{version}}';
 function log_message(message, color, object) {
   console.log(
-    "%csw.js: %c" + message,
-    object || "",
+    "%c sw.js: %c" + message + "%c",
     "color: coral;",
+    "color: " + color,
+    object || "",
     "color: " + color);
 }
 log_message("👋 Hello there!", "green");
@@ -12,7 +13,7 @@ self.addEventListener('install', (e) => {
         log_message("⏭️ Online, not waiting.", "blue");
         self.skipWaiting();
     }
-    log_message("⬇ Installing ...", "yellow");
+    log_message("🔻 Installing ...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             log_message("⬇ Caching caches...", "coral", [{{urls}}]);
@@ -38,7 +39,7 @@ self.addEventListener('fetch', function(event) {
         !event.request.url.includes("gids") &&
         !event.request.url.includes("cardstatus")) {
         caches.open(cacheName).then(function(cache) {
-            log_message("⬇ Caching for later use:", "green", event.request.url);
+            log_message("🔻 Caching for later use:", "green", event.request.url);
             cache.add(event.request.url);
         }).catch(function() {
             log_message("❌ Error caching", "red", event.request.url);
