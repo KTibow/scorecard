@@ -1,7 +1,7 @@
 function log_message(message, color) {
     console.log(
         "%c install.js: %c" + message,
-        "color: orange;",
+        "color: #ad50ff;",
         "color: " + color
     );
 }
