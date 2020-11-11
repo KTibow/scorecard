@@ -195,9 +195,7 @@ def track_view(page, ip_addr, agent):
         tracking_data["uip"] = ip_addr
     if agent is not None:
         tracking_data["ua"] = quote(agent)
-    requests.post(
-        "https://www.google-analytics.com/collect", data=tracking_data
-    )
+    requests.post("https://www.google-analytics.com/collect", data=tracking_data)
 
 
 @app.before_request
