@@ -8,7 +8,7 @@ function log_message(message, color) {
 log_message("🔁 Getting ready to install service worker", "green");
 window.addEventListener("load", function () {
     if ("serviceWorker" in navigator) {
-        log_message("🔻 Installing ...", "yellow");
+        log_message("🔻 Installing...", "yellow");
         navigator.serviceWorker
             .register("/sw.js")
             .then(function (reg) {

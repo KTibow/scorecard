@@ -13,7 +13,7 @@ self.addEventListener("install", (e) => {
         log_message("⏭️ Online, not waiting.", "darkslateblue");
         self.skipWaiting();
     }
-    log_message("🔻 Installing ...", "yellow");
+    log_message("🔻 Installing...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             var cache_urls = JSON.parse("[{{urls}}]");
