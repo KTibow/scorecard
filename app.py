@@ -108,7 +108,8 @@ def find_commit():
 
 # Start async commit checker
 find_commit_thread = threading.Thread(target=find_commit, daemon=True)
-find_commit_thread.start()
+if "debug_mode_enabled" not in globals():
+    find_commit_thread.start()
 
 
 def make_sender(pathy, directy):
@@ -205,25 +206,26 @@ def before_req():
         None usually, but if it's HTTP, it returns a redirect to HTTPS.
     """
     # Use Host to determine if in prod
-    if "debug_mode_enabled" not in globals():
-        now_in_ms = time.time() * 1000
-        flask_global.before_before_request_time = now_in_ms
-        flask_global.middle_before_request_time = now_in_ms
-        flask_global.after_before_request_time = now_in_ms
-        flask_global.after_after_request_time = now_in_ms
-        if request.headers["X-Forwarded-Proto"] == "http":
-            return redirect(request.url.replace("http", "https"), code=301)
-        user_agent = None
-        ua_add = ""
-        if "User-Agent" in request.headers:
-            user_agent = request.headers["User-Agent"]
-            ua_add = ", " + str(ua_parse(user_agent))
-        ip_addr = request.headers["X-Forwarded-For"]
-        print("Hit from " + ip_addr + ua_add)
-        chunks = request.url.split("/")
-        flask_global.middle_before_request_time = now_in_ms
-        track_view("/".join(chunks[2 : len(chunks)]), ip_addr, user_agent)
-        flask_global.after_before_request_time = now_in_ms
+    if "debug_mode_enabled" in globals():
+        return
+    now_in_ms = time.time() * 1000
+    flask_global.before_before_request_time = now_in_ms
+    flask_global.middle_before_request_time = now_in_ms
+    flask_global.after_before_request_time = now_in_ms
+    flask_global.after_after_request_time = now_in_ms
+    if request.headers["X-Forwarded-Proto"] == "http":
+        return redirect(request.url.replace("http", "https"), code=301)
+    user_agent = None
+    ua_add = ""
+    if "User-Agent" in request.headers:
+        user_agent = request.headers["User-Agent"]
+        ua_add = ", " + str(ua_parse(user_agent))
+    ip_addr = request.headers["X-Forwarded-For"]
+    print("Hit from " + ip_addr + ua_add)
+    chunks = request.url.split("/")
+    flask_global.middle_before_request_time = now_in_ms
+    track_view("/".join(chunks[2 : len(chunks)]), ip_addr, user_agent)
+    flask_global.after_before_request_time = now_in_ms
 
 
 @app.after_request
