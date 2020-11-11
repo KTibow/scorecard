@@ -204,6 +204,7 @@ def before_req():
     Returns:
         None usually, but if it's HTTP, it returns a redirect to HTTPS.
     """
+    print(request.headers)
     if "debug_mode_enabled" not in globals():
         now_in_ms = time.time() * 1000
         flask_global.before_before_request_time = now_in_ms
