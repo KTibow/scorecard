@@ -16,7 +16,7 @@ self.addEventListener("install", (e) => {
     log_message("🔻 Installing...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            var cache_urls = eval("{{urls}}");
+            var cache_urls = eval("[{{urls}}]");
             console.log("urls:", {{urls}});
             console.log("urls listed:", [{{urls}}]);
             console.log("evaled urls:", cache_urls);
