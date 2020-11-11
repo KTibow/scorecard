@@ -38,9 +38,12 @@ self.addEventListener("install", (e) => {
 self.addEventListener("fetch", function (event) {
     var shouldCache = event.request.url.includes(".");
     log_message(
-        "🌎 We got a (no, not fish) fetch! " + shouldCache
-            ? "Caching it for later use."
-            : "Not caching API call.",
+        "🌎 We got a (no, not fish) fetch! " +
+            (shouldCache
+                ? "Caching it for later use."
+                : "Not caching API call.") +
+            "URL: " +
+            event.request.url,
         "slateblue",
         event.request
     );
