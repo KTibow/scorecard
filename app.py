@@ -31,6 +31,7 @@ import threading
 
 # Tests
 import __main__
+
 debug_mode = "boot" in __main__.__file__
 
 # Init flask
@@ -241,12 +242,10 @@ def after_req(response):
     Returns:
         The modified response.
     """
-    security_policy = (
-        "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
-    )
-    if debug_mode:
-        security_policy = security_policy.replace("https: ", "")
-    response.headers["Content-Security-Policy"] = security_policy
+    if not debug_mode:
+        response.headers[
+            "Content-Security-Policy"
+        ] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
     if response.status_code != 301:
         response.headers[
             "Strict-Transport-Security"
