@@ -30,7 +30,8 @@ import requests
 import threading
 
 # Tests
-debug_mode = "debug_mode_enabled" in globals()
+import __main__
+debug_mode = "boot" in __main__.__file__
 
 # Init flask
 app = Flask(__name__, template_folder="game")

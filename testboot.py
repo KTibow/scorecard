@@ -1,7 +1,6 @@
 print("Loading...")
 import app
 
-app.debug_mode_enabled = True
 from multiprocessing import Process
 from time import sleep
 from urllib.request import urlopen
