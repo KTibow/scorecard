@@ -18,6 +18,7 @@ self.addEventListener("install", (e) => {
         caches.open(cacheName).then((cache) => {
             var cache_urls = eval("{{urls}}");
             console.log("urls:", {{urls}});
+            console.log("urls listed:", [{{urls}}]);
             console.log("evaled urls:", cache_urls);
             log_message("⬇ Caching caches...", "coral", cache_urls);
             return cache.addAll(cache_urls);
