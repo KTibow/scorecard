@@ -1,9 +1,8 @@
-function log_message(message, color, object) {
+function log_message(message, color) {
     console.log(
         "%c install.js: %c" + message,
         "color: orange;",
-        "color: " + color,
-        object || ""
+        "color: " + color
     );
 }
 log_message("🔁 Getting ready to install service worker", "green");

@@ -16,7 +16,7 @@ self.addEventListener("install", (e) => {
     log_message("🔻 Installing ...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            var cache_urls = JSON.parse("{{urls}}");
+            var cache_urls = JSON.parse("[{{urls}}]");
             log_message("⬇ Caching caches...", "coral", cache_urls);
             return cache.addAll(cache_urls);
         })
