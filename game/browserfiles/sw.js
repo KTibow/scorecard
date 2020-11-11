@@ -36,21 +36,22 @@ self.addEventListener("install", (e) => {
     log_message("✅ Done installing!", "green");
 });
 self.addEventListener("fetch", function (event) {
-    log_message("🌎 We got a (no, not 🐟) fetch!", "slateblue", event.request);
-    if (
+    var shouldCache =
         !event.request.url.includes("makeid") &&
         !event.request.url.includes("addid") &&
         !event.request.url.includes("gids") &&
-        !event.request.url.includes("cardstatus")
-    ) {
+        !event.request.url.includes("cardstatus");
+    log_message(
+        "🌎 We got a (no, not fish) fetch! " + shouldCache
+            ? "Caching it for later use."
+            : "Not caching API call.",
+        "slateblue",
+        event.request
+    );
+    if (shouldCache) {
         caches
             .open(cacheName)
             .then(function (cache) {
-                log_message(
-                    "🔻 Caching for later use:",
-                    "green",
-                    event.request.url
-                );
                 cache.add(event.request.url);
             })
             .catch(function () {
