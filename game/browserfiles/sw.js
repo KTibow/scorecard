@@ -36,11 +36,7 @@ self.addEventListener("install", (e) => {
     log_message("✅ Done installing!", "green");
 });
 self.addEventListener("fetch", function (event) {
-    var shouldCache =
-        !event.request.url.includes("makeid") &&
-        !event.request.url.includes("addid") &&
-        !event.request.url.includes("gids") &&
-        !event.request.url.includes("cardstatus");
+    var shouldCache = event.request.url.includes(".");
     log_message(
         "🌎 We got a (no, not fish) fetch! " + shouldCache
             ? "Caching it for later use."
