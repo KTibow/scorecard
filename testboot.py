@@ -1,6 +1,6 @@
 print("Loading...")
-debug_mode_enabled = True
-exec(open("app.py", "r").read())
+import app
+app.debug_mode_enabled = True
 from multiprocessing import Process
 from time import sleep
 from urllib.request import urlopen
