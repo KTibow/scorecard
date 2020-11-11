@@ -41,8 +41,8 @@ self.addEventListener("fetch", function (event) {
         "🌎 We got a (no, not fish) fetch! " +
             (shouldCache
                 ? "Caching it for later use."
-                : "Not caching API call.") +
-            "URL: " +
+                : "Not caching non-file call.") +
+            " URL: " +
             event.request.url,
         "slateblue",
         event.request
