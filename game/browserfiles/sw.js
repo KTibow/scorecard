@@ -42,7 +42,7 @@ self.addEventListener("fetch", function (event) {
             (shouldCache
                 ? "Caching it for later use."
                 : "Not caching non-file call.") +
-            " URL: " +
+            "\nURL: " +
             event.request.url,
         "slateblue",
         event.request
