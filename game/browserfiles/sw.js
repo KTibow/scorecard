@@ -16,9 +16,7 @@ self.addEventListener("install", (e) => {
     log_message("🔻 Installing...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            var cache_urls = eval("{{urls}}");
-            console.log("urls:", {{urls}});
-            console.log("evaled urls:", cache_urls);
+            var cache_urls = eval("[{{urls}}]");
             log_message("⬇ Caching caches...", "coral", cache_urls);
             return cache.addAll(cache_urls);
         })
@@ -38,21 +36,21 @@ self.addEventListener("install", (e) => {
     log_message("✅ Done installing!", "green");
 });
 self.addEventListener("fetch", function (event) {
-    log_message("🌎 We got a (no, not 🐟) fetch!", "slateblue", event.request);
-    if (
-        !event.request.url.includes("makeid") &&
-        !event.request.url.includes("addid") &&
-        !event.request.url.includes("gids") &&
-        !event.request.url.includes("cardstatus")
-    ) {
+    var shouldCache = event.request.url.includes(".");
+    log_message(
+        "🌎 We got a (no, not fish) fetch! " +
+            (shouldCache
+                ? "Caching it for later use."
+                : "Not caching non-file call.") +
+            "\nURL: " +
+            event.request.url,
+        "slateblue",
+        event.request
+    );
+    if (shouldCache) {
         caches
             .open(cacheName)
             .then(function (cache) {
-                log_message(
-                    "🔻 Caching for later use:",
-                    "green",
-                    event.request.url
-                );
                 cache.add(event.request.url);
             })
             .catch(function () {
