@@ -258,7 +258,6 @@ def after_req(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     if not debug_mode:
-        flask_global.after_after_request_time = time.time() * 1000
         server_timing = 'beforereq;desc="Process redirect and log";dur='
         server_timing += str(
             round(
@@ -275,11 +274,20 @@ def after_req(response):
                 1,
             )
         )
+        flask_global.after_after_request_time = time.time() * 1000
         server_timing += ', process;desc="Render stuff";dur='
         server_timing += str(
             round(
                 flask_global.after_after_request_time
                 - flask_global.after_before_request_time,
+                1,
+            )
+        )
+        server_timing += ', process;desc="Total server-side timing";dur='
+        server_timing += str(
+            round(
+                flask_global.after_after_request_time
+                - flask_global.before_before_request_time,
                 1,
             )
         )
