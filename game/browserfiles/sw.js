@@ -43,6 +43,8 @@ self.addEventListener("fetch", function (event) {
     } else {
         message_to_log += "Not caching non-file call.";
     }
+    message_to_log += " URL: ";
+    message_to_log += event.request.url.split("com")[1];
     message_to_log += "\n";
     log_message(message_to_log, "slateblue", event.request);
     if (shouldCache) {
