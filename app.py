@@ -20,6 +20,7 @@ from flask import (
 )
 from github.MainClass import Github
 from flask_compress import Compress
+from flask_minify import minify
 
 # Tracking
 from user_agents import parse as ua_parse
@@ -38,6 +39,7 @@ debug_mode = "boot" in __main__.__file__
 # Init flask
 app = Flask(__name__, template_folder="game")
 Compress(app)
+minify(app=app, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
