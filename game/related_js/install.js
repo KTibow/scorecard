@@ -11,24 +11,24 @@ window.addEventListener("load", function () {
         log_message("🔻 Installing...", "yellow");
         navigator.serviceWorker
             .register("/sw.js")
-            .then(function (reg) {
+            .then(function () {
                 log_message("✅ Done installing!", "green");
             })
-            .catch(function (err) {
+            .catch(function () {
                 log_message("❌ Error installing", "red");
             });
     }
     let deferredPrompt;
     const addBtn = document.getElementById("add2hs");
-    window.addEventListener("beforeinstallprompt", (e) => {
+    window.addEventListener("beforeinstallprompt", (event) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
+        event.preventDefault();
         // Stash the event so it can be triggered later.
-        deferredPrompt = e;
+        deferredPrompt = event;
         // Update UI to notify the user they can add to home screen
         addBtn.style.setProperty("opacity", "1", "important");
         addBtn.style.setProperty("visibility", "visible", "important");
-        addBtn.addEventListener("click", (e) => {
+        addBtn.addEventListener("click", () => {
             // hide our user interface that shows our A2HS button
             addBtn.style.setProperty("opacity", "0", "important");
             addBtn.style.setProperty("visibility", "hidden", "important");

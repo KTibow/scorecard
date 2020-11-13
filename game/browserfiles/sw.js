@@ -37,7 +37,7 @@ self.addEventListener("install", (e) => {
 });
 self.addEventListener("fetch", function (event) {
     var shouldCache = event.request.url.includes(".");
-    message_to_log = "🌎 We got a (no, not fish) fetch! ";
+    var message_to_log = "🌎 We got a (no, not fish) fetch! ";
     if (shouldCache) {
         message_to_log += "Caching it for later use.";
     } else {
