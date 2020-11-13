@@ -16,7 +16,7 @@ self.addEventListener("install", (e) => {
     log_message("🔻 Installing...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            var cache_urls = Function("\"use strict\"; return ([{{urls}}])")();
+            var cache_urls = Function("return ([{{urls}}])")();
             log_message("⬇ Caching caches...", "coral", cache_urls);
             return cache.addAll(cache_urls);
         })
@@ -39,9 +39,9 @@ self.addEventListener("fetch", function (event) {
     var shouldCache = event.request.url.includes(".");
     message_to_log = "🌎 We got a (no, not fish) fetch! ";
     if (shouldCache) {
-      message_to_log += "Caching it for later use.";
+        message_to_log += "Caching it for later use.";
     } else {
-      message_to_log += "Not caching non-file call.";
+        message_to_log += "Not caching non-file call.";
     }
     message_to_log += "\n";
     log_message(message_to_log, "slateblue", event.request);
