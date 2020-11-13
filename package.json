@@ -1,0 +1,16 @@
+{
+  "name": "scorecard",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KTibow/scorecard.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KTibow/scorecard/issues"
+  },
+  "homepage": "https://github.com/KTibow/scorecard",
+  "devDependencies": {
+    "eslint": "^7.13.0"
+  }
+}
