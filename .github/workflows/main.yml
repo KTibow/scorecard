@@ -59,10 +59,12 @@ jobs:
       run: python3 testboot.py
 
     - name: flake8
-      run: python3 -m flake8 --exit-zero app.py
+      run: python3 -m flake8 app.py
 
     - name: ESLint
       run: npx eslint .
 
-    - name: Black
-      run: python3 -m black . --check
+    - name: Formatting
+      run: |
+        python3 -m black . --check
+        npx prettier **\*.js --check
