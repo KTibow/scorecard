@@ -36,19 +36,35 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
     - name: Update prexisting packages
       run: python3 -m pip install -U pip setuptools wheel
 
     - name: Install flake stuff
-      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names
+      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names black isort
 
     # Installs from requirements
-    - name: Install from requirements
+    - name: Install from requirements (Python)
       run: pip3 install -r requirements.txt
 
-    # Runs a single command using the runners shell
+    - name: Install from requirements (Node)
+      run: npm install
+
+    # Runs CI
     - name: Test booting the server
       run: python3 testboot.py
 
     - name: flake8
       run: python3 -m flake8 --exit-zero app.py
+
+    - name: ESLint
+      run: npx eslint .
+
+    - name: Black + isort
+      run: |
+        python3 -m black . --check
+        python3 -m isort . --check
