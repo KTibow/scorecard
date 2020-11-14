@@ -4,6 +4,7 @@ statistics = True
 count = True
 use-varnames-strict-mode = True
 inline-quotes = double
+exclude = lighthouse_boot.py,testboot.py
 extend-ignore =
     C812 # Trailing commas don't work with black.
     E203 # No whitespace around colons doesn't work with black.
@@ -21,6 +22,7 @@ extend-ignore =
     WPS441 # Block variable overlap is unavoidable.
     WPS442 # False positives because I call global earlier.
     WPS515 # Using open() without the with keyword is unavoidable.
+    WPS609 # So I shouldn't be using __file__? Well how then?
 min-name-length=3
 max-returns=10
 max-local-variables=15
@@ -30,3 +32,4 @@ max-line-complexity=20
 max-module-members=20
 max-line-length=90
 max-cognitive-score=100
+htmldir=flake-report
