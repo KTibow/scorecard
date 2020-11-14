@@ -61,15 +61,13 @@ function goHome() {
 }
 function getGroup() {
     if (document.hasFocus()) {
-        var xmlhttp = new XMLHttpRequest();
-        var url = "/gids/" + userId;
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("gstat").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
+        fetch("/gids/" + userId)
+            .then((response) => {
+                return response.text();
+            })
+            .then((response) => {
+                document.getElementById("gstat").innerHTML = response;
+            });
     }
 }
 setInterval(getGroup, 400);
