@@ -22,14 +22,14 @@ function getPosition(element) {
 }
 function registerGroup() {
     var idInput = document.getElementById("username");
-    var url = "/addid/" + user_id + "/" + idInput.value;
+    var url = "/addid/" + userId + "/" + idInput.value;
     fetch(url)
         .then((result) => {
             return result.text() != "notreal";
         })
-        .then((id_valid) => {
-            var button_icon = document.createAttribute("data-icon");
-            if (id_valid) {
+        .then((idValid) => {
+            var buttonIcon = document.createAttribute("data-icon");
+            if (idValid) {
                 // Confetti
                 var pos = getPosition(idInput);
                 pos["x"] = pos["x"] + idInput.offsetWidth / 2;
@@ -42,27 +42,27 @@ function registerGroup() {
                     origin: pos,
                 });
                 // Other stuff
-                button_icon.value = "done";
+                buttonIcon.value = "done";
                 document.getElementById("adgr").innerHTML = "Added to group";
             } else {
-                button_icon.value = "error";
+                buttonIcon.value = "error";
                 document.getElementById("adgr").innerHTML = "Invalid ID.";
             }
-            document.getElementById("adgr").setAttributeNode(button_icon);
+            document.getElementById("adgr").setAttributeNode(buttonIcon);
             setTimeout(() => {
-                button_icon.value = "group_add";
-                document.getElementById("adgr").setAttributeNode(button_icon);
+                buttonIcon.value = "group_add";
+                document.getElementById("adgr").setAttributeNode(buttonIcon);
                 document.getElementById("adgr").innerHTML = "Add to group";
             }, 1000);
         });
 }
 function goHome() {
-    window.location.href = "/";
+    window.location = "/";
 }
 function getGroup() {
     if (document.hasFocus()) {
         var xmlhttp = new XMLHttpRequest();
-        var url = "/gids/" + user_id;
+        var url = "/gids/" + userId;
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("gstat").innerHTML = this.responseText;
@@ -74,7 +74,7 @@ function getGroup() {
 }
 setInterval(getGroup, 400);
 var xmlhttpy = new XMLHttpRequest();
-var urly = "/rightnum/" + user_id;
+var urly = "/rightnum/" + userId;
 var nopes = [];
 for (var i = 1; i <= 1000; i++) {
     nopes.push(i);
@@ -94,25 +94,25 @@ function getCard() {
     document.getElementById("attmpts").innerHTML = String(
         Number(document.getElementById("attmpts").innerHTML) + 1
     );
-    var render_popup_timeout = 0;
+    var renderPopupTimeout = 0;
     if (Number(document.getElementById("attmpts").innerHTML) == 16) {
         openOverlay(
             "It looks like you've done all of the cards. Make sure you aren't repeating any."
         );
-        render_popup_timeout = 2000;
+        renderPopupTimeout = 2000;
     }
     function renderPopup() {
         var xmlhttp = new XMLHttpRequest();
         var url =
             "/cardstatus/" +
-            user_id +
+            userId +
             "/" +
             document.getElementById("cardname").value;
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText == "0") {
                     var xmlhttp2 = new XMLHttpRequest();
-                    var url2 = "/rightnum/" + user_id;
+                    var url2 = "/rightnum/" + userId;
                     xmlhttp2.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
                             openOverlay(
@@ -148,7 +148,7 @@ function getCard() {
                                 },
                             });
                             var xmlhttp3 = new XMLHttpRequest();
-                            var url3 = "/finished/" + user_id;
+                            var url3 = "/finished/" + userId;
                             xmlhttp3.open("GET", url3, true);
                             xmlhttp3.send();
                         }
@@ -180,11 +180,11 @@ function getCard() {
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
     }
-    setTimeout(renderPopup, render_popup_timeout);
+    setTimeout(renderPopup, renderPopupTimeout);
 }
 function checkNumber() {
     var xmlhttp = new XMLHttpRequest();
-    var url = "/rightnum/" + user_id;
+    var url = "/rightnum/" + userId;
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             if (
