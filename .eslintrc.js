@@ -6,5 +6,9 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 12,
     },
-    rules: {},
+    globals: {
+        user_id: "readonly",
+        confetti: "readonly",
+    },
+    extends: "plugin:prettier/recommended",
 };

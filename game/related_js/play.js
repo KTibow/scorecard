@@ -32,7 +32,8 @@ function registerGroup() {
             if (id_valid) {
                 // Confetti
                 var pos = getPosition(idInput);
-                pos["x"] = (pos["x"] + idInput.offsetWidth / 2) / window.innerWidth;
+                pos["x"] = pos["x"] + idInput.offsetWidth / 2;
+                pos["x"] = pos["x"] / window.innerWidth;
                 pos["y"] = pos["x"] / window.innerHeight;
                 confetti({
                     particleCount: 100,
