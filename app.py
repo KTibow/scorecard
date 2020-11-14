@@ -6,7 +6,7 @@
 import json
 import mimetypes
 import os
-from random import randint
+from random import randint, choice
 import time
 
 from flask import (
@@ -463,21 +463,17 @@ def addid(exist, new):
     else:
         # The best make you win, most tell you what it's not,
         # and some don't give you anything.
-        infodict = {"rightnum": str(randint(1, 1000))}
-        fyet = False
-        for tletter in "ABCD":
-            for tnumber in range(1, 5):
-                myoption = randint(0, 15)
-                if myoption == 0:
-                    myoption = "0"
-                    fyet = True
-                elif myoption < 12:
+        infodict = {}
+        for clue_letter in "ABCD":
+            for clue_number in range(1, 4):
+                myoption = randint(0, 4)
+                if myoption < 4:
                     myoption = "1"
                 else:
                     myoption = "2"
-                if tletter + str(tnumber) == "D4" and not fyet:
-                    myoption = "0"
-                infodict[tletter + str(tnumber)] = myoption
+                infodict[clue_letter + str(clue_number)] = myoption
+        the_chosen_one = choice(["A", "B", "C", "D"]) + str(randint(1, 4))
+        infodict[the_chosen_one] = "0"
         group_database.append([infodict, exist, new])
         print(group_database)
         json.dump(group_database, open("groups.db", "w"))
