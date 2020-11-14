@@ -1,3 +1,12 @@
+function closeOverlay() {
+    document.getElementById("overlay").style.opacity = "0";
+    document.getElementById("overlay").style.visibility = "hidden";
+}
+function openOverlay(message) {
+    document.getElementById("overlay").style.opacity = "1";
+    document.getElementById("overlay").style.visibility = "";
+    document.getElementById("overlay-text").innerHTML = message;
+}
 function getPosition(el) {
     var xPos = 0;
     var yPos = 0;
@@ -92,10 +101,9 @@ function getCard() {
     );
     var render_popup_timeout = 0;
     if (Number(document.getElementById("attmpts").innerHTML) == 16) {
-        document.getElementById("overlay").style.opacity = "1";
-        document.getElementById("overlay").style.visibility = "";
-        document.getElementById("overlay-text").innerHTML =
-            "It looks like you've done all of the cards. Make sure you aren't repeating any.";
+        openOverlay(
+            "It looks like you've done all of the cards. Make sure you aren't repeating any."
+        );
         render_popup_timeout = 2000;
     }
     function renderPopup() {
@@ -109,15 +117,11 @@ function getCard() {
                     var url2 = "/rightnum/{{uid}}";
                     xmlhttp2.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("overlay").style.opacity =
-                                "1";
-                            document.getElementById(
-                                "overlay"
-                            ).style.visibility = "";
-                            document.getElementById("overlay-text").innerHTML =
+                            openOverlay(
                                 "That's the right clue! The number is " +
-                                this.responseText +
-                                ". Share it with your friends, and they can verify it!";
+                                    this.responseText +
+                                    ". Share it with your friends, and they can verify it!"
+                            );
                             setTimeout(confetti, 10, {
                                 particleCount: 100,
                                 startVelocity: 30,
@@ -155,31 +159,23 @@ function getCard() {
                     xmlhttp2.send();
                 } else if (this.responseText == "1") {
                     if (nopes.length < 1) {
-                        document.getElementById("overlay").style.opacity = "1";
-                        document.getElementById("overlay").style.visibility =
-                            "";
-                        document.getElementById("overlay-text").innerHTML =
-                            "Ooops! You missed out on the right one from 1-1000.";
+                        openOverlay(
+                            "Ooops! You missed out on the right one from 1-1000."
+                        );
                     } else {
                         var choice = choose(nopes);
-                        document.getElementById("overlay").style.opacity = "1";
-                        document.getElementById("overlay").style.visibility =
-                            "";
-                        document.getElementById("overlay-text").innerHTML =
+                        openOverlay(
                             "This is a normal clue, and it tells you that it's not " +
-                            String(choice);
+                                String(choice)
+                        );
                         nopes.pop(choice);
                     }
                 } else if (this.responseText == "2") {
-                    document.getElementById("overlay").style.opacity = "1";
-                    document.getElementById("overlay").style.visibility = "";
-                    document.getElementById("overlay-text").innerHTML =
-                        "This clue doesn't help you.";
+                    openOverlay("This clue doesn't help you.");
                 } else if (this.responseText == "invalid") {
-                    document.getElementById("overlay").style.opacity = "1";
-                    document.getElementById("overlay").style.visibility = "";
-                    document.getElementById("overlay-text").innerHTML =
-                        "That's an invalid clue. Make sure you're in a group.";
+                    openOverlay(
+                        "That's an invalid clue. Make sure you're in a group."
+                    );
                 }
             }
         };
@@ -196,22 +192,12 @@ function checkNumber() {
             if (
                 this.responseText == document.getElementById("numbername").value
             ) {
-                document.getElementById("overlay").style.opacity = "1";
-                document.getElementById("overlay").style.visibility = "";
-                document.getElementById("overlay-text").innerHTML =
-                    "Yup, this person actually got it!";
+                openOverlay("Yup, this person actually got it!");
             } else {
-                document.getElementById("overlay").style.opacity = "1";
-                document.getElementById("overlay").style.visibility = "";
-                document.getElementById("overlay-text").innerHTML =
-                    "That's an invalid number. Double-check it.";
+                openOverlay("That's an invalid number. Double-check it.");
             }
         }
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
-}
-function closeOverlay() {
-    document.getElementById("overlay").style.opacity = "0";
-    document.getElementById("overlay").style.visibility = "hidden";
 }
