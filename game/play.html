@@ -37,8 +37,10 @@
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <button onClick="goHome();" class="home-button" data-icon="arrow_back">Home</button>
         <h1>Play...</h1>
-        <h3>You're in the game. Let's make this happen.</h3>
-        <h4>(Your ID is {{uid}}.<br><span id="gstat">You currently don't have anyone in your group.</span><br>So far, you've done this number of clue checks: <span id="attmpts">0</span>)</h4>
+        <h2>You're in the game. Let's make this happen.</h2>
+        <h3>Your ID is {{uid}}.</h3>
+        <h3 id="gstat">You currently don't have anyone in your group.</h3>
+        <h3>So far, you've done <span id="attmpts">0</span> clue checks.</h3>
         <input id="cardname" type="text" placeholder="Clue ID"><br/>
         <button onClick="getCard()" data-icon="add">Add clue</button><br/>
         <input id="numbername" type="text" placeholder="Final number"><br/>

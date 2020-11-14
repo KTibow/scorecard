@@ -43,6 +43,10 @@ h1 {
 h2 {
   font-size: 1.3em;
 }
+h3 {
+  margin-bottom: 0.1em !important;
+  font-size: 1.1em;
+}
 input {
   border: 5px solid var(--primary-color);
   border-radius: 10px;
