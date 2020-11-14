@@ -10,7 +10,7 @@ function openOverlay(message) {
 function getPosition(element) {
     var xPos = 0;
     var yPos = 0;
-    while (el) {
+    while (element) {
         xPos += element.offsetLeft - element.scrollLeft + element.clientLeft;
         yPos += element.offsetTop - element.scrollTop + element.clientTop;
         element = element.offsetParent;
