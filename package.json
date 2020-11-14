@@ -11,7 +11,6 @@
   },
   "homepage": "https://github.com/KTibow/scorecard",
   "devDependencies": {
-    "eslint": "^7.13.0",
-    "eslint-plugin-html": "^6.1.1"
+    "eslint": "^7.13.0"
   }
 }
