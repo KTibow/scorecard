@@ -249,7 +249,7 @@ def after_req(response):
     if not debug_mode:
         response.headers[
             "Content-Security-Policy"
-        ] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'; worker-src blob: 'self'; script-src 'self'"
+        ] = "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'; worker-src blob: 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'"
     if response.status_code != 301:
         response.headers[
             "Strict-Transport-Security"
