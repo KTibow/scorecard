@@ -538,9 +538,7 @@ def checkcard(uid, cardnum):
         group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
         group_database = []
-    print(group_database)
     comp = [user_id for group in group_database for user_id in group]
-    print(comp)
     if uid not in comp:
         return "invalid"
     for group in group_database:
