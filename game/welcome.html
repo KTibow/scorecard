@@ -42,10 +42,11 @@
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add Cluecard to Home Screen</button>
         <script>
             var input = document.getElementById("username");
-            input.addEventListener("keyup", function(event) {
+            input.addEventListener("keydown", function(event) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
                     registerUser();
+                    return false;
                 }
             });
         </script>
