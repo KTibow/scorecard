@@ -39,7 +39,7 @@ debug_mode = "boot" in __main__.__file__
 # Init flask
 app = Flask(__name__, template_folder="game")
 Compress(app)
-minify(app=app, caching_limit=0)
+minify(app=app, js=False, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
