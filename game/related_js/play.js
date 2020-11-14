@@ -7,13 +7,13 @@ function openOverlay(message) {
     document.getElementById("overlay").style.visibility = "";
     document.getElementById("overlay-text").innerHTML = message;
 }
-function getPosition(el) {
+function getPosition(element) {
     var xPos = 0;
     var yPos = 0;
     while (el) {
-        xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
-        yPos += el.offsetTop - el.scrollTop + el.clientTop;
-        el = el.offsetParent;
+        xPos += element.offsetLeft - element.scrollLeft + element.clientLeft;
+        yPos += element.offsetTop - element.scrollTop + element.clientTop;
+        element = element.offsetParent;
     }
     return {
         x: xPos,
@@ -21,45 +21,39 @@ function getPosition(el) {
     };
 }
 function registerGroup() {
-    var xmlhttp = new XMLHttpRequest();
     var idInput = document.getElementById("username");
     var url = "/addid/" + user_id + "/" + idInput.value;
-    var pos = getPosition(idInput);
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var attry = document.createAttribute("data-icon");
-            if (this.responseText == "notreal") {
-                attry.value = "error";
-            } else {
-                attry.value = "done";
+    fetch(url)
+        .then((result) => {
+            return result.text() != "notreal";
+        })
+        .then((id_valid) => {
+            var button_icon = document.createAttribute("data-icon");
+            if (id_valid) {
+                // Confetti
+                var pos = getPosition(idInput);
+                pos["x"] = (pos["x"] + idInput.offsetWidth / 2) / window.innerWidth;
+                pos["y"] = pos["x"] / window.innerHeight;
                 confetti({
                     particleCount: 100,
                     startVelocity: 30,
                     spread: 100,
-                    origin: {
-                        x:
-                            (pos["x"] + idInput.offsetWidth / 2) /
-                            window.innerWidth,
-                        y: pos["y"] / window.innerHeight,
-                    },
+                    origin: pos,
                 });
-            }
-            document.getElementById("adgr").setAttributeNode(attry);
-            if (this.responseText == "notreal") {
-                document.getElementById("adgr").innerHTML = "Invalid ID.";
-            } else {
+                // Other stuff
+                button_icon.value = "done";
                 document.getElementById("adgr").innerHTML = "Added to group";
+            } else {
+                button_icon.value = "error";
+                document.getElementById("adgr").innerHTML = "Invalid ID.";
             }
-            setTimeout(function () {
-                var attry = document.createAttribute("data-icon");
-                attry.value = "group_add";
-                document.getElementById("adgr").setAttributeNode(attry);
+            document.getElementById("adgr").setAttributeNode(button_icon);
+            setTimeout(() => {
+                button_icon.value = "group_add";
+                document.getElementById("adgr").setAttributeNode(button_icon);
                 document.getElementById("adgr").innerHTML = "Add to group";
             }, 1000);
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
+        });
 }
 function goHome() {
     window.location.href = "/";
@@ -109,7 +103,9 @@ function getCard() {
     function renderPopup() {
         var xmlhttp = new XMLHttpRequest();
         var url =
-            "/cardstatus/" + user_id + document.getElementById("cardname").value;
+            "/cardstatus/" +
+            user_id +
+            document.getElementById("cardname").value;
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText == "0") {
