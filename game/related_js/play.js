@@ -23,7 +23,7 @@ function getPosition(el) {
 function registerGroup() {
     var xmlhttp = new XMLHttpRequest();
     var idInput = document.getElementById("username");
-    var url = "/addid/{{uid}}/" + idInput.value;
+    var url = "/addid/" + user_id + "/" + idInput.value;
     var pos = getPosition(idInput);
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -67,7 +67,7 @@ function goHome() {
 function getGroup() {
     if (document.hasFocus()) {
         var xmlhttp = new XMLHttpRequest();
-        var url = "/gids/{{uid}}";
+        var url = "/gids/" + user_id;
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("gstat").innerHTML = this.responseText;
@@ -79,7 +79,7 @@ function getGroup() {
 }
 setInterval(getGroup, 400);
 var xmlhttpy = new XMLHttpRequest();
-var urly = "/rightnum/{{uid}}";
+var urly = "/rightnum/" + user_id;
 var nopes = [];
 for (var i = 1; i <= 1000; i++) {
     nopes.push(i);
@@ -109,12 +109,12 @@ function getCard() {
     function renderPopup() {
         var xmlhttp = new XMLHttpRequest();
         var url =
-            "/cardstatus/{{uid}}/" + document.getElementById("cardname").value;
+            "/cardstatus/" + user_id + document.getElementById("cardname").value;
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText == "0") {
                     var xmlhttp2 = new XMLHttpRequest();
-                    var url2 = "/rightnum/{{uid}}";
+                    var url2 = "/rightnum/" + user_id;
                     xmlhttp2.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
                             openOverlay(
@@ -150,7 +150,7 @@ function getCard() {
                                 },
                             });
                             var xmlhttp3 = new XMLHttpRequest();
-                            var url3 = "/finished/{{uid}}";
+                            var url3 = "/finished/" + user_id;
                             xmlhttp3.open("GET", url3, true);
                             xmlhttp3.send();
                         }
@@ -186,7 +186,7 @@ function getCard() {
 }
 function checkNumber() {
     var xmlhttp = new XMLHttpRequest();
-    var url = "/rightnum/{{uid}}";
+    var url = "/rightnum/" + user_id;
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             if (
