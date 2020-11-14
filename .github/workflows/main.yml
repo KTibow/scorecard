@@ -45,7 +45,7 @@ jobs:
       run: python3 -m pip install -U pip setuptools wheel
 
     - name: Install flake stuff
-      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names black isort
+      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names black
 
     # Installs from requirements
     - name: Install from requirements (Python)
@@ -64,7 +64,5 @@ jobs:
     - name: ESLint
       run: npx eslint .
 
-    - name: Black + isort
-      run: |
-        python3 -m black . --check
-        python3 -m isort . --check
+    - name: Black
+      run: python3 -m black . --check
