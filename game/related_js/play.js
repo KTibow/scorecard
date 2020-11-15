@@ -24,9 +24,10 @@ function registerGroup() {
     var idInput = document.getElementById("username");
     fetch(`/addid/${userIdString}/${idInput.value}`)
         .then((result) => {
-            return result.text() != "notreal";
+            return result.text();
         })
         .then((idValid) => {
+            idValid = idValid == "notreal";
             var buttonIcon = document.createAttribute("data-icon");
             if (idValid) {
                 // Confetti
