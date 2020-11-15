@@ -559,6 +559,7 @@ def rightnum(uid, excludes):
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
+    return " and ".join([uid, excludes, comp]) + " bawkbawk " + " and ".join([type(i) for i in [uid, excludes, comp]])
     if uid not in comp:
         return "-1"
     for group in group_database:
