@@ -560,24 +560,23 @@ def rightnum(uid, excludes):
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     return (
-        " and ".join([uid, excludes, comp])
+        " and ".join([str(item) for item in [uid, excludes, comp]])
         + " bawkbawk "
-        + " and ".join([type(i) for i in [uid, excludes, comp]])
+        + " and ".join([str(type(item)) for item in [uid, excludes, comp]])
     )
-    if uid not in comp:
-        return "-1"
-    for group in group_database:
-        if uid in group:
-            clues = []
-            for clue_letter in "ABCD":
-                for clue_number in range(1, 5):
-                    clues.append(clue_letter + str(clue_number))
-            clue_to_return = ""
-            while True:
-                clue_to_return = choice(clues)
-                if group[0][clue_to_return] != "correct" and clue_to_return != excludes:
-                    break
-            return clue_to_return
+    # if uid not in comp:
+    # return "-1"
+    # for group in group_database:
+    # if uid in group:
+    # clues = []
+    # for clue_letter in "ABCD":
+    # for clue_number in range(1, 5):
+    # clues.append(clue_letter + str(clue_number))
+    # clue_to_return = ""
+    # while True:
+    # clue_to_return = choice(clues)
+    # if group[0][clue_to_return] != "correct" and clue_to_return != excludes:
+    # break
 
 
 @app.route("/finished/<user_id>")
