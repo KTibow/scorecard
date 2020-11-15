@@ -43,8 +43,6 @@
         <h3>So far, you've done <span id="attmpts">0</span> clue checks.</h3>
         <input id="cardname" type="text" placeholder="Clue ID"><br/>
         <button onClick="getCard()" data-icon="add">Add clue</button><br/>
-        <input id="numbername" type="text" placeholder="Final number"><br/>
-        <button onClick="checkNumber()" data-icon="check">Check number</button><br/>
         <input id="username" type="text" placeholder="User ID"><br/>
         <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
         <button id="add2hs" class="alt-button" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add Cluecard to Home Screen</button>
@@ -58,13 +56,6 @@
                 if (event.keyCode === 13) {
                     event.preventDefault();
                     getCard();
-                }
-            });
-            input = document.getElementById("numbername");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    checkNumber();
                 }
             });
             input = document.getElementById("username");
