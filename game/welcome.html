@@ -35,10 +35,8 @@
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <h1>Let's go!</h1>
         <h2>You've opened the electronic scorecard. Now it's time to start going.</h2>
-        <form>
-          <input id="username" type="text" placeholder="Name" aria-label="Name" autofocus required><br/>
-          <button onClick="registerUser()" data-icon="arrow_forward" type="button" autofocus>Let's do this.</button><br/>
-        </form>
+        <input id="username" type="text" placeholder="Name" aria-label="Name" autofocus><br/>
+        <button onClick="registerUser()" data-icon="arrow_forward" type="button" autofocus>Let's do this.</button><br/>
         <button id="add2hs" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add Cluecard to Home Screen</button>
         <script>
             var input = document.getElementById("username");

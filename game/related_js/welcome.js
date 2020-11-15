@@ -1,6 +1,10 @@
 function registerUser() {
-    var url = "/makeid/" + document.getElementById("username").value;
-    fetch(url)
+    var username = document.getElementById("username").value;
+    if (username == "") {
+        document.getElementById("username").style.animation = "1s jiggle";
+        return;
+    }
+    fetch(`/makeid/${username}`)
         .then((result) => {
             return result.text();
         })
