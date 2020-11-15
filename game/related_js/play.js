@@ -84,7 +84,9 @@ function getCard() {
     }
     setTimeout(() => {
         fetch(
-            `/cardstatus/${userIdString}/${document.getElementById("cardname").value}`
+            `/cardstatus/${userIdString}/${
+                document.getElementById("cardname").value
+            }`
         )
             .then((result) => {
                 return result.text();
@@ -143,7 +145,7 @@ function getCard() {
                         );
                         break;
                     default:
-                        openOverlay("WTH?" + outcome)
+                        openOverlay("WTH?" + outcome);
                         break;
                 }
             });
