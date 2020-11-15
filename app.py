@@ -548,16 +548,17 @@ def checkcard(uid, cardnum):
             return "invalid"
 
 
-@app.route("/rightnum/<uid>")
-def rightnum(uid):
+@app.route("/nopecard/<uid>/<excludes>")
+def rightnum(uid, excludes):
     """
-    Find the right number based on a user ID.
+    Find an incorrect card based on a user ID.
 
     Args:
         uid: The user ID.
+        excludes: A card to not return.
 
     Returns:
-        The correct number for that ID.
+        An incorrect clue for that ID that isn't excludes.
     """
     try:
         group_database = json.load(open("groups.db", "r"))
@@ -568,7 +569,16 @@ def rightnum(uid):
         return "-1"
     for group in group_database:
         if uid in group:
-            return group[0]["rightnum"]
+            clues = []
+            for clue_letter in "ABCD":
+                for clue_number in range(1, 5):
+                    clues.append(clue_letter + str(clue_number))
+            clue_to_return = ""
+            while True:
+                clue_to_return = choice(clues)
+                if group[0][clue_to_return] != "0" and clue_to_return != excludes:
+                    break
+            return clue_to_return
 
 
 @app.route("/finished/<user_id>")
