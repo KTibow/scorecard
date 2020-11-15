@@ -10,5 +10,8 @@ module.exports = {
         userIdString: "readonly",
         confetti: "readonly",
     },
-    extends: "plugin:prettier/recommended",
+    extends: "eslint:recommended",
+    rules: {
+        "no-unused-vars": "warn",
+    },
 };

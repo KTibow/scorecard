@@ -101,7 +101,7 @@ function getCard() {
                             startVelocity: 30,
                             spread: 360,
                         };
-                        for (confettiDelay of [10, 510, 1010]) {
+                        for (var confettiDelay of [10, 510, 1010]) {
                             setTimeout(
                                 confetti,
                                 confettiDelay,
