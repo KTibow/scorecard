@@ -465,7 +465,7 @@ def addid(exist, new):
         # and some don't give you anything.
         infodict = {}
         for clue_letter in "ABCD":
-            for clue_number in range(1, 4):
+            for clue_number in range(1, 5):
                 myoption = randint(0, 4)
                 if myoption < 4:
                     myoption = "1"
