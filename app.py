@@ -466,14 +466,9 @@ def addid(exist, new):
         infodict = {}
         for clue_letter in "ABCD":
             for clue_number in range(1, 5):
-                myoption = randint(0, 4)
-                if myoption < 4:
-                    myoption = "1"
-                else:
-                    myoption = "2"
-                infodict[clue_letter + str(clue_number)] = myoption
+                infodict[clue_letter + str(clue_number)] = "regular"
         the_chosen_one = choice(["A", "B", "C", "D"]) + str(randint(1, 4))
-        infodict[the_chosen_one] = "0"
+        infodict[the_chosen_one] = "correct"
         group_database.append([infodict, exist, new])
         print(group_database)
         json.dump(group_database, open("groups.db", "w"))
@@ -530,9 +525,8 @@ def checkcard(uid, cardnum):
         cardnum: The card ID.
 
     Returns:
-        0 if the card is right.
-        1 if it should give the player a hint.
-        2 if it's not a helpful card.
+        regular if the card should give them a hint on what not to go to.
+        correct if it means that they won.
     """
     try:
         group_database = json.load(open("groups.db", "r"))
@@ -576,7 +570,7 @@ def rightnum(uid, excludes):
             clue_to_return = ""
             while True:
                 clue_to_return = choice(clues)
-                if group[0][clue_to_return] != "0" and clue_to_return != excludes:
+                if group[0][clue_to_return] != "correct" and clue_to_return != excludes:
                     break
             return clue_to_return
 
