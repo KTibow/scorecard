@@ -22,8 +22,7 @@ function getPosition(element) {
 }
 function registerGroup() {
     var idInput = document.getElementById("username");
-    var url = "/addid/" + userId + "/" + idInput.value;
-    fetch(url)
+    fetch(`/addid/${userIdString}/${idInput.value}`)
         .then((result) => {
             return result.text() != "notreal";
         })
