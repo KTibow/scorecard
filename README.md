@@ -1,5 +1,5 @@
 # scorecard
-An electronic scorecard for a RC tank clue game.
+An electronic scorecard for a RC tank clue game. Uses Heroku, Flask, Python, and [gitmoji](https://gitmoji.carloscuesta.me/).
 #### What? A game? Nobody plays them these days!
 Well this one is fun. It's online, fast, modern, multiplayer, and installable.
 #### Fine, how do I play?
