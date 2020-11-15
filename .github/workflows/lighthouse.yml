@@ -32,6 +32,6 @@ jobs:
           python3 -m pip install -r requirements.txt
       - name: Run Lighthouse
         run: |
-          lhci autorun
+          lhci autorun --config=./assets/lighthouserc.js
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

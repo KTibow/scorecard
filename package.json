@@ -17,6 +17,6 @@
     "prettier": "2.1.2"
   },
   "scripts": {
-    "ci": "python3 -m black . && npx prettier --write **/*.js && python3 -m flake8 --exit-zero . && npx eslint ."
+    "ci": "python3 -m black . && npx prettier -w **/*.js && python3 -m flake8 --exit-zero . && npx eslint ."
   }
 }
