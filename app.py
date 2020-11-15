@@ -534,12 +534,12 @@ def checkcard(uid, cardnum):
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
-        return "invalid"
+        return "invalid_id"
     for group in group_database:
         if uid in group:
             if cardnum in group[0]:
                 return group[0][cardnum]
-            return "invalid"
+            return "invalid_card"
 
 
 @app.route("/nopecard/<uid>/<excludes>")

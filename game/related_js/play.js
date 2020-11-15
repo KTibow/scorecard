@@ -132,9 +132,14 @@ function getCard() {
                                 );
                             });
                         break;
-                    case "invalid":
+                    case "invalid_id":
                         openOverlay(
-                            "That's an invalid clue. Make sure you're in a group."
+                            "That's an invalid user ID. Try going home to make a new one."
+                        );
+                        break;
+                    case "invalid_card":
+                        openOverlay(
+                            "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
                         );
                         break;
                     default:
