@@ -57,6 +57,8 @@ jobs:
     # Runs CI
     - name: Test booting the server
       run: python3 testboot.py
+      env:
+        GITHUB_VERSION_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     - name: flake8
       run: python3 -m flake8 app.py
