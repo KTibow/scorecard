@@ -1,4 +1,4 @@
-import app
+import scorecard.app
 
 app.app.run()
 id_database = open("ids.db", "w")
