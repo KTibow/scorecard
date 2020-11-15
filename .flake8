@@ -1,10 +1,10 @@
 [flake8]
-format = ${blue_bold}%(row)d:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
+format = ${red_bold}%(path)s: ${blue_bold}%(row)d:${green_bold}%(col)d ${purple_bold}%(code)s${reset} %(text)s
 statistics = True
 count = True
 use-varnames-strict-mode = True
 inline-quotes = double
-exclude = lighthouse_boot.py,testboot.py
+exclude = assets
 extend-ignore =
     C812 # Trailing commas don't work with black.
     E203 # No whitespace around colons doesn't work with black.

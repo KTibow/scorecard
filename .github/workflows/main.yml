@@ -44,12 +44,9 @@ jobs:
     - name: Update prexisting packages
       run: python3 -m pip install -U pip setuptools wheel
 
-    - name: Install flake stuff
-      run: python3 -m pip install -U flake8 wemake-python-styleguide flake8-colors flake8-variables-names black
-
     # Installs from requirements
     - name: Install from requirements (Python)
-      run: pip3 install -r requirements.txt
+      run: pip3 install -r requirements.txt -r dev-requirements.txt
 
     - name: Install from requirements (Node)
       run: npm install
