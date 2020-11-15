@@ -56,7 +56,7 @@ jobs:
 
     # Runs CI
     - name: Test booting the server
-      run: python3 assets/test_boot.py
+      run: python3 -m assets.test_boot
       env:
         GITHUB_VERSION_PAT: ${{ secrets.GITHUB_TOKEN }}
 
