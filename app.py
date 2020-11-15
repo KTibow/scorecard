@@ -560,9 +560,14 @@ def rightnum(uid, excludes):
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     return (
-        " and ".join([str(item) for item in [uid, excludes, comp]])
-        + " bawkbawk "
-        + " and ".join([str(type(item)) for item in [uid, excludes, comp]])
+        "Here's a quick rundown. Here's the paramaters (uid, excludes, comp):"
+        + ",".join([str(item) for item in [uid, excludes, comp]])
+        + ". Okay, here's the types:"
+        + ",".join([str(type(item)) for item in [uid, excludes, comp]])
+        + ". Okay, here's whether the ID is in comp:"
+        + str(uid in comp)
+        + ". Okay, here's whether it's in str(comp):"
+        + str(uid in str(comp))
     )
     # if uid not in comp:
     # return "-1"
