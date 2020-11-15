@@ -121,9 +121,9 @@ function getCard() {
                         break;
                     case "regular":
                         fetch(
-                            `/nopecard/${
+                            `/nopecard/${userIdString}/${
                                 document.getElementById("cardname").value
-                            }/${userIdString}`
+                            }`
                         )
                             .then((result) => {
                                 return result.text();
