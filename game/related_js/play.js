@@ -137,6 +137,9 @@ function getCard() {
                             "That's an invalid clue. Make sure you're in a group."
                         );
                         break;
+                    default:
+                        openOverlay("WTH?" + outcome)
+                        break;
                 }
             });
     }, renderPopupTimeout);
