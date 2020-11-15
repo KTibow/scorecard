@@ -227,7 +227,6 @@ def before_req():
             user_agent = request.headers["User-Agent"]
             ua_add = ", " + str(ua_parse(user_agent))
         ip_addr = request.headers["X-Forwarded-For"]
-        print("Hit from " + ip_addr + ua_add)
         chunks = request.url.split("/")
         flask_global.middle_before_request_time = now_in_ms
         track_view("/".join(chunks[2 : len(chunks)]), ip_addr, user_agent)
