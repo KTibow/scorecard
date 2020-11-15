@@ -60,7 +60,7 @@ function goHome() {
 }
 function getGroup() {
     if (document.hasFocus()) {
-        fetch("/gids/" + userId)
+        fetch(`/gids/${userIdString}`)
             .then((response) => {
                 return response.text();
             })

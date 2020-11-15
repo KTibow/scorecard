@@ -7,7 +7,7 @@ module.exports = {
         ecmaVersion: 12,
     },
     globals: {
-        user_id: "readonly",
+        userIdString: "readonly",
         confetti: "readonly",
     },
     extends: "plugin:prettier/recommended",
