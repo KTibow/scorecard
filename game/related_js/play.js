@@ -84,7 +84,7 @@ function getCard() {
     }
     setTimeout(() => {
         fetch(
-            `/cardstatus/${userId}/${document.getElementById("cardname").value}`
+            `/cardstatus/${userIdString}/${document.getElementById("cardname").value}`
         )
             .then((result) => {
                 return result.text();
@@ -115,20 +115,20 @@ function getCard() {
                                 )
                             );
                         }
-                        fetch(`/finished/${userId}`);
+                        fetch(`/finished/${userIdString}`);
                         break;
                     case "regular":
                         fetch(
                             `/nopecard/${
                                 document.getElementById("cardname").value
-                            }/${userId}`
+                            }/${userIdString}`
                         )
                             .then((result) => {
                                 return result.text();
                             })
                             .then((cardNum) => {
                                 openOverlay(
-                                    `This is a normal card. Don't go looking for card ${cardNum}`
+                                    `This is a normal card. Don't go looking for card ${cardNum}.`
                                 );
                             });
                         break;

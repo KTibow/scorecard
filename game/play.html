@@ -31,7 +31,8 @@
         <script src="/install.js" defer></script>
         <script src="/confetti.js" defer></script>
         <script>
-          var userId = {{uid}};
+          var userId = +"{{uid}}";
+          var userIdString = "{{uid}}";
         </script>
         <script src="/play.js"></script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
