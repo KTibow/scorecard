@@ -1,27 +1,28 @@
-.alt-button, .home-button {
-  position: sticky;
-  bottom: 0;
+.alt-button,
+.home-button {
+    position: sticky;
+    bottom: 0;
 }
 @media all and (orientation: landscape) {
-  .homebutton {
-    width: unset;
-  }
-  .alt-button {
-    width: unset;
-  }
-  body {
-    width: 50%;
-    margin: 0 auto;
-  }
+    .homebutton {
+        width: unset;
+    }
+    .alt-button {
+        width: unset;
+    }
+    body {
+        width: 50%;
+        margin: 0 auto;
+    }
 }
 div.overlay {
-  background: #7000FF;
-  z-index: 2;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  color: white;
-  padding: 16px;
+    background: #7000ff;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+    padding: 16px;
 }

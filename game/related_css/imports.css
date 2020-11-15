@@ -1,55 +1,77 @@
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Open Sans Regular'), local('OpenSans-Regular'),
-    url('/open-sans.woff2') format('woff2'),
-    url('/open-sans.woff') format('woff'),
-    url('/open-sans.ttf') format('truetype');
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Open Sans Regular"), local("OpenSans-Regular"),
+        url("/open-sans.woff2") format("woff2"),
+        url("/open-sans.woff") format("woff"),
+        url("/open-sans.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: local('Material Icons'), local('MaterialIcons-Regular'),
-   url(/material-icons.woff2) format('woff2'),
-   url(/material-icons.woff) format('woff'),
-   url(/material-icons.ttf) format('truetype');
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: local("Material Icons"), local("MaterialIcons-Regular"),
+        url(/material-icons.woff2) format("woff2"),
+        url(/material-icons.woff) format("woff"),
+        url(/material-icons.ttf) format("truetype");
 }
 [data-icon]::before {
-  content: attr(data-icon);
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2em;
-  margin: 0 0.5em 0 0;
-  display: inline-block;
-  vertical-align: middle;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'liga';
+    content: attr(data-icon);
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    margin: 0 0.5em 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga";
 }
 @keyframes jiggle {
-   0% { transform: skewX(9deg); }
-   10% { transform: skewX(-8deg); }
-   20% { transform: skewX(7deg); }
-   30% { transform: skewX(-6deg); }
-   40% { transform: skewX(5deg); }
-   50% { transform: skewX(-4deg); }
-   60% { transform: skewX(3deg); }
-   70% { transform: skewX(-2deg); }
-   80% { transform: skewX(1deg); }
-   90% { transform: skewX(0deg); }
-   100% { transform: skewX(0deg); }
+    0% {
+        transform: skewX(9deg);
+    }
+    10% {
+        transform: skewX(-8deg);
+    }
+    20% {
+        transform: skewX(7deg);
+    }
+    30% {
+        transform: skewX(-6deg);
+    }
+    40% {
+        transform: skewX(5deg);
+    }
+    50% {
+        transform: skewX(-4deg);
+    }
+    60% {
+        transform: skewX(3deg);
+    }
+    70% {
+        transform: skewX(-2deg);
+    }
+    80% {
+        transform: skewX(1deg);
+    }
+    90% {
+        transform: skewX(0deg);
+    }
+    100% {
+        transform: skewX(0deg);
+    }
 }

@@ -1,92 +1,115 @@
 * {
-  font-family: Open Sans, sans-serif;
-  --primary-color-h: 266;
-  --primary-color-s: 100%;
-  --primary-color-lighter: hsl(var(--primary-color-h), var(--primary-color-s), 70%);
-  --primary-color-light:   hsl(var(--primary-color-h), var(--primary-color-s), 60%);
-  --primary-color:         hsl(var(--primary-color-h), var(--primary-color-s), 50%);
-  --primary-color-dark:    hsl(var(--primary-color-h), var(--primary-color-s), 40%);
-  --primary-color-darker:  hsl(var(--primary-color-h), var(--primary-color-s), 30%);
+    font-family: Open Sans, sans-serif;
+    --primary-color-h: 266;
+    --primary-color-s: 100%;
+    --primary-color-lighter: hsl(
+        var(--primary-color-h),
+        var(--primary-color-s),
+        70%
+    );
+    --primary-color-light: hsl(
+        var(--primary-color-h),
+        var(--primary-color-s),
+        60%
+    );
+    --primary-color: hsl(var(--primary-color-h), var(--primary-color-s), 50%);
+    --primary-color-dark: hsl(
+        var(--primary-color-h),
+        var(--primary-color-s),
+        40%
+    );
+    --primary-color-darker: hsl(
+        var(--primary-color-h),
+        var(--primary-color-s),
+        30%
+    );
 }
 button {
-  background-color: var(--primary-color);
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  margin: 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
-  transition: background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s;
-  box-shadow: 4px 4px 2px var(--primary-color-light);
-  cursor: pointer;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background 0.3s, background-color 0.3s, box-shadow 0.1s,
+        transform 0.1s;
+    box-shadow: 4px 4px 2px var(--primary-color-light);
+    cursor: pointer;
 }
 button:hover {
-  background-color: var(--primary-color-dark);
+    background-color: var(--primary-color-dark);
 }
 button:active {
-  background-color: var(--primary-color-darker);
-  box-shadow: 2px 2px 1px var(--primary-color-dark);
-  transform: translate(2px, 2px);
+    background-color: var(--primary-color-darker);
+    box-shadow: 2px 2px 1px var(--primary-color-dark);
+    transform: translate(2px, 2px);
 }
-h1, h2, h3, h4, h5, h6 {
-  color: var(--primary-color-darker);
-  margin: 0px !important;
-  margin-left: 16px !important;
-  margin-bottom: 0.67em !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-color-darker);
+    margin: 0px !important;
+    margin-left: 16px !important;
+    margin-bottom: 0.67em !important;
 }
 h1 {
-  font-size: 2.3em;
+    font-size: 2.3em;
 }
 h2 {
-  font-size: 1.3em;
+    font-size: 1.3em;
 }
 h3 {
-  margin-bottom: 0.1em !important;
-  font-size: 1.1em;
+    margin-bottom: 0.1em !important;
+    font-size: 1.1em;
 }
 input {
-  border: 5px solid var(--primary-color);
-  border-radius: 10px;
-  padding: 10px 27px;
-  outline: 0;
-  box-shadow: 4px 4px 2px var(--primary-color-light);
-  transition-duration: 0.2s;
-  margin: 15px;
-  transition: all 0.4s;
+    border: 5px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 10px 27px;
+    outline: 0;
+    box-shadow: 4px 4px 2px var(--primary-color-light);
+    transition-duration: 0.2s;
+    margin: 15px;
+    transition: all 0.4s;
 }
 input:focus {
-  box-shadow: 2px 2px 1px var(--primary-color-light);
-  border: 5px solid var(--primary-color-dark);
-  transform: translate(2px, 2px);
+    box-shadow: 2px 2px 1px var(--primary-color-light);
+    border: 5px solid var(--primary-color-dark);
+    transform: translate(2px, 2px);
 }
 input::placeholder {
-  color: var(--primary-color-light);
-  font-weight: bold !important;
+    color: var(--primary-color-light);
+    font-weight: bold !important;
 }
 input:focus::placeholder {
-  color: var(--primary-color-darker);
+    color: var(--primary-color-darker);
 }
 .alt-button {
-  transition: opacity 0.35s, background 0.3s, background-color 0.3s, box-shadow 0.1s, transform 0.1s, visibility 0.35s;
-  background-color: var(--primary-color);
-  box-shadow: 4px 4px 2px var(--primary-color-light);
-  filter: hue-rotate(-90deg);
+    transition: opacity 0.35s, background 0.3s, background-color 0.3s,
+        box-shadow 0.1s, transform 0.1s, visibility 0.35s;
+    background-color: var(--primary-color);
+    box-shadow: 4px 4px 2px var(--primary-color-light);
+    filter: hue-rotate(-90deg);
 }
 .alt-button:hover {
-  filter: hue-rotate(-90deg);
+    filter: hue-rotate(-90deg);
 }
 .alt-button:active {
-  filter: hue-rotate(-90deg);
-  box-shadow: 2px 2px 1px var(--primary-color);
+    filter: hue-rotate(-90deg);
+    box-shadow: 2px 2px 1px var(--primary-color);
 }
 @media all and (orientation: portrait) {
-  button {
-	  width: 90%;
-	}
-	input {
-	  width: calc(90% - 74px);
-	}
+    button {
+        width: 90%;
+    }
+    input {
+        width: calc(90% - 74px);
+    }
 }
