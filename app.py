@@ -596,6 +596,38 @@ def send_finished(user_id):
     return f"done {metadata_database}"
 
 
+@app.route("/debug/")
+def list_dbs():
+    """
+    List all databases.
+
+    Returns:
+        All of the databases.
+    """
+    try:
+        group_database = json.load(open("groups.db", "r"))
+    except FileNotFoundError:
+        group_database = []
+    comp = [user_id for group in group_database for user_id in group]
+    try:
+        metadata_database = json.load(open("metadata.db", "r"))
+    except FileNotFoundError:
+        metadata_database = {}
+    try:
+        id_database = json.load(open("ids.db", "r"))
+    except FileNotFoundError:
+        id_database = {}
+    return f"""
+groups.db:
+{group_database}
+comp:
+{comp}
+metadata.db:
+{metadata_database}
+ids.db:
+{id_database}
+"""
+
 # ========== BROWSER FILES ==========
 for folder_name, file_name in walk():
     if file_name != "/sw.js":
