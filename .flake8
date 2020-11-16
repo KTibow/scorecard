@@ -25,11 +25,11 @@ extend-ignore =
     WPS609 # So I shouldn't be using __file__? Well how then?
 min-name-length=3
 max-returns=10
-max-local-variables=15
+max-local-variables=13
 max-imports=15
-max-expressions=20
-max-line-complexity=20
-max-module-members=20
-max-line-length=90
-max-cognitive-score=100
+max-expressions=18
+max-line-complexity=16
+max-module-members=21
+max-line-length=88
+max-cognitive-score=65
 htmldir=flake-report
