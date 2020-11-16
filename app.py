@@ -19,8 +19,16 @@ from flask import (
 )
 from api_app import app as api_app
 from github.MainClass import Github
-from flask_compress import Compress
-from flask_minify import minify
+compress_inited = True
+try:
+    from flask_compress import Compress
+except:
+    compress_inited = False
+minify_inited = True
+try:
+    from flask_minify import minify
+except:
+    minify_inited = False
 
 # Tracking
 from user_agents import parse as ua_parse
@@ -38,8 +46,10 @@ debug_mode = "boot" in __main__.__file__
 
 # Init flask
 app = Flask(__name__, template_folder="game")
-Compress(app)
-minify(app=app, js=False, caching_limit=0)
+if compress_inited:
+    Compress(app)
+if minify_inited:
+    minify(app=app, js=False, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
@@ -158,7 +168,7 @@ def walk():
     for root, _dirs, files in os.walk("game"):
         for file_name in files:
             if "html" not in file_name:
-                pys.append([root.replace("game/", ""), f"/{file_name}"])
+                pys.append([root.replace("\\", "/").replace("game/", ""), f"/{file_name}"])
     return pys
 
 
@@ -385,7 +395,8 @@ def make_service_worker():
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append(f"'{url}'")
+            if "debug" not in url:
+                links.append(f"'{url}'")
     swlist = ""
     for index, link in enumerate(links):
         if len(links) - 1 != index:
