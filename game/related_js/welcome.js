@@ -10,7 +10,7 @@ function registerUser() {
             return result.text();
         })
         .then((result) => {
-            window.location = result;
+            //window.location = result;
         });
 }
 if (localStorage.getItem("username") != null) {
