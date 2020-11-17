@@ -17,7 +17,9 @@
     "prettier": "2.1.2"
   },
   "scripts": {
-    "ci": "python3 -m black . && npx prettier -w **/*.js && npx prettier -w **/*.css && python3 -m flake8 --exit-zero . && npx eslint .",
-    "setup": "python3 -m pip install -r ./dev-requirements.txt && npm install"
+    "format": "python3 -m black . && npx prettier -w **/*.js && npx prettier -w **/*.css",
+    "lint": "python3 -m flake8 --exit-zero . && npx eslint . && python3 -m assets.lighthouse_boot",
+    "setup": "python3 -m pip install --no-deps -r requirements.txt && python3 -m pip install -r dev-requirements.txt flask && npm install",
+    "start": "python3 -m assets.lighthouse_boot"
   }
 }
