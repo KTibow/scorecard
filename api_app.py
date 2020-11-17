@@ -17,6 +17,7 @@ def genew_id(username):
     Returns:
         Where to redirect to with the ID.
     """
+    print("Making ID for", username)
     username = username.lower()
     try:
         id_database = json.load(open("ids.db", "r"))
@@ -33,11 +34,11 @@ def genew_id(username):
             group_database[group_database.index(group)] = [
                 new_id if user_id == old_id else user_id for user_id in group
             ]
-        print(group_database)
+        print("Updating groups, now is", group_database)
         json.dump(group_database, open("groups.db", "w"))
     # First ID
     id_database[username] = new_id
-    print(id_database)
+    print("Updating IDs, now is", id_database)
     json.dump(id_database, open("ids.db", "w"))
     return f"/cluecard/{id_database[username]}"
 
