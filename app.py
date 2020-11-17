@@ -31,7 +31,6 @@ except:
     minify_inited = False
 
 # Tracking
-from user_agents import parse as ua_parse
 import hashlib
 from urllib.parse import quote
 import requests
@@ -232,7 +231,6 @@ def before_req():
         if request.headers["X-Forwarded-Proto"] == "http":
             return redirect(request.url.replace("http", "https"), code=301)
         user_agent = None
-        ua_add = ""
         if "User-Agent" in request.headers:
             user_agent = request.headers["User-Agent"]
         ip_addr = request.headers["X-Forwarded-For"]
