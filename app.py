@@ -170,7 +170,9 @@ def walk():
     for root, _dirs, files in os.walk("game"):
         for file_name in files:
             if "html" not in file_name:
-                pys.append([root.replace("\\", "/").replace("game/", ""), f"/{file_name}"])
+                pys.append(
+                    [root.replace("\\", "/").replace("game/", ""), f"/{file_name}"]
+                )
     return pys
 
 
