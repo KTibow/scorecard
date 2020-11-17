@@ -113,3 +113,6 @@ input:focus::placeholder {
         width: calc(90% - 74px);
     }
 }
+#loading {
+    display: none;
+}
