@@ -398,7 +398,7 @@ def make_service_worker():
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            if "debug" not in url:
+            if "debug" not in url and "eslint" not in url:
                 links.append(f"'{url}'")
     swlist = ""
     for index, link in enumerate(links):
