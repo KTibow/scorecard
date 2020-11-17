@@ -19,16 +19,6 @@ from flask import (
 )
 from api_app import app as api_app
 from github.MainClass import Github
-compress_inited = True
-try:
-    from flask_compress import Compress
-except:
-    compress_inited = False
-minify_inited = True
-try:
-    from flask_minify import minify
-except:
-    minify_inited = False
 
 # Tracking
 import hashlib
@@ -42,6 +32,19 @@ import threading
 import __main__
 
 debug_mode = "boot" in __main__.__file__
+
+# Minfication
+
+compress_inited = True
+try:
+    from flask_compress import Compress
+except ModuleNotFoundError:
+    compress_inited = False
+minify_inited = True
+try:
+    from flask_minify import minify
+except ModuleNotFoundError:
+    minify_inited = False
 
 # Init flask
 app = Flask(__name__, template_folder="game")

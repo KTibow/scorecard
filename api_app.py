@@ -1,3 +1,4 @@
+"""This part of the scorecard provides all API calls for the frontend."""
 from flask import Blueprint
 import json
 from random import randint, choice

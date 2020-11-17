@@ -21,6 +21,7 @@ extend-ignore =
     WPS440 # Block variable overlap is unavoidable.
     WPS441 # Block variable overlap is unavoidable.
     WPS442 # False positives because I call global earlier.
+    WPS433 # So I shouldn't be putting my imports in a try catch? Then how then?
     WPS515 # Using open() without the with keyword is unavoidable.
     WPS609 # So I shouldn't be using __file__? Well how then?
 min-name-length=3
@@ -28,6 +29,7 @@ max-returns=10
 max-local-variables=13
 max-imports=15
 max-expressions=18
+max-cognitive-average=18
 max-line-complexity=16
 max-module-members=21
 max-line-length=88
