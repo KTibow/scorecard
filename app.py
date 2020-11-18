@@ -337,9 +337,10 @@ def card(username):
     except FileNotFoundError:
         id_database = {}
     if username in id_database:
-        return render_template("play.html", uid=id_database[username], username=username)
-    else:
-        return render_template("404.html"), 404
+        return render_template(
+            "play.html", uid=id_database[username], username=username
+        )
+    return render_template("404.html"), 404
 
 
 # 404
