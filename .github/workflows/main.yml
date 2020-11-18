@@ -68,5 +68,5 @@ jobs:
     - name: Formatting
       run: |
         python3 -m black . --check
-        npx prettier **\*.js --check
-        npx prettier **\*.css --check
+        npx prettier **/*.js --check
+        npx prettier **/*.css --check
