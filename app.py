@@ -336,7 +336,7 @@ def card(username):
         id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         id_database = {}
-    return render_template("play.html", uid=id_database[username])
+    return render_template("play.html", uid=id_database[username], username=username)
 
 
 # 404
