@@ -7,7 +7,7 @@ module.exports = {
             ],
             startServerCommand: "python3 -m assets.lighthouse_boot",
             startServerReadyPattern: "Running on http://127.0.0.1:5000",
-            startServerReadyTimeout: 5000,
+            startServerReadyTimeout: 10000,
         },
         upload: {
             target: "temporary-public-storage",
