@@ -21,5 +21,11 @@
     "lint": "python3 -m flake8 --exit-zero . && npx eslint . && python3 -m assets.lighthouse_boot",
     "setup": "python3 -m pip install --no-deps -r requirements.txt && python3 -m pip install -r dev-requirements.txt flask && npm install",
     "start": "python3 -m assets.lighthouse_boot"
+  },
+  "dependencies": {
+    "fast-json-stable-stringify": "^2.1.0",
+    "resolve-from": "^5.0.0",
+    "shebang-command": "^2.0.0",
+    "uri-js": "^4.4.0"
   }
 }
