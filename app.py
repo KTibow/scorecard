@@ -343,7 +343,8 @@ def card(username):
         return render_template(
             "play.html", uid=id_database[username], username=username
         )
-    return render_template("404.html"), 404
+    return "<h1 style='font-size: 5em;'>" + os.getcwd() + " database " + str(id_database) + "</h1>"
+    #return render_template("404.html"), 404
 
 
 # 404
