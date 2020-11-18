@@ -7,6 +7,7 @@ import mimetypes
 import os
 from random import randint
 import time
+import json
 
 from flask import (
     Flask,
@@ -320,18 +321,23 @@ def hello():
 
 
 # card
-@app.route("/cluecard/<theid>")
-def card(theid):
+@app.route("/cluecard/<username>")
+def card(username):
     """
     Render the cluecard.
 
     Args:
-        theid: ID of the user.
+        username: Username.
 
     Returns:
         HTML clue card.
     """
-    return render_template("play.html", uid=theid)
+    try:
+        id_database = json.load(open("ids.db", "r"))
+    except FileNotFoundError:
+        id_database = {}
+    username = username.lower()
+    return render_template("play.html", uid=id_database[username])
 
 
 # 404
