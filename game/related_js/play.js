@@ -27,7 +27,7 @@ function registerGroup() {
             return result.text();
         })
         .then((idValid) => {
-            idValid = idValid == "notreal";
+            idValid = idValid != "notreal";
             var buttonIcon = document.createAttribute("data-icon");
             if (idValid) {
                 // Confetti
