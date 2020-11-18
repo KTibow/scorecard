@@ -82,12 +82,9 @@ function getCard() {
         );
         renderPopupTimeout = 2000;
     }
+    var cardId = document.getElementById("cardname").value.toUpperCase();
     setTimeout(() => {
-        fetch(
-            `/cardstatus/${userIdString}/${
-                document.getElementById("cardname").value
-            }`
-        )
+        fetch(`/cardstatus/${userIdString}/${cardId}`)
             .then((result) => {
                 return result.text();
             })
