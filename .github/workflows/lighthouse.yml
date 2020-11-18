@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install requirements
         run: |
-          npm install -g @lhci/cli@0.6.x puppeteer
+          npm install -g @lhci/cli@0.6.x
           python3 -m pip install -r requirements.txt
       - name: Run Lighthouse
         run: |

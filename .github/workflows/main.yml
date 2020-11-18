@@ -46,7 +46,9 @@ jobs:
 
     # Installs from requirements
     - name: Install from requirements (Python)
-      run: pip3 install -r requirements.txt -r dev-requirements.txt
+      run: |
+        sed '/pygithub/d' dev-requirements.txt > dev-requirements.txt
+        pip3 install -r requirements.txt -r dev-requirements.txt
 
     - name: Install from requirements (Node)
       run: npm install
