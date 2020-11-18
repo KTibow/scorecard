@@ -18,7 +18,6 @@ def genew_id(username):
         Where to redirect to with the ID.
     """
     print("Making ID for", username)
-    username = username.lower()
     try:
         id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
