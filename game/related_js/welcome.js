@@ -42,5 +42,14 @@ html, body {
     document.getElementById("username").value = localStorage.getItem(
         "username"
     );
+    setTimeout(() => {
+        var errorSheet = document.createElement("style");
+        errorSheet.innerHTML = `
+ #loading {
+     filter: hue-rotate(60deg);
+ }`;
+        document.body.appendChild(errorSheet);
+        alert("I'm having trouble logging you in.");
+    }, 5000);
     registerUser();
 }
