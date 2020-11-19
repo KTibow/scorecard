@@ -13,6 +13,7 @@
 }
 * {
     font-family: Open Sans;
+    text-align: center;
 }
 h1,
 h2,
@@ -22,7 +23,6 @@ h5,
 h6 {
     color: #390070;
     margin-left: 16px;
-    text-align: center;
 }
 a {
     color: #7000ff;
