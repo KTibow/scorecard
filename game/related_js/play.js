@@ -120,11 +120,7 @@ function getCard() {
                         fetch(`/finished/${userIdString}`);
                         break;
                     case "regular":
-                        fetch(
-                            `/nopecard/${userIdString}/${
-                                document.getElementById("cardname").value
-                            }`
-                        )
+                        fetch(`/nopecard/${userIdString}/${cardId}`)
                             .then((result) => {
                                 return result.text();
                             })
