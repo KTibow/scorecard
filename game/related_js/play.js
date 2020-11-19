@@ -6,6 +6,9 @@ function openOverlay(message) {
     document.getElementById("overlay").style.opacity = "1";
     document.getElementById("overlay").style.visibility = "";
     document.getElementById("overlay-text").innerHTML = message;
+    setTimeout(() => {
+        document.getElementById("closeOverlay").focus();
+    }, 50);
 }
 function getPosition(element) {
     var xPos = 0;

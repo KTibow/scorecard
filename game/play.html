@@ -48,7 +48,9 @@
         <button id="add2hs" class="alt-button" style="opacity: 0; visibility: hidden;" data-icon="system_update">Add Cluecard to Home Screen</button>
         <div class="overlay" id="overlay">
             <p id="overlay-text"></p>
-            <button onClick="closeOverlay()" class="alt-button" data-icon="close">Close</button>
+            <button
+                onClick="closeOverlay()" class="alt-button"
+                data-icon="close" id="closeOverlay">Close</button>
         </div>
         <script>
             var input = document.getElementById("cardname");

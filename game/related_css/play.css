@@ -26,3 +26,6 @@ div.overlay {
     color: white;
     padding: 16px;
 }
+#closeOverlay:focus {
+    border: black 2px solid;
+}
