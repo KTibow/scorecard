@@ -26,19 +26,7 @@
         <link rel="manifest" href="/manifest.json">
     </head>
     <body>
-        <script>
-            console.log("Running... (install.js)");
-            window.addEventListener("load", function() {
-                if ("serviceWorker" in navigator) {
-                    console.log("Trying to install service worker... (install.js)");
-                    navigator.serviceWorker
-                        .register("/sw.js")
-                        .then(function(reg) {
-                            console.log("Service worker: installed! (install.js)", reg);
-                        }).catch (err => console.log("Service worker: not registered (install.js)", err));
-                }
-            });
-        </script>
+        <script src="/install.js" defer></script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <h1>500! ☹</h1>
         <h3>We've got an error in our server. Hmm... Maybe the <a href="/">homepage</a> will work.</h3>
