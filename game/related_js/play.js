@@ -30,9 +30,8 @@ function registerGroup() {
             return result.text();
         })
         .then((idValid) => {
-            idValid = idValid != "notreal";
-            var buttonIcon = document.createAttribute("data-icon");
-            if (idValid) {
+            var addToGroup = document.getElementById("adgr");
+            if (idValid != "notreal") {
                 // Confetti
                 var pos = getPosition(idInput);
                 pos["x"] = pos["x"] + idInput.offsetWidth / 2;
@@ -45,17 +44,15 @@ function registerGroup() {
                     origin: pos,
                 });
                 // Other stuff
-                buttonIcon.value = "done";
-                document.getElementById("adgr").innerHTML = "Added to group";
+                addToGroup.setAttribute("data-icon", "done");
+                addToGroup.innerHTML = "Added to group";
             } else {
-                buttonIcon.value = "error";
-                document.getElementById("adgr").innerHTML = "Invalid ID.";
+                addToGroup.setAttribute("data-icon", "error");
+                addToGroup.innerHTML = "Invalid ID.";
             }
-            document.getElementById("adgr").setAttributeNode(buttonIcon);
             setTimeout(() => {
-                buttonIcon.value = "group_add";
-                document.getElementById("adgr").setAttributeNode(buttonIcon);
-                document.getElementById("adgr").innerHTML = "Add to group";
+                addToGroup.setAttribute("data-icon", "group_add");
+                addToGroup.innerHTML = "Add to group";
             }, 1000);
         });
 }
@@ -78,84 +75,85 @@ function getCard() {
     var attemptsElement = document.getElementById("attmpts");
     var attemptsSoFar = Number(attemptsElement.innerHTML) + 1;
     attemptsElement.innerHTML = String(attemptsSoFar);
-    var renderPopupTimeout = 0;
     if (attemptsSoFar == 16) {
         openOverlay(
             "It looks like you've done all of the cards. Make sure you aren't repeating any."
         );
-        renderPopupTimeout = 2000;
     }
     var cardId = document.getElementById("cardname").value.toUpperCase();
-    setTimeout(() => {
-        fetch(`/cardstatus/${userIdString}/${cardId}`)
-            .then((result) => {
-                return result.text();
-            })
-            .then((outcome) => {
-                switch (outcome) {
-                    case "correct":
-                        openOverlay(
-                            "That's the right clue! Your group can see you're finished now."
-                        );
-                        var confettiConfig = {
-                            particleCount: 100,
-                            startVelocity: 30,
-                            spread: 360,
-                        };
-                        for (var confettiDelay of [10, 510, 1010]) {
-                            setTimeout(
-                                confetti,
-                                confettiDelay,
-                                Object.assign(
-                                    {
-                                        origin: {
-                                            x: Math.random(),
-                                            y: Math.random() - 0.2,
-                                        },
-                                    },
-                                    confettiConfig
-                                )
+    setTimeout(
+        () => {
+            fetch(`/cardstatus/${userIdString}/${cardId}`)
+                .then((result) => {
+                    return result.text();
+                })
+                .then((outcome) => {
+                    switch (outcome) {
+                        case "correct":
+                            openOverlay(
+                                "That's the right clue! Your group can see you're finished now."
                             );
-                        }
-                        fetch(`/finished/${userIdString}`);
-                        break;
-                    case "regular":
-                        fetch(`/nopecard/${userIdString}/${cardId}`)
-                            .then((result) => {
-                                return result.text();
-                            })
-                            .then((cardId) => {
-                                var cardsNotToVisit = document.getElementById(
-                                    "cardsNotToVisit"
+                            var confettiConfig = {
+                                particleCount: 100,
+                                startVelocity: 30,
+                                spread: 360,
+                            };
+                            for (var confettiDelay of [10, 510, 1010]) {
+                                setTimeout(
+                                    confetti,
+                                    confettiDelay,
+                                    Object.assign(
+                                        {
+                                            origin: {
+                                                x: Math.random(),
+                                                y: Math.random() - 0.2,
+                                            },
+                                        },
+                                        confettiConfig
+                                    )
                                 );
-                                if (
-                                    cardsNotToVisit.innerHTML ==
-                                    "[no cards yet]"
-                                ) {
-                                    cardsNotToVisit.innerHTML = cardId;
-                                } else {
-                                    cardsNotToVisit.innerHTML += ", ";
-                                    cardsNotToVisit.innerHTML += cardId;
-                                }
-                                openOverlay(
-                                    `This is a normal card. Don't go looking for card ${cardId}.`
-                                );
-                            });
-                        break;
-                    case "invalid_id":
-                        openOverlay(
-                            "That's an invalid user ID. Try going home to make a new one."
-                        );
-                        break;
-                    case "invalid_card":
-                        openOverlay(
-                            "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
-                        );
-                        break;
-                    default:
-                        openOverlay("WTH?" + outcome);
-                        break;
-                }
-            });
-    }, renderPopupTimeout);
+                            }
+                            fetch(`/finished/${userIdString}`);
+                            break;
+                        case "regular":
+                            fetch(`/nopecard/${userIdString}/${cardId}`)
+                                .then((result) => {
+                                    return result.text();
+                                })
+                                .then((cardId) => {
+                                    var cardsNotToVisit = document.getElementById(
+                                        "cardsNotToVisit"
+                                    );
+                                    if (
+                                        cardsNotToVisit.innerHTML ==
+                                        "[no cards yet]"
+                                    ) {
+                                        cardsNotToVisit.innerHTML = cardId;
+                                    } else {
+                                        cardsNotToVisit.innerHTML += ", ";
+                                        cardsNotToVisit.innerHTML += cardId;
+                                    }
+                                    openOverlay(
+                                        `This is a normal card. Don't go looking for card ${cardId}.`
+                                    );
+                                });
+                            break;
+                        case "invalid_id":
+                            openOverlay(
+                                "That's an invalid user ID. Try going home to make a new one."
+                            );
+                            break;
+                        case "invalid_card":
+                            openOverlay(
+                                "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
+                            );
+                            break;
+                        default:
+                            openOverlay("WTH?" + outcome);
+                            break;
+                    }
+                });
+        },
+        attemptsSoFar == 16 ? 2000 : 0
+    );
 }

@@ -168,6 +168,6 @@ input:focus::placeholder {
         content: "system_update_alt";
     }
     #a2hs::after {
-        content: "Install app"
+        content: "Install app";
     }
 }
