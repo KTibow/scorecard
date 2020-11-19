@@ -34,6 +34,16 @@ import __main__
 
 debug_mode = "boot" in __main__.__file__
 
+if debug_mode:
+    id_database = open("ids.db", "w")
+    id_database.write(
+        """
+    {
+    "test": "12345"
+    }
+    """
+    )
+    id_database.close()
 # Minfication
 
 compress_inited = True
