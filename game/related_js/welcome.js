@@ -1,7 +1,9 @@
 function registerUser() {
-    var username = document.getElementById("username").value;
-    if (username == "") {
-        document.getElementById("username").style.animation = "1s jiggle";
+    var usernameElement = document.getElementById("username");
+    var username = usernameElement.value;
+    if (username.replace(" ", "") == "") {
+        usernameElement.classList.remove("jiggle-once");
+        usernameElement.classList.add("jiggle-once");
         return;
     }
     localStorage.setItem("username", username);
