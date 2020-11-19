@@ -154,3 +154,20 @@ input:focus::placeholder {
 .jiggle-once {
     animation: 1s jiggle;
 }
+
+@media (orientation: portrait) {
+    #a2hs::before {
+        content: "system_update";
+    }
+    #a2hs::after {
+        content: "Add to Home Screen";
+    }
+}
+@media (orientation: landscape) {
+    #a2hs::before {
+        content: "system_update_alt";
+    }
+    #a2hs::after {
+        content: "Install app"
+    }
+}
