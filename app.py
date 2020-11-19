@@ -346,15 +346,11 @@ def card(username):
         id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         id_database = {}
-    print("=" * 100)
-    print("DB:", id_database)
-    print("=" * 100)
     if username in id_database:
         return render_template(
             "play.html", uid=id_database[username], username=username
         )
-    return "<h1 style='font-size: 5em;'>" + os.getcwd() + " database " + str(id_database) + "</h1>"
-    #return render_template("404.html"), 404
+    return render_template("404.html"), 404
 
 
 # 404
