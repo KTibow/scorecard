@@ -124,9 +124,21 @@ function getCard() {
                             .then((result) => {
                                 return result.text();
                             })
-                            .then((cardNum) => {
+                            .then((cardId) => {
+                                var cardsNotToVisit = document.getElementById(
+                                    "cardsNotToVisit"
+                                );
+                                if (
+                                    cardsNotToVisit.innerHTML ==
+                                    "[no cards yet]"
+                                ) {
+                                    cardsNotToVisit.innerHTML = cardId;
+                                } else {
+                                    cardsNotToVisit.innerHTML += ", ";
+                                    cardsNotToVisit.innerHTML += cardId;
+                                }
                                 openOverlay(
-                                    `This is a normal card. Don't go looking for card ${cardNum}.`
+                                    `This is a normal card. Don't go looking for card ${cardId}.`
                                 );
                             });
                         break;
