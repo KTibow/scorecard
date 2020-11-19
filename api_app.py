@@ -1,5 +1,5 @@
 """This part of the scorecard provides all API calls for the frontend."""
-from flask import Blueprint
+from flask import Blueprint, render_template
 import json
 from random import randint, choice
 
@@ -262,13 +262,10 @@ def list_dbs():
         id_database = json.load(open("ids.db", "r"))
     except FileNotFoundError:
         id_database = {}
-    return f"""
-groups.db:
-{group_database}
-comp:
-{comp}
-metadata.db:
-{metadata_database}
-ids.db:
-{id_database}
-"""
+    return render_template(
+        "debug.html",
+        group_database=group_database,
+        comp=comp,
+        metadata_database=metadata_database,
+        id_database=id_database,
+    )
