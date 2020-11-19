@@ -14,6 +14,7 @@ extend-ignore =
     WPS226 # String constants over-use is unavoidable.
     WPS305 # What's wrong with f-strings?
     WPS336 # What's wrong with string concat?
+    WPS355 # Found an unnecessary blank line before a bracket doesn't work with black.
     WPS420 # What's wrong with global?
     WPS421 # What's wrong with print?
     WPS430 # A nested function is unavoidable.
