@@ -75,7 +75,29 @@ function getGroup() {
                 return response.text();
             })
             .then((response) => {
-                document.getElementById("gstat").innerHTML = response;
+                response = JSON.parse(response);
+                if (response["status"] == "bad_id") {
+                    showPopup(
+                        "Your ID is invalid. I'll try to update it in a bit."
+                    );
+                    setTimeout(() => {
+                        window.location.hash = "invalidid";
+                        window.location.reload();
+                    }, 2500);
+                } else if (response["status"] == "not_in_group") {
+                    document.getElementById("groupStat").innerHTML =
+                        "You're not in a group yet.";
+                } else if (response["status"] == "success") {
+                    var people_in_group = response["result"];
+                    document.getElementById(
+                        "groupStat"
+                    ).innerHTML = `Right now you have ${[
+                        people_in_group
+                            .slice(0, people_in_group.length - 1)
+                            .join(", "),
+                        people_in_group[people_in_group.length - 1],
+                    ].join(" and ")} in your group.`;
+                }
             });
     }
 }

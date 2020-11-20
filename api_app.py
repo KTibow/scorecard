@@ -132,6 +132,12 @@ def fids(uid):
         A HTML string for which people are in the group.
     """
     try:
+        id_database = json.load(open("ids.db", "r"))
+    except FileNotFoundError:
+        id_database = {}
+    if uid not in list(id_database.values()):
+        return json.dumps({"status": "bad_id"})
+    try:
         group_database = json.load(open("groups.db", "r"))
     except FileNotFoundError:
         group_database = []
@@ -141,7 +147,7 @@ def fids(uid):
         metadata_database = {}
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
-        return "You currently don't have anyone in your group."
+        return json.dumps({"status": "not_in_group"})
     for group in group_database:
         if uid in group:
             try:
@@ -154,10 +160,7 @@ def fids(uid):
                 inv_map[person] + metadata_database.get(person, "")
                 for person in group.copy()
             ]
-            return (
-                "In your group, there's these people: "
-                + f'<span style="color: deepskyblue;">{", ".join(mgroup)}</span>'
-            )
+            return json.dumps({"status": "success", "result": mgroup})
 
 
 @app.route("/cardstatus/<uid>/<cardnum>")
