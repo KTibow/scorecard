@@ -23,6 +23,15 @@ function getPosition(element) {
         y: yPos,
     };
 }
+function showPopup(message) {
+    var element =
+        document.getElementById("notification") ||
+        document.createElement("div");
+    element.id = "notification";
+    element.classList.add("notification");
+    element.innerHTML = message;
+    document.body.appendChild(element);
+}
 function registerGroup() {
     var idInput = document.getElementById("username");
     fetch(`/addid/${userIdString}/${idInput.value}`)

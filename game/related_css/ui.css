@@ -151,6 +151,11 @@ input:focus::placeholder {
         transform: skewX(0deg);
     }
 }
+@keyframes hide {
+    to {
+        visibility: hidden;
+    }
+}
 .jiggle-once {
     animation: 1s jiggle;
 }
@@ -170,4 +175,16 @@ input:focus::placeholder {
     #a2hs::after {
         content: "Install app";
     }
+}
+.notification {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 32px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px var(--primary-color-light);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: hide 0s 5s forwards;
 }
