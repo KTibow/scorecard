@@ -29,8 +29,10 @@ window.addEventListener("load", function () {
     window.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
         deferredPrompt = event;
-        a2hs.style.setProperty("opacity", "1", "important");
-        a2hs.style.setProperty("visibility", "visible", "important");
+        if (!document.body.innerText.includes("☹")) {
+            a2hs.style.setProperty("opacity", "1", "important");
+            a2hs.style.setProperty("visibility", "visible", "important");
+        }
         a2hs.addEventListener("click", () => {
             a2hs.style.setProperty("opacity", "0", "important");
             a2hs.style.setProperty("visibility", "hidden", "important");
