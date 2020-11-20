@@ -154,14 +154,14 @@ function getCard() {
                                     var cardsNotToVisit = document.getElementById(
                                         "cardsNotToVisit"
                                     );
-                                    if (
-                                        cardsNotToVisit.innerHTML ==
-                                        "[no cards yet]"
-                                    ) {
-                                        cardsNotToVisit.innerHTML = cardId;
+                                    if (cardsNotToVisit.innerHTML == "") {
+                                        cardsNotToVisit.innerHTML = `Don't bother visiting ${cardId}.`;
                                     } else {
-                                        cardsNotToVisit.innerHTML += ", ";
-                                        cardsNotToVisit.innerHTML += cardId;
+                                        cardsNotToVisit.innerHTML = cardsNotToVisit.innerHTML.replace(
+                                            ".",
+                                            ""
+                                        );
+                                        cardsNotToVisit.innerHTML += `, ${cardId}.`;
                                     }
                                     openOverlay(
                                         `This is a normal card. Don't go looking for card ${cardId}.`
