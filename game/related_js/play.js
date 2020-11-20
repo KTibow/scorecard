@@ -81,7 +81,6 @@ function getGroup() {
                         "Your ID is invalid. I'll try to update it in a bit."
                     );
                     setTimeout(() => {
-                        window.location.hash = "invalidid";
                         window.location.reload();
                     }, 2500);
                 } else if (response["status"] == "not_in_group") {
