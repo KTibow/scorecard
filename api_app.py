@@ -6,8 +6,8 @@ from random import randint, choice
 app = Blueprint("api", __name__)
 
 
-@app.route("/makeid/<username>")
-def genew_id(username):
+@app.route("/make_id_for/<username>")
+def make_id(username):
     """
     Create an ID for a user.
 
@@ -42,8 +42,8 @@ def genew_id(username):
     return f"/cluecard/{id_database[username]}"
 
 
-@app.route("/addid/<exist>/<new>")
-def addid(exist, new):
+@app.route("/add_ids/<exist>/<new>")
+def add_ids(exist, new):
     """
     Group mechanic: Add two IDs together.
 
@@ -120,16 +120,17 @@ def addid(exist, new):
         return "makenew"
 
 
-@app.route("/gids/<uid>")
-def fids(uid):
+@app.route("/user_status/<uid>")
+def user_status(uid):
     """
-    Find all people in a group.
+    Find the current user status.
 
     Args:
         uid: The user ID.
 
     Returns:
-        A HTML string for which people are in the group.
+        A JSON string. Status can be bad_id, not_in_group, or success. If successful, then result is
+        set to a list of people in the group.
     """
     try:
         id_database = json.load(open("ids.db", "r"))
@@ -163,14 +164,14 @@ def fids(uid):
             return json.dumps({"status": "success", "result": mgroup})
 
 
-@app.route("/cardstatus/<uid>/<cardnum>")
-def checkcard(uid, cardnum):
+@app.route("/clue_status_of/<clue_id>/for/<uid>")
+def clue_status(clue_id, uid):
     """
-    Check a card number for a user ID.
+    Check a clue number for a user ID.
 
     Args:
         uid: The user ID.
-        cardnum: The card ID.
+        clue_id: The clue ID.
 
     Returns:
         regular if the card should give them a hint on what not to go to.
@@ -182,16 +183,16 @@ def checkcard(uid, cardnum):
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     if uid not in comp:
-        return "invalid_id"
+        return "not_in_group"
     for group in group_database:
         if uid in group:
-            if cardnum in group[0]:
-                return group[0][cardnum]
+            if clue_id in group[0]:
+                return group[0][clue_id]
             return "invalid_card"
 
 
-@app.route("/nopecard/<uid>/<excludes>")
-def rightnum(uid, excludes):
+@app.route("/incorrect_card_for/<uid>/without/<excludes>")
+def find_incorrect_card(uid, excludes):
     """
     Find an incorrect card based on a user ID.
 
@@ -223,8 +224,8 @@ def rightnum(uid, excludes):
             return clue_to_return
 
 
-@app.route("/finished/<user_id>")
-def send_finished(user_id):
+@app.route("/add_to_finished/<user_id>")
+def add_to_finished(user_id):
     """
     Add a user ID to the finished database.
 
@@ -245,7 +246,7 @@ def send_finished(user_id):
 
 
 @app.route("/debug/")
-def list_dbs():
+def debug():
     """
     List all databases.
 

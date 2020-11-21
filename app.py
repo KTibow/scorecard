@@ -391,7 +391,7 @@ def err500(_error):
 
 
 # ============== API ================
-app.register_blueprint(api_app)
+app.register_blueprint(api_app, url_prefix="/api/")
 # ========== BROWSER FILES ==========
 for folder_name, file_name in walk():
     if file_name != "/sw.js":

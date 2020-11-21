@@ -7,7 +7,7 @@ function registerUser() {
         return;
     }
     localStorage.setItem("username", username);
-    fetch(`/makeid/${username}`)
+    fetch(`/api/make_id_for/${username}`)
         .then((result) => {
             return result.text();
         })

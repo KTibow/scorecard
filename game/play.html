@@ -42,10 +42,10 @@
         <h3 id="groupStat">You're not in a group yet.</h3>
         <h3>So far, you've done <span id="attmpts">0</span> clue checks.</h3>
         <h3 id="cardsNotToVisit"></h3>
-        <input id="cardname" type="text" placeholder="Clue ID"><br/>
-        <button onClick="getCard()" data-icon="add">Add clue</button><br/>
-        <input id="username" type="text" placeholder="User ID"><br/>
-        <button onClick="registerGroup()" data-icon="group_add" id="adgr">Add to group</button><br/>
+        <input id="clueId" type="text" placeholder="Clue ID"><br/>
+        <button onClick="checkClue()" data-icon="add">Add clue</button><br/>
+        <input id="userId" type="text" placeholder="User ID"><br/>
+        <button onClick="addToGroup()" data-icon="group_add" id="addToGroup">Add to group</button><br/>
         <div class="overlay" id="overlay">
             <p id="overlay-text"></p>
             <button
@@ -53,14 +53,14 @@
                 data-icon="close" id="closeOverlay">Close</button>
         </div>
         <script>
-            var input = document.getElementById("cardname");
+            var input = document.getElementById("clueId");
             input.addEventListener("keyup", function(event) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
-                    getCard();
+                    checkClue();
                 }
             });
-            input = document.getElementById("username");
+            input = document.getElementById("userId");
             input.addEventListener("keyup", function(event) {
                 if (event.keyCode === 13) {
                     event.preventDefault();

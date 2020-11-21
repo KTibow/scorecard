@@ -33,13 +33,13 @@ function showPopup(message) {
     document.body.appendChild(element);
 }
 function registerGroup() {
-    var idInput = document.getElementById("username");
-    fetch(`/addid/${userIdString}/${idInput.value}`)
+    var idInput = document.getElementById("userId");
+    fetch(`/api/add_ids/${userIdString}/${idInput.value}`)
         .then((result) => {
             return result.text();
         })
         .then((idValid) => {
-            var addToGroup = document.getElementById("adgr");
+            var addToGroup = document.getElementById("addToGroup");
             if (idValid != "notreal") {
                 // Confetti
                 var pos = getPosition(idInput);
@@ -68,120 +68,123 @@ function registerGroup() {
 function goHome() {
     window.location = "/";
 }
-function getGroup() {
+function updateStatus() {
     if (document.hasFocus()) {
-        fetch(`/gids/${userIdString}`)
+        fetch(`/api/user_status/${userIdString}`)
             .then((response) => {
                 return response.text();
             })
-            .then((response) => {
-                response = JSON.parse(response);
-                if (response["status"] == "bad_id") {
+            .then((status) => {
+                status = JSON.parse(status);
+                if (status["status"] == "bad_id") {
                     showPopup(
                         "Your ID is invalid. I'll try to update it in a bit."
                     );
                     setTimeout(() => {
                         window.location.reload();
                     }, 2500);
-                } else if (response["status"] == "not_in_group") {
+                } else if (status["status"] == "not_in_group") {
                     document.getElementById("groupStat").innerHTML =
                         "You're not in a group yet.";
-                } else if (response["status"] == "success") {
-                    var people_in_group = response["result"];
+                } else if (status["status"] == "success") {
+                    var peopleInGroup = status["result"];
+                    peopleInGroup = [
+                        peopleInGroup
+                            .slice(0, peopleInGroup.length - 1)
+                            .join(", "),
+                        peopleInGroup[peopleInGroup.length - 1],
+                    ];
+                    peopleInGroup = peopleInGroup.join(" and ");
                     document.getElementById(
                         "groupStat"
-                    ).innerHTML = `Right now you have ${[
-                        people_in_group
-                            .slice(0, people_in_group.length - 1)
-                            .join(", "),
-                        people_in_group[people_in_group.length - 1],
-                    ].join(" and ")} in your group.`;
+                    ).innerHTML = `Right now you have ${peopleInGroup} in your group.`;
                 }
             });
     }
 }
-setInterval(getGroup, 400);
-function getCard() {
+setInterval(updateStatus, 400);
+function handleClue(outcome, clueId) {
+    switch (outcome) {
+        case "correct":
+            openOverlay(
+                "That's the right clue! Your group can see you're finished now."
+            );
+            var confettiConfig = {
+                particleCount: 100,
+                startVelocity: 30,
+                spread: 360,
+            };
+            for (var confettiDelay of [10, 510, 1010]) {
+                setTimeout(
+                    confetti,
+                    confettiDelay,
+                    Object.assign(
+                        {
+                            origin: {
+                                x: Math.random(),
+                                y: Math.random() - 0.2,
+                            },
+                        },
+                        confettiConfig
+                    )
+                );
+            }
+            fetch(`/api/add_to_finished/${userIdString}`);
+            break;
+        case "regular":
+            fetch(`/api/incorrect_card_for/${userIdString}/without/${clueId}`)
+                .then((result) => {
+                    return result.text();
+                })
+                .then((clueId) => {
+                    var cardsNotToVisit = document.getElementById(
+                        "cardsNotToVisit"
+                    );
+                    if (cardsNotToVisit.innerHTML == "") {
+                        cardsNotToVisit.innerHTML = `Don't bother visiting ${clueId}.`;
+                    } else {
+                        cardsNotToVisit.innerHTML = cardsNotToVisit.innerHTML.replace(
+                            ".",
+                            ""
+                        );
+                        cardsNotToVisit.innerHTML += `, ${clueId}.`;
+                    }
+                    openOverlay(
+                        `This is a normal card. Don't go looking for card ${clueId}.`
+                    );
+                });
+            break;
+        case "not_in_group":
+            openOverlay("You need to be in a group to check a card status.");
+            break;
+        case "invalid_card":
+            openOverlay(
+                "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
+            );
+            break;
+        default:
+            openOverlay("WTH?" + outcome);
+            break;
+    }
+}
+function checkClue() {
     var attemptsElement = document.getElementById("attmpts");
     var attemptsSoFar = Number(attemptsElement.innerHTML) + 1;
     attemptsElement.innerHTML = String(attemptsSoFar);
     if (attemptsSoFar == 16) {
         openOverlay(
-            "It looks like you've done all of the cards. Make sure you aren't repeating any."
+            "It looks like you've done all of the clues. Make sure you aren't repeating any."
         );
     }
-    var cardId = document.getElementById("cardname").value.toUpperCase();
+    var clueId = document.getElementById("clueId").value.toUpperCase();
     setTimeout(
         () => {
-            fetch(`/cardstatus/${userIdString}/${cardId}`)
+            fetch(`/api/clue_status_of/${clueId}/for/${userIdString}/`)
                 .then((result) => {
                     return result.text();
                 })
                 .then((outcome) => {
-                    switch (outcome) {
-                        case "correct":
-                            openOverlay(
-                                "That's the right clue! Your group can see you're finished now."
-                            );
-                            var confettiConfig = {
-                                particleCount: 100,
-                                startVelocity: 30,
-                                spread: 360,
-                            };
-                            for (var confettiDelay of [10, 510, 1010]) {
-                                setTimeout(
-                                    confetti,
-                                    confettiDelay,
-                                    Object.assign(
-                                        {
-                                            origin: {
-                                                x: Math.random(),
-                                                y: Math.random() - 0.2,
-                                            },
-                                        },
-                                        confettiConfig
-                                    )
-                                );
-                            }
-                            fetch(`/finished/${userIdString}`);
-                            break;
-                        case "regular":
-                            fetch(`/nopecard/${userIdString}/${cardId}`)
-                                .then((result) => {
-                                    return result.text();
-                                })
-                                .then((cardId) => {
-                                    var cardsNotToVisit = document.getElementById(
-                                        "cardsNotToVisit"
-                                    );
-                                    if (cardsNotToVisit.innerHTML == "") {
-                                        cardsNotToVisit.innerHTML = `Don't bother visiting ${cardId}.`;
-                                    } else {
-                                        cardsNotToVisit.innerHTML = cardsNotToVisit.innerHTML.replace(
-                                            ".",
-                                            ""
-                                        );
-                                        cardsNotToVisit.innerHTML += `, ${cardId}.`;
-                                    }
-                                    openOverlay(
-                                        `This is a normal card. Don't go looking for card ${cardId}.`
-                                    );
-                                });
-                            break;
-                        case "invalid_id":
-                            openOverlay(
-                                "You need to be in a group to check a card status."
-                            );
-                            break;
-                        case "invalid_card":
-                            openOverlay(
-                                "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
-                            );
-                            break;
-                        default:
-                            openOverlay("WTH?" + outcome);
-                            break;
-                    }
+                    handleClue(outcome, clueId);
                 });
         },
         attemptsSoFar == 16 ? 2000 : 0
