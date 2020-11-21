@@ -115,19 +115,16 @@ function handleClue(outcome, clueId) {
                 spread: 360,
             };
             for (var confettiDelay of [10, 510, 1010]) {
-                setTimeout(
-                    confetti,
-                    confettiDelay,
-                    Object.assign(
-                        {
-                            origin: {
-                                x: Math.random(),
-                                y: Math.random() - 0.2,
-                            },
+                var confettiTempConfig = Object.assign(
+                    {
+                        origin: {
+                            x: Math.random(),
+                            y: Math.random() - 0.2,
                         },
-                        confettiConfig
-                    )
+                    },
+                    confettiConfig
                 );
+                setTimeout(confetti, confettiDelay, confettiTempConfig);
             }
             fetch(`/api/add_to_finished/${userIdString}`);
             break;
