@@ -1,21 +1,21 @@
-function log_message(message, color) {
+function logMessage(message, color) {
     console.log(
         "%c install.js: %c" + message,
         "color: #ad50ff;",
         "color: " + color
     );
 }
-log_message("🔁 Getting ready to install service worker", "green");
+logMessage("🔁 Getting ready to install service worker", "green");
 window.addEventListener("load", function () {
     if ("serviceWorker" in navigator) {
-        log_message("🔻 Installing...", "yellow");
+        logMessage("🔻 Installing...", "yellow");
         navigator.serviceWorker
             .register("/sw.js")
             .then(function () {
-                log_message("✅ Done installing!", "green");
+                logMessage("✅ Done installing!", "green");
             })
             .catch(function () {
-                log_message("❌ Error installing", "red");
+                logMessage("❌ Error installing", "red");
             });
     }
     let deferredPrompt;
@@ -39,9 +39,9 @@ window.addEventListener("load", function () {
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === "accepted") {
-                    log_message("📲 User accepted the A2HS prompt!", "green");
+                    logMessage("📲 User accepted the A2HS prompt!", "green");
                 } else {
-                    log_message("❌ User dismissed the A2HS prompt.", "red");
+                    logMessage("❌ User dismissed the A2HS prompt.", "red");
                 }
                 deferredPrompt = null;
             });

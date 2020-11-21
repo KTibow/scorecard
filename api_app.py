@@ -129,8 +129,8 @@ def user_status(uid):
         uid: The user ID.
 
     Returns:
-        A JSON string. Status can be bad_id, not_in_group, or success. If successful, then result is
-        set to a list of people in the group.
+        A JSON string. Status can be bad_id, not_in_group, or success.
+        If successful, then result is set to a list of people in the group.
     """
     try:
         id_database = json.load(open("ids.db", "r"))

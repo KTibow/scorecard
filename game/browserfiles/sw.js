@@ -1,5 +1,5 @@
 var cacheName = "clue-card-v{{version}}";
-function log_message(message, color, object) {
+function logMessage(message, color, object) {
     console.log(
         "%c sw.js: %c" + message,
         "color: orange;",
@@ -7,18 +7,18 @@ function log_message(message, color, object) {
         object || ""
     );
 }
-log_message("👋 Hello there!", "green");
+logMessage("👋 Hello there!", "green");
 self.addEventListener("install", (e) => {
     if (navigator.onLine) {
-        log_message("⏭️ Online, not waiting.", "darkslateblue");
+        logMessage("⏭️ Online, not waiting.", "darkslateblue");
         self.skipWaiting();
     }
-    log_message("🔻 Installing...", "yellow");
+    logMessage("🔻 Installing...", "yellow");
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
-            var cache_urls = Function("return ([{{urls}}])")();
-            log_message("⬇ Caching caches...", "coral", cache_urls);
-            return cache.addAll(cache_urls);
+            var cacheUrls = Function("return ([{{urls}}])")();
+            logMessage("⬇ Caching caches...", "coral", cacheUrls);
+            return cache.addAll(cacheUrls);
         })
     );
     e.waitUntil(
@@ -26,27 +26,27 @@ self.addEventListener("install", (e) => {
             return Promise.all(
                 keyList.map((key) => {
                     if (key !== cacheName) {
-                        log_message("👋 See you later " + key, "coral");
+                        logMessage("👋 See you later " + key, "coral");
                         return caches.delete(key);
                     }
                 })
             );
         })
     );
-    log_message("✅ Done installing!", "green");
+    logMessage("✅ Done installing!", "green");
 });
 self.addEventListener("fetch", function (event) {
     var shouldCache = event.request.url.includes(".");
-    var message_to_log = "🌎 We got a (no, not fish) fetch! ";
+    var messageToLog = "🌎 We got a (no, not fish) fetch! ";
     if (shouldCache) {
-        message_to_log += "Caching it for later use.";
+        messageToLog += "Caching it for later use.";
     } else {
-        message_to_log += "Not caching non-file call.";
+        messageToLog += "Not caching non-file call.";
     }
-    message_to_log += " URL: ";
-    message_to_log += event.request.url.split("com")[1];
-    message_to_log += "\n";
-    log_message(message_to_log, "slateblue", event.request);
+    messageToLog += " URL: ";
+    messageToLog += event.request.url.split("com")[1];
+    messageToLog += "\n";
+    logMessage(messageToLog, "slateblue", event.request);
     if (shouldCache) {
         caches
             .open(cacheName)
@@ -54,15 +54,15 @@ self.addEventListener("fetch", function (event) {
                 cache.add(event.request.url);
             })
             .catch(function () {
-                log_message("❌ Error caching", "red", event.request.url);
+                logMessage("❌ Error caching", "red", event.request.url);
             });
     }
     event.respondWith(
         fetch(event.request).catch(function () {
-            log_message("↩ Returning cache for", "blue", event.request.url);
+            logMessage("↩ Returning cache for", "blue", event.request.url);
             return caches.match(event.request.url).then(function (resty) {
                 if (!resty) {
-                    log_message("❌ Page not found:", "red", event.request.url);
+                    logMessage("❌ Page not found:", "red", event.request.url);
                     return caches.match("/404");
                 }
             });
