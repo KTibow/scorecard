@@ -170,7 +170,7 @@ function getCard() {
                             break;
                         case "invalid_id":
                             openOverlay(
-                                "That's an invalid user ID. Try going home to make a new one."
+                                "You need to be in a group to check a card status."
                             );
                             break;
                         case "invalid_card":
