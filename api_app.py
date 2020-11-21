@@ -19,14 +19,14 @@ def make_id(username):
     """
     print("Making ID for", username)
     try:
-        id_database = json.load(open("ids.db", "r"))
+        id_database = json.load(open("ids.db"))
     except FileNotFoundError:
         id_database = {}
     new_id = str(randint(0, 99999)).zfill(5)
     if username in id_database:
         old_id = id_database[username]
         try:
-            group_database = json.load(open("groups.db", "r"))
+            group_database = json.load(open("groups.db"))
         except FileNotFoundError:
             group_database = []
         for group_index, group in enumerate(group_database):
@@ -58,12 +58,12 @@ def add_ids(exist, new):
     exist = exist.zfill(5)
     new = new.zfill(5)
     try:
-        aids = list(json.load(open("ids.db", "r")).values())
+        aids = list(json.load(open("ids.db")).values())
     except Exception:
         aids = []
     if exist not in aids or new not in aids:
         try:
-            json.load(open("ids.db", "r"))
+            json.load(open("ids.db"))
         except Exception:
             json.dump({}, open("ids.db", "w"))
         print(f"{exist} or {new} are not in {aids}")
@@ -71,7 +71,7 @@ def add_ids(exist, new):
         print(f'new {"is" if new in aids else "is not"} in ids')
         return "notreal"
     try:
-        group_database = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
@@ -134,17 +134,17 @@ def user_status(uid):
         If successful, then result is set to a list of people in the group.
     """
     try:
-        id_database = json.load(open("ids.db", "r"))
+        id_database = json.load(open("ids.db"))
     except FileNotFoundError:
         id_database = {}
     if uid not in list(id_database.values()):
         return json.dumps({"status": "bad_id"})
     try:
-        group_database = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     try:
-        metadata_database = json.load(open("metadata.db", "r"))
+        metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
         metadata_database = {}
     comp = [user_id for group in group_database for user_id in group]
@@ -153,7 +153,7 @@ def user_status(uid):
     for group in group_database:
         if uid in group:
             try:
-                id_database = json.load(open("ids.db", "r"))
+                id_database = json.load(open("ids.db"))
             except FileNotFoundError:
                 id_database = {}
             group = group[1 : len(group)]
@@ -179,7 +179,7 @@ def clue_status(clue_id, uid):
         correct if it means that they won.
     """
     try:
-        group_database = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
@@ -205,7 +205,7 @@ def find_incorrect_card(uid, excludes):
         An incorrect clue for that ID that isn't excludes.
     """
     try:
-        group_database = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
@@ -237,7 +237,7 @@ def add_to_finished(user_id):
         "done" and the current database.
     """
     try:
-        metadata_database = json.load(open("metadata.db", "r"))
+        metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
         metadata_database = {}
     if user_id not in metadata_database:
@@ -255,16 +255,16 @@ def debug():
         All of the databases.
     """
     try:
-        group_database = json.load(open("groups.db", "r"))
+        group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     comp = [user_id for group in group_database for user_id in group]
     try:
-        metadata_database = json.load(open("metadata.db", "r"))
+        metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
         metadata_database = {}
     try:
-        id_database = json.load(open("ids.db", "r"))
+        id_database = json.load(open("ids.db"))
     except FileNotFoundError:
         id_database = {}
     return render_template(

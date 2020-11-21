@@ -343,7 +343,7 @@ def card(username):
         HTML clue card.
     """
     try:
-        id_database = json.load(open("ids.db", "r"))
+        id_database = json.load(open("ids.db"))
     except FileNotFoundError:
         id_database = {}
     if username in id_database:
