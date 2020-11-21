@@ -29,15 +29,16 @@ def make_id(username):
             group_database = json.load(open("groups.db", "r"))
         except FileNotFoundError:
             group_database = []
-        for group in group_database:
-            group_database[group_database.index(group)] = [
-                new_id if user_id == old_id else user_id for user_id in group
+        for group_index, group in enumerate(group_database):
+            group[1:] = [
+                user_id.replace(old_id, new_id) for user_id in group[1:]
             ]
-        print("Updating groups, now is", group_database)
+            group_database[group_index] = group
+        print("Updating groups, now groups.db is", group_database)
         json.dump(group_database, open("groups.db", "w"))
     # First ID
     id_database[username] = new_id
-    print("Updating IDs, now is", id_database)
+    print("Updating IDs, now ids.db is", id_database)
     json.dump(id_database, open("ids.db", "w"))
     return f"/cluecard/{id_database[username]}"
 
