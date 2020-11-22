@@ -40,7 +40,7 @@ function registerGroup() {
         })
         .then((idValid) => {
             var addToGroup = document.getElementById("addToGroup");
-            if (idValid != "notreal") {
+            if (idValid != "invalid_id") {
                 // Confetti
                 var pos = getPosition(idInput);
                 pos["x"] = pos["x"] + idInput.offsetWidth / 2;

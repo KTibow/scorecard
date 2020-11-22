@@ -45,79 +45,71 @@ def make_id(username):
     return f"/cluecard/{id_database[username]}"
 
 
-@app.route("/add_ids/<exist>/<new>")
-def add_ids(exist, new):
+@app.route("/add_ids/<existing_id>/<new_id>")
+def add_ids(existing_id, new_id):
     """
     Group mechanic: Add two IDs together.
 
     Args:
-        exist: The ID that's sending the add request.
-        new: The ID to be added on.
+        existing_id: The ID that's sending the add request.
+        new_id: The ID to be added on.
 
     Returns:
         Whether it worked, and if it worked, what happened in order to merge.
     """
-    exist = exist.zfill(5)
-    new = new.zfill(5)
+    existing_id = existing_id.zfill(5)
+    new_id = new_id.zfill(5)
     try:
-        aids = list(json.load(open("ids.db")).values())
+        all_ids = list(json.load(open("ids.db")).values())
     except Exception:
-        aids = []
-    if exist not in aids or new not in aids:
+        all_ids = []
+    if existing_id not in aids or new_id not in aids:
         try:
             json.load(open("ids.db"))
         except Exception:
             json.dump({}, open("ids.db", "w"))
-        print(f"{exist} or {new} are not in {aids}")
-        print(f'exist {"is" if exist in aids else "is not"} in ids')
-        print(f'new {"is" if new in aids else "is not"} in ids')
-        return "notreal"
+        print(f"{existing_id} or {new_id} are not in {aids}")
+        print(f'existing_id {"is" if existing_id in aids else "is not"} in ids')
+        print(f'new_id {"is" if new_id in aids else "is not"} in ids')
+        return "invalid_id"
     try:
         group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
     comp = get_all_user_ids(group_database)
     for group in group_database:
-        if exist in group and new in group:
-            return "already"
-    if exist in comp and new in comp:
-        newgp = []
+        if existing_id in group and new_id in group:
+            return "already_in_same_group"
+    if existing_id in comp and new_id in comp:
+        new_group = []
         for group in group_database:
-            if new in group:
-                newgp = group
-        for group in group_database:
-            if exist in group:
-                group_database[group_database.index(group)] = (
-                    group + newgp[1 : len(newgp)]
-                )
-                group_database.remove(newgp)
+            if new_id in group:
+                new_group = group
+        for group_index, group in enumerate(group_database):
+            if existing_id in group:
+                group_database[group_index] = group + new_group[1:]
+                group_database.remove(new_group)
                 print(group_database)
                 json.dump(group_database, open("groups.db", "w"))
-                return "merge"
-    elif exist in comp and new not in comp:
-        for group in group_database:
-            if exist in group:
-                group_database[group_database.index(group)].append(new)
+                return "merge_groups"
+    elif existing_id in comp or new_id in comp:
+        for group_index, group in enumerate(group_database):
+            if existing_id in group or new_id in group:
+                id_to_add = new_id if existing_id in group else existing_id
+                group_database[group_index].append(id_to_add)
                 print(group_database)
                 json.dump(group_database, open("groups.db", "w"))
-                return "addnew"
-    elif exist not in comp and new in comp:
-        for group in group_database:
-            if new in group:
-                group_database[group_database.index(group)].append(exist)
-                print(group_database)
-                json.dump(group_database, open("groups.db", "w"))
-                return "addexist"
+                return "add_to_group"
     else:
         # The best make you win, most tell you what it's not,
         # and some don't give you anything.
-        infodict = {}
+        clue_statuses = {}
         for clue_letter in "ABCD":
             for clue_number in range(1, 5):
-                infodict[clue_letter + str(clue_number)] = "regular"
+                clue_statuses[clue_letter + str(clue_number)] = "regular"
         the_chosen_one = choice(["A", "B", "C", "D"]) + str(randint(1, 4))
-        infodict[the_chosen_one] = "correct"
-        group_database.append([infodict, exist, new])
+        clue_statuses[the_chosen_one] = "correct"
+        group_database.append([clue_statuses, existing_id, new_id])
         print(group_database)
         json.dump(group_database, open("groups.db", "w"))
         return "makenew"
