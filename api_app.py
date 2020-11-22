@@ -34,9 +34,7 @@ def make_id(username):
         except FileNotFoundError:
             group_database = []
         for group_index, group in enumerate(group_database):
-            group[1:] = [
-                user_id.replace(old_id, new_id) for user_id in group[1:]
-            ]
+            group[1:] = [user_id.replace(old_id, new_id) for user_id in group[1:]]
             group_database[group_index] = group
         print("Updating groups, now groups.db is", group_database)
         json.dump(group_database, open("groups.db", "w"))
