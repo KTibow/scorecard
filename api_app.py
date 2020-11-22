@@ -6,6 +6,10 @@ from random import randint, choice
 app = Blueprint("api", __name__)
 
 
+def get_all_user_ids(group_database):
+    return [user_id for group in g for user_id in group if isinstance(user_id, str)]
+
+
 @app.route("/make_id_for/<username>")
 def make_id(username):
     """
@@ -74,7 +78,7 @@ def add_ids(exist, new):
         group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
-    comp = [user_id for group in group_database for user_id in group]
+    comp = get_all_user_ids(group_database)
     for group in group_database:
         if exist in group and new in group:
             return "already"
@@ -147,7 +151,7 @@ def user_status(uid):
         metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
         metadata_database = {}
-    comp = [user_id for group in group_database for user_id in group]
+    comp = get_all_user_ids(group_database)
     if uid not in comp:
         return json.dumps({"status": "not_in_group"})
     for group in group_database:
@@ -182,7 +186,7 @@ def clue_status(clue_id, uid):
         group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
-    comp = [user_id for group in group_database for user_id in group]
+    comp = get_all_user_ids(group_database)
     if uid not in comp:
         return "not_in_group"
     for group in group_database:
@@ -208,7 +212,7 @@ def find_incorrect_card(uid, excludes):
         group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
-    comp = [user_id for group in group_database for user_id in group]
+    comp = get_all_user_ids(group_database)
     if uid not in comp:
         return "-1"
     for group in group_database:
@@ -258,7 +262,7 @@ def debug():
         group_database = json.load(open("groups.db"))
     except FileNotFoundError:
         group_database = []
-    comp = [user_id for group in group_database for user_id in group]
+    comp = get_all_user_ids(group_database)
     try:
         metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
