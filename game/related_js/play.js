@@ -87,7 +87,7 @@ function updateStatus() {
                     document.getElementById("groupStat").innerHTML =
                         "You're not in a group yet.";
                 } else if (status["status"] == "success") {
-                    var peopleInGroup = status["result"];
+                    var peopleInGroup = status["result"].sort();
                     peopleInGroup = [
                         peopleInGroup
                             .slice(0, peopleInGroup.length - 1)
