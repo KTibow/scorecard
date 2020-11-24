@@ -5,3 +5,7 @@ flake8-html
 flake8-variables-names
 black
 pygithub
+pyppeteer
+pytest
+pytest-asyncio
+pytest-rerunfailures

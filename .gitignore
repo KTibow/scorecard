@@ -4,3 +4,4 @@ node_modules
 *.db
 .lighthouseci
 todo-scorecard.txt
+pytest_screenshots

@@ -54,8 +54,10 @@ jobs:
       run: npm install
 
     # Runs CI
-    - name: Test booting the server
-      run: python3 -m assets.test_boot
+    - name: Run puppeteer
+      run: |
+        (python3 -m assets.lighthouse_boot &) &> /dev/null
+        python3 -m pytest --reruns 1 assets/puppeteer.py
       env:
         GITHUB_VERSION_PAT: ${{ secrets.GITHUB_TOKEN }}
 

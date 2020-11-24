@@ -12,7 +12,9 @@ function registerUser() {
             return result.text();
         })
         .then((result) => {
-            window.location = `/cluecard/${username}`;
+            setTimeout(() => {
+                window.location = `/cluecard/${username}`;
+            }, 250);
         });
 }
 if (localStorage.getItem("username") != null) {
@@ -53,5 +55,5 @@ html, body {
         document.body.appendChild(errorSheet);
         alert("I'm having trouble logging you in.");
     }, 5000);
-    registerUser();
+    setTimeout(registerUser, 1500);
 }
