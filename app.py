@@ -62,7 +62,7 @@ app = Flask(__name__, template_folder="game")
 if compress_inited:
     Compress(app)
 if minify_inited:
-    minify(app=app, js=False, caching_limit=0)
+    minify(app=app, js=False, fail_safe=False, caching_limit=0)
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
