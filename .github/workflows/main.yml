@@ -57,7 +57,7 @@ jobs:
     - name: Run puppeteer
       run: |
         (python3 -m assets.lighthouse_boot &) &> /dev/null
-        python3 -m pytest --reruns 1 assets/puppeteer.py
+        python3 -m pytest --reruns 2 assets/puppeteer.py
       env:
         GITHUB_VERSION_PAT: ${{ secrets.GITHUB_TOKEN }}
 
