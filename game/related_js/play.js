@@ -129,34 +129,34 @@ function handleClue(outcome, clueId) {
             fetch(`/api/add_to_finished/${userIdString}`);
             break;
         case "regular":
-            fetch(`/api/incorrect_card_for/${userIdString}/without/${clueId}`)
+            fetch(`/api/incorrect_clue_for/${userIdString}/without/${clueId}`)
                 .then((result) => {
                     return result.text();
                 })
                 .then((clueId) => {
-                    var cardsNotToVisit = document.getElementById(
-                        "cardsNotToVisit"
+                    var cluesNotToVisit = document.getElementById(
+                        "cluesNotToVisit"
                     );
-                    if (cardsNotToVisit.innerHTML == "") {
-                        cardsNotToVisit.innerHTML = `Don't bother visiting ${clueId}.`;
+                    if (cluesNotToVisit.innerHTML == "") {
+                        cluesNotToVisit.innerHTML = `Don't bother visiting ${clueId}.`;
                     } else {
-                        cardsNotToVisit.innerHTML = cardsNotToVisit.innerHTML.replace(
+                        cluesNotToVisit.innerHTML = cluesNotToVisit.innerHTML.replace(
                             ".",
                             ""
                         );
-                        cardsNotToVisit.innerHTML += `, ${clueId}.`;
+                        cluesNotToVisit.innerHTML += `, ${clueId}.`;
                     }
                     openOverlay(
-                        `This is a normal card. Don't go looking for card ${clueId}.`
+                        `This is a normal clue. Don't go looking for clue ${clueId}.`
                     );
                 });
             break;
         case "not_in_group":
-            openOverlay("You need to be in a group to check a card status.");
+            openOverlay("You need to be in a group to check a clue status.");
             break;
-        case "invalid_card":
+        case "invalid_clue":
             openOverlay(
-                "That's an invalid card. Cards are A-D and 1-4, so some examples are A1, D4, and B3."
+                "That's an invalid clue. Make sure you've selected both the letter and number of the clue."
             );
             break;
         default:

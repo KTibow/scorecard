@@ -185,7 +185,7 @@ def clue_status(clue_id, user_id):
         clue_id: The clue ID.
 
     Returns:
-        regular if the card should give them a hint on what not to go to.
+        regular if the clue should give them a hint on what not to go to.
         correct if it means that they won.
     """
     try:
@@ -199,17 +199,17 @@ def clue_status(clue_id, user_id):
         if user_id in group:
             if clue_id in group[0]:
                 return group[0][clue_id]
-            return "invalid_card"
+            return "invalid_clue"
 
 
-@app.route("/incorrect_card_for/<user_id>/without/<excludes>")
-def find_incorrect_card(user_id, excludes):
+@app.route("/incorrect_clue_for/<user_id>/without/<excludes>")
+def find_incorrect_clue(user_id, excludes):
     """
-    Find an incorrect card based on a user ID.
+    Find an incorrect clue based on a user ID.
 
     Args:
         user_id: The user ID.
-        excludes: A card to not return.
+        excludes: A clue to not return.
 
     Returns:
         An incorrect clue for that ID that isn't excludes.
