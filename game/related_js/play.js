@@ -165,7 +165,7 @@ function handleClue(outcome, clueId) {
     }
 }
 function checkClue() {
-    var attemptsElement = document.getElementById("attmpts");
+    var attemptsElement = document.getElementById("clueChecks");
     var attemptsSoFar = Number(attemptsElement.innerHTML) + 1;
     attemptsElement.innerHTML = String(attemptsSoFar);
     if (attemptsSoFar == 16) {
