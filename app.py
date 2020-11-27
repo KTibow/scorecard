@@ -5,13 +5,11 @@
 # General stuff
 import mimetypes
 import os
-from random import randint
 import time
 import json
 
 from flask import (
     Flask,
-    g as flask_global,
     redirect,
     render_template,
     request,
@@ -21,17 +19,10 @@ from flask import (
 from api_app import app as api_app
 from github.MainClass import Github
 
-# Tracking
-import hashlib
-from urllib.parse import quote
-import requests
-
 # Service worker
 import threading
 
 # Tests
-import __main__
-
 debug_mode = os.getenv("PROD") != "TRUE"
 
 if debug_mode:
@@ -63,7 +54,7 @@ if compress_inited:
     Compress(app)
 if minify_inited:
     minify(app=app, js=False, caching_limit=0)
-import before_after_req
+import before_after_req  # noqa: F401,E402
 
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:

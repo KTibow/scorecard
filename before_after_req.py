@@ -1,3 +1,19 @@
+"""
+This runs before and after requests.
+
+It contains the track_view function. It also redirects HTTP to HTTPS.
+It handles server-timing as well. And it adds security headers.
+"""
+
+import hashlib
+import time
+from random import randint
+from urllib.parse import quote
+
+import requests
+from flask import g as flask_global
+from flask import redirect, request
+
 from app import app, debug_mode
 
 
