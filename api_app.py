@@ -40,7 +40,7 @@ def make_id(username):
         id_database = json.load(open("ids.db"))
     except FileNotFoundError:
         id_database = {}
-    new_id = str(randint(0, 99999)).zfill(5)
+    new_id = str(randint(0, 999)).zfill(3)
     if username in id_database:
         old_id = id_database[username]
         try:
@@ -71,8 +71,8 @@ def add_ids(existing_id, new_id):
     Returns:
         Whether it worked, and if it worked, what happened in order to merge.
     """
-    existing_id = existing_id.zfill(5)
-    new_id = new_id.zfill(5)
+    existing_id = existing_id.zfill(3)
+    new_id = new_id.zfill(3)
     try:
         all_ids = json.load(open("ids.db")).values()
     except Exception:
