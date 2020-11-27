@@ -78,7 +78,7 @@ input[type="radio"]:nth-of-type(8):checked ~ .control-me:nth-of-type(8) {
 .cluePicker,
 .letters,
 .numbers {
-    margin: 15px 0;
+    margin: 5px 0;
 }
 .cluePicker {
     margin: 15px;
@@ -88,5 +88,14 @@ input[type="radio"]:nth-of-type(8):checked ~ .control-me:nth-of-type(8) {
     .letters,
     .numbers {
         text-align: center;
+    }
+    label.toggler {
+        width: 15vw;
+        height: 15vw;
+    }
+    .control-me {
+        width: 15vw;
+        height: 15vw;
+        line-height: 15vw;
     }
 }
