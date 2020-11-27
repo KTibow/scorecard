@@ -187,4 +187,5 @@ input:focus::placeholder {
     bottom: 0;
     left: 0;
     animation: hide 0s 5s forwards;
+    z-index: 3;
 }

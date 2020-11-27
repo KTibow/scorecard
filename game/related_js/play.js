@@ -68,6 +68,7 @@ function registerGroup() {
 function goHome() {
     window.location = "/";
 }
+var previousStatus;
 function updateStatus() {
     if (document.hasFocus()) {
         fetch(`/api/user_status/${userIdString}`)
@@ -98,6 +99,56 @@ function updateStatus() {
                     document.getElementById(
                         "groupStat"
                     ).innerHTML = `Right now you have ${peopleInGroup} in your group.`;
+                    if (
+                        previousStatus !== undefined &&
+                        previousStatus["status"] == "success" &&
+                        previousStatus != status &&
+                        previousStatus.length == status.length
+                    ) {
+                        oldPeople = previousStatus["result"].sort();
+                        newPeople = status["result"].sort();
+                        var prevAllFinished = true;
+                        var allFinished = true;
+                        for (var [i, oldPerson] of oldPeople.entries()) {
+                            var newPerson = newPeople[i];
+                            if (oldPerson != newPerson) {
+                                showPopup(
+                                    newPerson.replace("(", "").replace(")", "")
+                                );
+                            }
+                            if (!oldPerson.includes("finished")) {
+                                prevAllFinished = false;
+                            }
+                            if (!newPerson.includes("finished")) {
+                                allFinished = false;
+                            }
+                        }
+                        if (allFinished && !prevAllFinished) {
+                            openOverlay("Everyone's finished!");
+                            var confettiConfig = {
+                                particleCount: 100,
+                                startVelocity: 30,
+                                spread: 360,
+                            };
+                            for (var confettiDelay = 10; confettiDelay < 4000; confettiDelay += 500) {
+                                var confettiTempConfig = Object.assign(
+                                    {
+                                        origin: {
+                                            x: Math.random(),
+                                            y: Math.random() - 0.2,
+                                        },
+                                    },
+                                    confettiConfig
+                                );
+                                setTimeout(
+                                    confetti,
+                                    confettiDelay,
+                                    confettiTempConfig
+                                );
+                            }
+                        }
+                    }
+                    previousStatus = status;
                 }
             });
     }
