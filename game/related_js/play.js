@@ -173,7 +173,14 @@ function checkClue() {
             "It looks like you've done all of the clues. Make sure you aren't repeating any."
         );
     }
-    var clueId = document.getElementById("clueId").value.toUpperCase();
+    var clueId = "";
+    var element;
+    for (element of document.querySelectorAll("input[type='radio']")) {
+        if (element.checked) {
+            clueId += element.id.replace("toggle-", "").toUpperCase();
+            element.checked = false;
+        }
+    }
     setTimeout(
         () => {
             fetch(`/api/clue_status_of/${clueId}/for/${userIdString}/`)

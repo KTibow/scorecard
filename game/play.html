@@ -41,8 +41,37 @@
         <h3>Your ID is {{uid}}.</h3>
         <h3 id="groupStat">You're not in a group yet.</h3>
         <h3>So far, you've done <span id="attmpts">0</span> clue checks.</h3>
-        <input id="clueId" type="text" placeholder="Clue ID"><br/>
         <h3 id="cluesNotToVisit"></h3>
+        <div class="cluePicker">
+          <div class="letters">
+            <label class="toggler" for="toggle-a"></label>
+            <input type="radio" id="toggle-a" name="letters"></input>
+            <div class="control-me">A</div>
+            <label class="toggler" for="toggle-b"></label>
+            <input type="radio" id="toggle-b" name="letters"></input>
+            <div class="control-me">B</div>
+            <label class="toggler" for="toggle-c"></label>
+            <input type="radio" id="toggle-c" name="letters"></input>
+            <div class="control-me">C</div>
+            <label class="toggler" for="toggle-d"></label>
+            <input type="radio" id="toggle-d" name="letters"></input>
+            <div class="control-me">D</div>
+          </div>
+          <div class="numbers">
+            <label class="toggler" for="toggle-1"></label>
+            <input type="radio" id="toggle-1" name="numbers"></input>
+            <div class="control-me">1</div>
+            <label class="toggler" for="toggle-2"></label>
+            <input type="radio" id="toggle-2" name="numbers"></input>
+            <div class="control-me">2</div>
+            <label class="toggler" for="toggle-3"></label>
+            <input type="radio" id="toggle-3" name="numbers"></input>
+            <div class="control-me">3</div>
+            <label class="toggler" for="toggle-4"></label>
+            <input type="radio" id="toggle-4" name="numbers"></input>
+            <div class="control-me">4</div>
+          </div>
+        </div>
         <button onClick="checkClue()" data-icon="add">Add clue</button><br/>
         <input id="userId" type="text" placeholder="User ID"><br/>
         <button onClick="registerGroup()" data-icon="group_add" id="addToGroup">Add to group</button><br/>
@@ -53,13 +82,6 @@
                 data-icon="close" id="closeOverlay">Close</button>
         </div>
         <script>
-            var input = document.getElementById("clueId");
-            input.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    checkClue();
-                }
-            });
             input = document.getElementById("userId");
             input.addEventListener("keyup", function(event) {
                 if (event.keyCode === 13) {
