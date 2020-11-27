@@ -228,7 +228,7 @@ def card(username):
         return render_template(
             "play.html", uid=id_database[username], username=username
         )
-    return render_template("404.html"), 404
+    return render_template("404_user.html", username=username), 404
 
 
 # 404
