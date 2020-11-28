@@ -56,7 +56,7 @@ jobs:
     # Runs CI
     - name: Run puppeteer
       run: |
-        (python3 -m assets.lighthouse_boot &) &> /dev/null
+        (python3 app.py &) &> /dev/null
         python3 -m pytest --reruns 2 assets/puppeteer.py
       env:
         GITHUB_VERSION_PAT: ${{ secrets.GITHUB_TOKEN }}
