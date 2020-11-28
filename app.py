@@ -30,7 +30,7 @@ if debug_mode:
     id_database.write(
         """
     {
-    "test": "12345"
+    "test": "123"
     }
     """
     )
