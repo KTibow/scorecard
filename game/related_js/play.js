@@ -105,8 +105,8 @@ function updateStatus() {
                         previousStatus != status &&
                         previousStatus.length == status.length
                     ) {
-                        oldPeople = previousStatus["result"].sort();
-                        newPeople = status["result"].sort();
+                        var oldPeople = previousStatus["result"].sort();
+                        var newPeople = status["result"].sort();
                         var prevAllFinished = true;
                         var allFinished = true;
                         for (var [i, oldPerson] of oldPeople.entries()) {
