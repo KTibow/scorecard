@@ -59,10 +59,9 @@ import before_after_req  # noqa: F401,E402
 # Init github
 if os.getenv("GITHUB_VERSION_PAT") is not None:
     github_instance = Github(os.getenv("GITHUB_VERSION_PAT"))
-    rep = github_instance.get_repo("KTibow/scorecard")
 else:
     github_instance = Github()
-    rep = github_instance.get_repo("KTibow/scorecard")
+rep = github_instance.get_repo("KTibow/scorecard")
 
 
 def sleep(timefor):
@@ -76,20 +75,19 @@ def sleep(timefor):
         time.sleep(1 / 16)
 
 
-comm_num = 0
+commit_number = 0
 
 
 def find_commit():
-    """Continously check for new commits, for the service worker version."""
+    """Continously check for new commits, for the service worker cache version."""
     # Declarations
     print("Starting commit finder")
     global github_instance
-    global comm_num
-    prevcomm = -1
+    global commit_number
+    previous_number = -1
     while True:
-        # Get rate limiting and log if it's divisible by 10
-        rate_limit = github_instance.rate_limiting[1]
-        rate_limit_remaining = github_instance.rate_limiting[0]
+        # Get rate limiting and log if it's divisible by 10 (so not to spam the log)
+        rate_limit_remaining, rate_limit = github_instance.rate_limiting
         rate_limit_used = rate_limit - rate_limit_remaining
         if (rate_limit_used % 10) == 0:
             print(
@@ -97,35 +95,33 @@ def find_commit():
                 f"{rate_limit_used}/{rate_limit}",
                 "interactions so far",
             )
-        prevcomm = comm_num
+        previous_number = commit_number
         try:
             if rate_limit_used < rate_limit * 0.8:
                 # Try (prevent exceptions) if there are less than 4/5 interactions used
                 # Get commit number (DO NOT use len(list(rep.get_commits())) )
-                comm_num = rep.get_commits().totalCount
+                commit_number = rep.get_commits().totalCount
                 # Log if updated
-                if prevcomm != comm_num:
+                if previous_number != commit_number:
                     print(
-                        "We updated from",
-                        prevcomm,
-                        "commits to",
-                        comm_num,
-                        "commits! (So far we've used",
-                        rate_limit_used,
-                        "interactions out of",
-                        str(rate_limit) + ")",
+                        f"We updated from {previous_number} commits",
+                        f"to {commit_number} commits!",
+                        f"(So far we've used {rate_limit_used} interactions",
+                        f"out of {rate_limit})",
                     )
                 if rate_limit_used > rate_limit * 0.4:
                     # If more than 2/5 interactions used, log and sleep
-                    print("(sleeping extra 30 seconds in commit fetcher)")
+                    print("More than 2/5 interactions used, sleeping 30 seconds")
                     sleep(30)
             else:
                 # Pause until next reset
-                print("Pausing fetch commits")
+                print("More than 4/5 interactions used, waiting 2 minutes.")
                 sleep(120)
         except Exception as github_error:
             # Log exception and wait (in case of other rate limit)
+            print("GitHub error!")
             print(github_error)
+            print("Sleeping 4 minutes.")
             sleep(240)
         # Sleep (don't use up rate limit)
         sleep(60)
@@ -137,23 +133,23 @@ if not debug_mode:
     find_commit_thread.start()
 
 
-def make_sender(pathy, directy):
+def make_sender(path_of_file, directory_of_file):
     """
     Generate a file sender function.
 
     Args:
-        pathy: The path of it.
-        directy: The directory of it.
+        path_of_file: The path of it.
+        directory_of_file: The directory of it.
 
     Returns:
         The sender function.
     """
 
     def sender_function():
-        mimetype = mimetypes.guess_type(pathy)[0]
+        mimetype = mimetypes.guess_type(path_of_file)[0]
         return send_from_directory(
-            os.path.join(app.root_path, "game/" + directy),
-            pathy.replace("/", ""),
+            os.path.join(app.root_path, "game/" + directory_of_file),
+            path_of_file.replace("/", ""),
             mimetype=mimetype,
         )
 
@@ -166,9 +162,11 @@ def walk():
 
     Returns:
         A list of files, something like this:
-        [["related/", "play.css"],
+        [
+        ["related/", "play.css"],
         ["related/", "welcome.css"],
-        ["fonts/", "open-sans.ttf"]]
+        ["fonts/", "open-sans.ttf"]
+        ]
     """
     pys = []
     for root, _dirs, files in os.walk("game"):
@@ -233,20 +231,20 @@ def card(username):
 
 # 404
 @app.errorhandler(404)
-def err404(_error):
+def handle404(_error):
     """
     Render the 404 error page.
 
     Returns:
         HTML page for when a page isn't found.
     """
-    if request.url[len(request.url) - 1] == "/":
-        return redirect(request.url[: len(request.url) - 1], code=301)
+    if request.url[-1] == "/":
+        return redirect(request.url[:-1], code=301)
     return render_template("404.html"), 404
 
 
 @app.route("/404")
-def ex404():
+def example404():
     """
     Render the 404 error page, for the service worker.
 
@@ -258,7 +256,7 @@ def ex404():
 
 # 500
 @app.errorhandler(500)
-def err500(_error):
+def handle500(_error):
     """
     Render the 500 error page.
 
@@ -297,14 +295,14 @@ def make_service_worker():
             url = url_for(rule.endpoint, **(rule.defaults or {}))
             if "debug" not in url and "eslint" not in url:
                 links.append(f"'{url}'")
-    swlist = ""
+    sw_list = ""
     for index, link in enumerate(links):
         if len(links) - 1 != index:
             link = f"{link}, "
-        swlist += link
-    global comm_num
+        sw_list += link
+    global commit_number
     service_worker = render_template(
-        "browserfiles/sw.js", urls=swlist, version=str(comm_num)
+        "browserfiles/sw.js", urls=sw_list, version=str(commit_number)
     )
     response = app.make_response(service_worker)
     response.mimetype = "application/javascript"
