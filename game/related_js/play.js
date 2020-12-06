@@ -130,7 +130,11 @@ function updateStatus() {
                                 startVelocity: 30,
                                 spread: 360,
                             };
-                            for (var confettiDelay = 10; confettiDelay < 4000; confettiDelay += 500) {
+                            for (
+                                var confettiDelay = 10;
+                                confettiDelay < 4000;
+                                confettiDelay += 500
+                            ) {
                                 var confettiTempConfig = Object.assign(
                                     {
                                         origin: {
