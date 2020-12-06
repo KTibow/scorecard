@@ -18,6 +18,8 @@
   },
   "scripts": {
     "format": "python3 -m black . && npx prettier -w **/*.js **/*.css",
+    "pythonlint": "python3 -m flake8 --exit-zero .",
+    "jslint": "npx eslint .",
     "lint": "python3 -m flake8 --exit-zero . && npx eslint . && python3 -m pytest assets/puppeteer.py",
     "setup": "python3 -m pip install --no-deps -r requirements.txt && python3 -m pip install -r dev-requirements.txt flask && npm install",
     "start": "python3 app.py"
