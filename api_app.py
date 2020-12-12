@@ -43,15 +43,27 @@ def make_id(username):
     new_id = str(randint(0, 999)).zfill(3)
     if username in id_database:
         old_id = id_database[username]
+        # Update group database
         try:
             group_database = json.load(open("groups.db"))
         except FileNotFoundError:
             group_database = []
-        for group_index, group in enumerate(group_database):
-            group[1:] = [user_id.replace(old_id, new_id) for user_id in group[1:]]
-            group_database[group_index] = group
-        print("Updating groups, now groups.db is", group_database)
-        json.dump(group_database, open("groups.db", "w"))
+        all_group_ids = get_all_group_user_ids(group_database)
+        if old_id in all_group_ids:
+            for group_index, group in enumerate(group_database):
+                group[1:] = [user_id.replace(old_id, new_id) for user_id in group[1:]]
+                group_database[group_index] = group
+            print(f"Updated groups.db because a new id was generated for {username}")
+            json.dump(group_database, open("groups.db", "w"))
+        # Update metadata database
+        try:
+            metadata_database = json.load(open("metadata.db"))
+        except FileNotFoundError:
+            metadata_database = {}
+        if old_id in metadata_database.keys():
+            metadata_database[new_id] = metadata_database.pop(old_id)
+            print(f"Updated metadata.db because a new id was generated for {username}")
+            json.dump(metadata_database, open("metadata.db", "w"))
     # First ID
     id_database[username] = new_id
     print("Updating IDs, now ids.db is", id_database)
