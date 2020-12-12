@@ -68,6 +68,10 @@ function registerGroup() {
 function goHome() {
     window.location = "/";
 }
+function escapeHtml() {
+  return this.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+String.prototype.escapeHtml = escapeHtml;
 var previousStatus;
 function updateStatus() {
     if (document.hasFocus()) {
@@ -95,7 +99,7 @@ function updateStatus() {
                             .join(", "),
                         peopleInGroup[peopleInGroup.length - 1],
                     ];
-                    peopleInGroup = peopleInGroup.join(" and ");
+                    peopleInGroup = peopleInGroup.join(" and ").escapeHtml();
                     document.getElementById(
                         "groupStat"
                     ).innerHTML = `Right now you have ${peopleInGroup} in your group.`;
