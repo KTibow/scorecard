@@ -36,7 +36,7 @@ self.addEventListener("install", (e) => {
     logMessage("✅ Done installing!", "green");
 });
 self.addEventListener("fetch", function (event) {
-    var shouldCache = event.request.url.includes(".");
+    var shouldCache = event.request.url.split("/").pop(-1).includes(".");
     var messageToLog = "🌎 We got a (no, not fish) fetch! ";
     if (shouldCache) {
         messageToLog += "Caching it for later use.";
