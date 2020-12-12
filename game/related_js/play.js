@@ -66,6 +66,7 @@ function registerGroup() {
         });
 }
 function goHome() {
+    localStorage.clear();
     window.location = "/";
 }
 function escapeHtml() {
@@ -102,7 +103,7 @@ function updateStatus() {
                     peopleInGroup = peopleInGroup.join(" and ").escapeHtml();
                     document.getElementById(
                         "groupStat"
-                    ).innerHTML = `Right now you have ${peopleInGroup} in your group.`;
+                    ).innerHTML = `You're in a group with ${peopleInGroup}.`;
                     if (
                         previousStatus !== undefined &&
                         previousStatus["status"] == "success" &&
