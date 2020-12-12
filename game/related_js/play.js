@@ -70,7 +70,9 @@ function goHome() {
     window.location = "/";
 }
 function escapeHtml() {
-  return this.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    return this.replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
 }
 String.prototype.escapeHtml = escapeHtml;
 var previousStatus;
