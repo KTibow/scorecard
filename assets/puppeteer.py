@@ -101,6 +101,36 @@ class TestGeneral(object):
         assert "http://127.0.0.1:5000/cluecard/Kendell" == page.url
         assert "Play ClueCard | E-ScoreCard for game clues" == await page.title()
 
+    @pytest.mark.asyncio
+    async def test_update_dbs(self, tabs_2):
+        # Do initial add
+        for page_index, this_page in enumerate(tabs_2):
+            await this_page.goto("http://127.0.0.1:5000")
+            await this_page.bringToFront()
+            await this_page.keyboard.type(f"Kendell{page_index}")
+            await this_page.evaluate("document.querySelector('button').click()")
+            await this_page.waitForNavigation({"waitUntil": "networkidle2"})
+            await this_page.evaluate("localStorage.clear()")
+        main_tab = tabs_2[1]
+        await main_tab.bringToFront()
+        await main_tab.focus("#userId")
+        await main_tab.keyboard.type(await tabs_2[0].evaluate("userIdString"))
+        await main_tab.click("#addToGroup")
+        # New id
+        await this_page.goto("http://127.0.0.1:5000")
+        await this_page.keyboard.type("Kendell1")
+        await this_page.evaluate("document.querySelector('button').click()")
+        await this_page.waitForNavigation({"waitUntil": "networkidle2"})
+        await this_page.evaluate("localStorage.clear()")
+        await asyncio.sleep(0.5)
+        await main_tab.screenshot({"path": "pytest_screenshots/after_update_dbs.png"})
+        people_in_group = await main_tab.querySelectorEval(
+            "#groupStat", "(el) => {return el.innerHTML}"
+        )
+        assert people_in_group in [
+            "Right now you have Kendell0 and Kendell1 in your group.",
+        ]
+
 
 class TestAddToGroup(object):
     @pytest.mark.asyncio
