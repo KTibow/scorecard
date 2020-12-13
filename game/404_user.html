@@ -42,9 +42,14 @@
         <h2>The database of users might have been reset, because the username {{username}} isn't in it.</h2>
         <div class="going-home">Taking you home...</div>
         <script>
-            setTimeout(() => {
-                window.location = "/";
-            }, 5000);
+            function goHome() {
+                if (document.hasFocus()) {
+                    window.location = "/";
+                } else {
+                    setTimeout(goHome, 5000);
+                }
+            }
+            setTimeout(goHome, 5000);
         </script>
     </body>
 </html>
