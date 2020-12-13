@@ -25,12 +25,26 @@
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
         <meta name="theme-color" content="#7000FF">
         <link rel="manifest" href="/manifest.json">
+        <style>
+            .going-home {
+                background: var(--primary-color);
+                padding: 10px;
+                animation: infinite 1s jiggle;
+                text-align: center;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <script src="/install.js"></script>
         <noscript>Hey, this site won't make any sense if you turn JavaScript off. Can you turn it on again or use a different browser with JavaScript on? Thanks.</noscript>
         <h1>Username not found.</h1>
         <h2>The database of users might have been reset, because the username {{username}} isn't in it.</h2>
-        <h3><a href="/">Go back home to make a new one.</a></h3>
+        <div class="going-home">Taking you home...</div>
+        <script>
+            setTimeout(() => {
+                window.location = "/";
+            }, 5000);
+        </script>
     </body>
 </html>
