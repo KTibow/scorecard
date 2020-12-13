@@ -180,11 +180,12 @@ def user_status(user_id):
                 id_database = {}
             group = group[1 : len(group)]
             inv_map = {user_id: name for name, user_id in id_database.items()}
-            mgroup = [
-                inv_map[person] + metadata_database.get(person, "")
+            my_group = [
+                inv_map[person].replace('"', "&quot;")
+                + metadata_database.get(person, "")
                 for person in group.copy()
             ]
-            return json.dumps({"status": "success", "result": mgroup})
+            return json.dumps({"status": "success", "result": my_group})
 
 
 @app.route("/clue_status_of/<clue_id>/for/<user_id>")
