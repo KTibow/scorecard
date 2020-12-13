@@ -69,12 +69,11 @@ function goHome() {
     localStorage.clear();
     window.location = "/";
 }
-function escapeHtml() {
-    return this.replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
+function escapeHtml(str) {
+    return str
+        .replace(new RegExp("<", "g"), "&lt;")
+        .replace(new RegExp(">", "g"), "&gt;");
 }
-String.prototype.escapeHtml = escapeHtml;
 var previousStatus;
 function updateStatus() {
     if (document.hasFocus()) {
@@ -102,7 +101,7 @@ function updateStatus() {
                             .join(", "),
                         peopleInGroup[peopleInGroup.length - 1],
                     ];
-                    peopleInGroup = peopleInGroup.join(" and ").escapeHtml();
+                    peopleInGroup = escapeHtml(peopleInGroup.join(" and "));
                     document.getElementById(
                         "groupStat"
                     ).innerHTML = `You're in a group with ${peopleInGroup}.`;
