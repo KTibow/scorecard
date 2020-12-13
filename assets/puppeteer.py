@@ -199,4 +199,6 @@ class TestAddToGroup(object):
         people_in_group = await main_tab.querySelectorEval(
             "#groupStat", "(el) => {return el.innerHTML}"
         )
-        assert people_in_group == "You're in a group with Kendell0, Kendell1 and Kendell2."
+        assert (
+            people_in_group == "You're in a group with Kendell0, Kendell1 and Kendell2."
+        )
