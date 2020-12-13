@@ -26,7 +26,7 @@ def event_loop():
 
 @pytest.fixture(scope="function")
 async def browser():
-    browser_config = {"autoClose": False, "slowMo": 1}
+    browser_config = {"autoClose": False, "slowMo": 2}
     if exists(r"C:\Users\Kende\AppData\Local\Google\Chrome\Application\chrome.exe"):
         browser_config[
             "executablePath"
@@ -127,9 +127,7 @@ class TestGeneral(object):
         people_in_group = await main_tab.querySelectorEval(
             "#groupStat", "(el) => {return el.innerHTML}"
         )
-        assert people_in_group in [
-            "Right now you have Kendell0 and Kendell1 in your group.",
-        ]
+        assert people_in_group == "You're in a group with Kendell0 and Kendell1."
 
 
 class TestAddToGroup(object):
@@ -163,9 +161,7 @@ class TestAddToGroup(object):
         people_in_group = await main_tab.querySelectorEval(
             "#groupStat", "(el) => {return el.innerHTML}"
         )
-        assert people_in_group in [
-            "Right now you have Kendell0 and Kendell1 in your group.",
-        ]
+        assert people_in_group == "You're in a group with Kendell0 and Kendell1."
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("tab_to_add", [[0, 2], [1, 2], [2, 0], [2, 1]])
@@ -203,6 +199,4 @@ class TestAddToGroup(object):
         people_in_group = await main_tab.querySelectorEval(
             "#groupStat", "(el) => {return el.innerHTML}"
         )
-        assert people_in_group in [
-            "Right now you have Kendell0, Kendell1 and Kendell2 in your group.",
-        ]
+        assert people_in_group == "You're in a group with Kendell0, Kendell1 and Kendell2."
