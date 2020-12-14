@@ -65,6 +65,16 @@ function registerGroup() {
             }, 1000);
         });
 }
+function deleteGroup() {
+    fetch(`/api/delete_group/${userIdString}`);
+    var deleteGroup = document.getElementById("deleteGroup");
+    deleteGroup.setAttribute("data-icon", "done");
+    deleteGroup.innerHTML = "Deleted group";
+    setTimeout(() => {
+        deleteGroup.setAttribute("data-icon", "delete");
+        deleteGroup.innerHTML = "Delete group";
+    }, 1000);
+}
 function goHome() {
     localStorage.clear();
     window.location = "/";

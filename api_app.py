@@ -297,3 +297,25 @@ def debug():
         metadata_database=metadata_database,
         id_database=id_database,
     )
+
+
+@app.route("/delete_group/<user_id>")
+def delete_group(user_id):
+    """
+    Delete a group from groups.db based on a user ID.
+
+    Args:
+        user_id: The user ID in the group to delete.
+
+    Returns:
+        The current groups database.
+    """
+    try:
+        group_database = json.load(open("groups.db"))
+    except FileNotFoundError:
+        group_database = []
+    for group in group_database:
+        if user_id in group:
+            group_database.remove(group)
+    json.dump(group_database, open("groups.db", "w"))
+    return f"done group_database"
