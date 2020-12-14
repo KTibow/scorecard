@@ -129,7 +129,11 @@ function updateStatus() {
                             var newPerson = newPeople[i];
                             if (oldPerson != newPerson) {
                                 showPopup(
-                                    newPerson.replace("(", "").replace(")", "")
+                                    escapeHtml(
+                                        newPerson
+                                            .replace("(", "")
+                                            .replace(")", "")
+                                    )
                                 );
                             }
                             if (!oldPerson.includes("finished")) {
