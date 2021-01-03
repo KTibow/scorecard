@@ -83,6 +83,9 @@ input[type="radio"]:nth-of-type(8):checked ~ .control-me:nth-of-type(8) {
 .cluePicker {
     margin: 15px;
 }
+.cluePicker * {
+    user-select: none;
+}
 @media (orientation: portrait) {
     .cluePicker,
     .letters,
