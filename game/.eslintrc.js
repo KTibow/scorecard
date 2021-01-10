@@ -8,6 +8,7 @@ module.exports = {
     },
     globals: {
         userIdString: "readonly",
+        username: "readonly",
         confetti: "readonly",
     },
     extends: "eslint:recommended",
