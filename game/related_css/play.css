@@ -86,6 +86,34 @@ input[type="radio"]:nth-of-type(8):checked ~ .control-me:nth-of-type(8) {
 .cluePicker * {
     user-select: none;
 }
+label[for="imReady"] {
+    margin: 16px;
+    display: inline-block;
+    background: var(--primary-color-light);
+    filter: hue-rotate(100deg);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+label[for="imReady"]::after {
+    content: "🆗";
+    margin-left: 8px;
+    filter: hue-rotate(50deg);
+}
+#imReady:checked + label {
+    filter: hue-rotate(-100deg);
+}
+#imReady:checked + label::after {
+    content: "☑";
+    font-family: apple color emoji, segoe ui emoji, noto color emoji,
+        android emoji, emojisymbols, emojione mozilla, twemoji mozilla,
+        segoe ui symbol;
+    filter: grayscale(1);
+}
+#clueUI {
+  opacity: 0.25;
+  pointer-events: none;
+}
 @media (orientation: portrait) {
     .cluePicker,
     .letters,
@@ -100,5 +128,9 @@ input[type="radio"]:nth-of-type(8):checked ~ .control-me:nth-of-type(8) {
         width: 15vw;
         height: 15vw;
         line-height: 15vw;
+    }
+    label[for="imReady"] {
+        width: 90%;
+        text-align: center;
     }
 }

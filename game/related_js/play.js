@@ -105,6 +105,17 @@ function updateStatus() {
                         "You're not in a group yet.";
                 } else if (status["status"] == "success") {
                     var peopleInGroup = status["result"].sort();
+                    // Update whether user is ready to go based on done
+                    document.getElementById(
+                        "imReady"
+                    ).checked = peopleInGroup
+                        .filter((person) => person.includes(username))[0]
+                        .includes("is ready");
+                    if (status["group_status"] == "going") {
+                      document.getElementById("clueUI").style.opacity = "unset";
+                      document.getElementById("clueUI").style.pointerEvents = "unset";
+                    }
+                    // Display people in group
                     peopleInGroup = [
                         peopleInGroup
                             .slice(0, peopleInGroup.length - 1)

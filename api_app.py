@@ -152,8 +152,9 @@ def user_status(user_id):
     Returns:
         A JSON string. Status can be bad_id, not_in_group, or success.
         If successful, then result is set to a list of people in the group.
+        Group status is also set: before, going, or finished.
         Example of success:
-        {"status": "success", "result": ["Kendell", "Wendell"]}
+        {"status": "success", "result": ["Kendell", "Wendell"], "status": "going"}
     """
     try:
         id_database = json.load(open("ids.db"))
@@ -185,7 +186,13 @@ def user_status(user_id):
                 + metadata_database.get(person, "")
                 for person in group.copy()
             ]
-            return json.dumps({"status": "success", "result": my_group})
+            current_status = "going"
+            for group in group_database:
+                if user_id in group:
+                    for this_user in group[1:]:
+                        if metadata_database.get(user_id) != " (✅ is ready)":
+                            current_status = "before"
+            return json.dumps({"status": "success", "result": my_group, "group_status": current_status})
 
 
 @app.route("/clue_status_of/<clue_id>/for/<user_id>")
@@ -319,3 +326,24 @@ def delete_group(user_id):
             group_database.remove(group)
     json.dump(group_database, open("groups.db", "w"))
     return f"done group_database"
+
+
+@app.route("/im_ready/<user_id>")
+def im_ready(user_id):
+    """
+    Mark a user ID as ready in metadata.db.
+
+    Args:
+        user_id: The user ID to mark as ready.
+
+    Returns:
+        The current metadata database.
+    """
+    try:
+        metadata_database = json.load(open("metadata.db"))
+    except FileNotFoundError:
+        metadata_database = {}
+    if user_id not in metadata_database:
+        metadata_database[user_id] = " (✅ is ready)"
+    json.dump(metadata_database, open("metadata.db", "w"))
+    return f"done {metadata_database}"
