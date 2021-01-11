@@ -85,6 +85,7 @@ function escapeHtml(str) {
         .replace(new RegExp(">", "g"), "&gt;");
 }
 var previousStatus;
+var wasGoing;
 function updateStatus() {
     if (document.hasFocus()) {
         fetch(`/api/user_status/${userIdString}`)
@@ -111,9 +112,25 @@ function updateStatus() {
                     ).checked = peopleInGroup
                         .filter((person) => person.includes(username))[0]
                         .includes("is ready");
-                    if (status["group_status"] == "going") {
-                      document.getElementById("clueUI").style.opacity = "unset";
-                      document.getElementById("clueUI").style.pointerEvents = "unset";
+                    if (status["group_status"] == "going" && !wasGoing) {
+                        document.getElementById("countdown").style.display =
+                            "inline-block";
+                        var countdownId = setInterval(() => {
+                            var countdown = document.getElementById(
+                                "countdown"
+                            );
+                            countdown.innerHTML =
+                                Number(countdown.innerHTML) - 1;
+                        }, 1000);
+                        setTimeout(() => {
+                            clearInterval(countdownId);
+                            var clueUI = document.getElementById("clueUI");
+                            clueUI.style.opacity = "unset";
+                            clueUI.style.pointerEvents = "unset";
+                            document.getElementById("countdown").style.display =
+                                "none";
+                        }, 10000);
+                        wasGoing = true;
                     }
                     // Display people in group
                     peopleInGroup = [

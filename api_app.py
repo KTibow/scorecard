@@ -192,7 +192,13 @@ def user_status(user_id):
                     for this_user in group[1:]:
                         if metadata_database.get(user_id) != " (✅ is ready)":
                             current_status = "before"
-            return json.dumps({"status": "success", "result": my_group, "group_status": current_status})
+            return json.dumps(
+                {
+                    "status": "success",
+                    "result": my_group,
+                    "group_status": current_status,
+                }
+            )
 
 
 @app.route("/clue_status_of/<clue_id>/for/<user_id>")

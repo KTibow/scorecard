@@ -111,8 +111,15 @@ label[for="imReady"]::after {
     filter: grayscale(1);
 }
 #clueUI {
-  opacity: 0.25;
-  pointer-events: none;
+    opacity: 0.25;
+    pointer-events: none;
+}
+#countdown {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    display: none;
 }
 @media (orientation: portrait) {
     .cluePicker,
