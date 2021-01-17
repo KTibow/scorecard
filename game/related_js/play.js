@@ -278,7 +278,7 @@ function checkClue() {
     }
     var clueId = "";
     var element;
-    for (element of document.querySelectorAll("input[type='radio']")) {
+    for (element of document.querySelectorAll("#clueUI input[type='radio']")) {
         if (element.checked) {
             clueId += element.id.replace("toggle-", "").toUpperCase();
             element.checked = false;
