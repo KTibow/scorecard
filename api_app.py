@@ -179,7 +179,7 @@ def user_status(user_id):
                 id_database = json.load(open("ids.db"))
             except FileNotFoundError:
                 id_database = {}
-            group = group[1 : len(group)]
+            group = group[1:]
             inv_map = {user_id: name for name, user_id in id_database.items()}
             my_group = [
                 inv_map[person].replace('"', "&quot;")
@@ -187,7 +187,7 @@ def user_status(user_id):
                 for person in group.copy()
             ]
             current_status = "going"
-            for this_user in group[1:]:
+            for this_user in group:
                 if metadata_database.get(this_user) != " (✅ is ready)":
                     current_status = "before"
             return json.dumps(
