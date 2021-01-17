@@ -187,11 +187,9 @@ def user_status(user_id):
                 for person in group.copy()
             ]
             current_status = "going"
-            for group in group_database:
-                if user_id in group:
-                    for this_user in group[1:]:
-                        if metadata_database.get(user_id) != " (✅ is ready)":
-                            current_status = "before"
+            for this_user in group[1:]:
+                if metadata_database.get(this_user) != " (✅ is ready)":
+                    current_status = "before"
             return json.dumps(
                 {
                     "status": "success",
