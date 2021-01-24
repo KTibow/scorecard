@@ -350,3 +350,24 @@ def im_ready(user_id):
         metadata_database[user_id] = " (✅ is ready)"
     json.dump(metadata_database, open("metadata.db", "w"))
     return f"done {metadata_database}"
+
+
+@app.route("/custom_metadata/<user_id>/<content>")
+def custom_metadata(user_id, content):
+    """
+    Set a custom value in metadata.db.
+
+    Args:
+        user_id: The user ID to set.
+        content: The value to set it to.
+
+    Returns:
+        The current metadata database.
+    """
+    try:
+        metadata_database = json.load(open("metadata.db"))
+    except FileNotFoundError:
+        metadata_database = {}
+    metadata_database[user_id] = content
+    json.dump(metadata_database, open("metadata.db", "w"))
+    return f"done {metadata_database}"
