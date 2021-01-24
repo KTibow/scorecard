@@ -274,8 +274,7 @@ def add_to_finished(user_id):
         metadata_database = json.load(open("metadata.db"))
     except FileNotFoundError:
         metadata_database = {}
-    if user_id not in metadata_database:
-        metadata_database[user_id] = " (🏁 finished)"
+    metadata_database[user_id] = " (🏁 finished)"
     json.dump(metadata_database, open("metadata.db", "w"))
     return f"done {metadata_database}"
 
