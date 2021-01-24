@@ -32,6 +32,11 @@ function showPopup(message) {
     element.innerHTML = message;
     document.body.appendChild(element);
 }
+function pad(n, width, z) {
+    z = z || "0";
+    n = n + "";
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
 function registerGroup() {
     var idInput = document.getElementById("userId");
     fetch(`/api/add_ids/${userIdString}/${idInput.value}`)
@@ -70,10 +75,7 @@ function deleteGroup() {
     var deleteGroup = document.getElementById("deleteGroup");
     deleteGroup.setAttribute("data-icon", "done");
     deleteGroup.innerHTML = "Deleted group";
-    setTimeout(() => {
-        deleteGroup.setAttribute("data-icon", "delete");
-        deleteGroup.innerHTML = "Delete group";
-    }, 1000);
+    window.location.reload();
 }
 function goHome() {
     localStorage.clear();
@@ -105,33 +107,7 @@ function updateStatus() {
                     document.getElementById("groupStat").innerHTML =
                         "You're not in a group yet.";
                 } else if (status["status"] == "success") {
-                    var peopleInGroup = status["result"].sort();
-                    // Update whether user is ready to go based on done
-                    document.getElementById(
-                        "imReady"
-                    ).checked = peopleInGroup
-                        .filter((person) => person.includes(username))[0]
-                        .includes("is ready");
-                    if (status["group_status"] == "going" && !wasGoing) {
-                        document.getElementById("countdown").style.display =
-                            "inline-block";
-                        var countdownId = setInterval(() => {
-                            var countdown = document.getElementById(
-                                "countdown"
-                            );
-                            countdown.innerHTML =
-                                Number(countdown.innerHTML) - 1;
-                        }, 1000);
-                        setTimeout(() => {
-                            clearInterval(countdownId);
-                            var clueUI = document.getElementById("clueUI");
-                            clueUI.style.opacity = "unset";
-                            clueUI.style.pointerEvents = "unset";
-                            document.getElementById("countdown").style.display =
-                                "none";
-                        }, 10000);
-                        wasGoing = true;
-                    }
+                    var peopleInGroup = handleSuccessfulStatus(status);
                     // Display people in group
                     peopleInGroup = [
                         peopleInGroup
@@ -204,6 +180,57 @@ function updateStatus() {
                 }
             });
     }
+}
+function handleSuccessfulStatus(status) {
+    var peopleInGroup = status["result"].sort();
+    // Update whether user is ready to go based on done
+    document.getElementById(
+        "imReady"
+    ).checked = peopleInGroup
+        .filter((person) => person.includes(username))[0]
+        .includes("is ready");
+    if (status["group_status"] == "going" && !wasGoing) {
+        // Countdown from 10
+        document.getElementById("countdown").style.display = "inline-block";
+        var countdownId = setInterval(() => {
+            var countdown = document.getElementById("countdown");
+            countdown.innerHTML = Number(countdown.innerHTML) - 1;
+        }, 1000);
+        setTimeout(() => {
+            clearInterval(countdownId);
+            var clueUI = document.getElementById("clueUI");
+            clueUI.style.opacity = "unset";
+            clueUI.style.pointerEvents = "unset";
+            document.getElementById("countdown").style.display = "none";
+        }, 10000);
+        // Countdown total game
+        setTimeout(() => {
+            var countdown = document.getElementById("countdown");
+            countdown.style.display = "inline-block";
+            countdown.innerHTML = "0:30";
+            var countdownId = setInterval(() => {
+                var countdownMinute = countdown.innerHTML.split(":")[0];
+                var countdownSecond = countdown.innerHTML.split(":")[1];
+                var countdownParsedSeconds =
+                    Number(countdownSecond) + Number(countdownMinute) * 60;
+                countdownParsedSeconds -= 1;
+                countdownMinute = Math.floor(countdownParsedSeconds / 60);
+                countdownSecond = countdownParsedSeconds - countdownMinute * 60;
+                countdownSecond = pad(countdownSecond, 2);
+                countdown.innerHTML = `${countdownMinute}:${countdownSecond}`;
+            }, 1000);
+            setTimeout(() => {
+                clearInterval(countdownId);
+                var clueUI = document.getElementById("clueUI");
+                clueUI.style.opacity = "0.25";
+                clueUI.style.pointerEvents = "none";
+                document.getElementById("countdown").style.display = "none";
+                showPopup("🛑 The game has ended.");
+            }, 30000);
+        }, 10000);
+        wasGoing = true;
+    }
+    return peopleInGroup;
 }
 setInterval(updateStatus, 400);
 function handleClue(outcome, clueId) {
