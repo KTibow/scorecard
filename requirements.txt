@@ -2,7 +2,7 @@ Flask==1.1.2
 Flask-Compress==1.8.0
 Flask-Minify==0.29
 gunicorn==20.0.4
-pip==20.2.2
+pip==21.0
 PyGithub==1.54.1
 requests==2.25.1
 wheel==0.36.2
