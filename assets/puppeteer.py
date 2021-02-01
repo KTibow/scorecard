@@ -44,7 +44,7 @@ async def browser():
 @pytest.fixture(scope="function")
 async def page(browser):
     page = await browser.newPage()
-    page.setDefaultNavigationTimeout(5000)
+    page.setDefaultNavigationTimeout(6000)
     databases = glob("*.db")
     for database in databases:
         try:
@@ -133,9 +133,8 @@ class TestGeneral(object):
 
 class TestAddToGroup(object):
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("use_on_old", [True, False])
     @pytest.mark.parametrize("use_keyboard", [True, False])
-    async def test_add_to_group_makenew(self, tabs_2, use_on_old, use_keyboard):
+    async def test_add_to_group_makenew(self, tabs_2, use_keyboard):
         for page_index, this_page in enumerate(tabs_2):
             await this_page.goto("http://127.0.0.1:5000")
             await this_page.bringToFront()
@@ -144,18 +143,17 @@ class TestAddToGroup(object):
             await this_page.evaluate("document.querySelector('button').click()")
             await this_page.waitForNavigation({"waitUntil": "networkidle2"})
             await this_page.evaluate("localStorage.clear()")
-        main_tab = tabs_2[not use_on_old]
+        main_tab = tabs_2[0]
         await main_tab.bringToFront()
         await main_tab.focus("#userId")
-        await main_tab.keyboard.type(await tabs_2[use_on_old].evaluate("userIdString"))
+        await main_tab.keyboard.type(await tabs_2[1].evaluate("userIdString"))
         if use_keyboard:
             await main_tab.keyboard.type("\n")
         else:
             await main_tab.click("#addToGroup")
         # After adding
-        image_path = "pytest_screenshots/add_to_group"
-        image_path += f"_{'same_page' if use_on_old else 'old_page'}"
-        image_path += f"_{'with_keyboard' if use_keyboard else 'with_button'}"
+        image_path = "pytest_screenshots/add_to_group_"
+        image_path += "with_keyboard" if use_keyboard else "with_button"
         await main_tab.bringToFront()
         await asyncio.sleep(0.5)
         await main_tab.screenshot({"path": image_path + ".png"})
@@ -203,6 +201,7 @@ class TestAddToGroup(object):
             people_in_group == "You're in a group with Kendell0, Kendell1 and Kendell2."
         )
 
+
 class TestMetadata(object):
     @pytest.mark.asyncio
     async def test_ready_to_go(self, tabs_2):
@@ -227,9 +226,11 @@ class TestMetadata(object):
             "#groupStat", "(e) => {return e.innerHTML}"
         )
         assert (
-            people_in_group == "You're in a group with Kendell0 (✅ is ready) and Kendell1."
+            people_in_group
+            == "You're in a group with Kendell0 (✅ is ready) and Kendell1."
         )
         # TODO: Check whether the card buttons are accessible
+
     @pytest.mark.asyncio
     async def test_finished(self, tabs_2):
         # Getting the tabs ready
@@ -272,5 +273,10 @@ class TestMetadata(object):
             "#groupStat", "(e) => {return e.innerHTML}"
         )
         assert (
-            people_in_group == "You're in a group with Kendell0 (🏁 finished) and Kendell1 (✅ is ready)."
+            people_in_group
+            == "You're in a group with Kendell0 (🏁 finished) and Kendell1 (✅ is ready)."
         )
+
+
+# TODO: Test backend seperately
+# TODO: Check every single line of code
