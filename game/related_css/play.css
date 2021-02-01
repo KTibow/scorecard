@@ -111,7 +111,7 @@ label[for="imReady"]::after {
     filter: grayscale(1);
 }
 #clueUI {
-    opacity: 0.25;
+    opacity: 0.5;
     pointer-events: none;
 }
 #countdown {
