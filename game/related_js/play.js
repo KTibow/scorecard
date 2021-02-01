@@ -207,7 +207,7 @@ function handleSuccessfulStatus(status) {
         setTimeout(() => {
             var countdown = document.getElementById("countdown");
             countdown.style.display = "inline-block";
-            countdown.innerHTML = "0:30";
+            countdown.innerHTML = "4:30";
             var countdownId = setInterval(() => {
                 var countdownMinute = countdown.innerHTML.split(":")[0];
                 var countdownSecond = countdown.innerHTML.split(":")[1];
@@ -226,7 +226,7 @@ function handleSuccessfulStatus(status) {
                 clueUI.style.pointerEvents = "none";
                 document.getElementById("countdown").style.display = "none";
                 showPopup("🛑 The game has ended.");
-            }, 30000);
+            }, 270000);
         }, 10000);
         wasGoing = true;
     }
