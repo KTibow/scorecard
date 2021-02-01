@@ -3,6 +3,7 @@ from pyppeteer import launch, errors as pyppeteer_errors
 from os import remove, removedirs, mkdir
 from os.path import exists
 from glob import glob
+from json import load
 import asyncio
 
 # Test every endpoint
@@ -170,7 +171,6 @@ class TestAddToGroup(object):
         for page_index, this_page in enumerate(all_tabs):
             await this_page.goto("http://127.0.0.1:5000")
             await this_page.bringToFront()
-            assert "ClueCard | E-ScoreCard for game clues" == await this_page.title()
             await this_page.keyboard.type(f"Kendell{page_index}")
             await this_page.evaluate("document.querySelector('button').click()")
             await this_page.waitForNavigation({"waitUntil": "networkidle2"})
@@ -201,4 +201,76 @@ class TestAddToGroup(object):
         )
         assert (
             people_in_group == "You're in a group with Kendell0, Kendell1 and Kendell2."
+        )
+
+class TestMetadata(object):
+    @pytest.mark.asyncio
+    async def test_ready_to_go(self, tabs_2):
+        for index, tab in enumerate(tabs_2):
+            await tab.goto("http://127.0.0.1:5000")
+            await tab.evaluate("localStorage.clear()")
+            await tab.goto("http://127.0.0.1:5000")
+            await tab.bringToFront()
+            await tab.keyboard.type(f"Kendell{index}")
+            await tab.click("button")
+            await tab.waitForNavigation({"waitUntil": "networkidle2"})
+        tab = tabs_2[0]
+        await tab.bringToFront()
+        user_id = await tab.querySelector("#userId")
+        await tab.type("#userId", await tabs_2[1].evaluate("userIdString"))
+        await tab.click("#addToGroup")
+        await asyncio.sleep(0.5)
+        await tab.click('label[for="imReady"]')
+        await asyncio.sleep(0.5)
+        await tab.screenshot({"path": "pytest_screenshots/ready_to_go_meta.png"})
+        people_in_group = await tab.querySelectorEval(
+            "#groupStat", "(e) => {return e.innerHTML}"
+        )
+        assert (
+            people_in_group == "You're in a group with Kendell0 (✅ is ready) and Kendell1."
+        )
+        # TODO: Check whether the card buttons are accessible
+    @pytest.mark.asyncio
+    async def test_finished(self, tabs_2):
+        # Getting the tabs ready
+        for index, tab in enumerate(tabs_2):
+            await tab.goto("http://127.0.0.1:5000")
+            await tab.evaluate("localStorage.clear()")
+            await tab.goto("http://127.0.0.1:5000")
+            await tab.bringToFront()
+            await tab.keyboard.type(f"Kendell{index}")
+            await tab.click("button")
+            await tab.waitForNavigation({"waitUntil": "networkidle2"})
+        # Adding them to group
+        tab = tabs_2[0]
+        await tab.bringToFront()
+        user_id = await tab.querySelector("#userId")
+        await tab.type("#userId", await tabs_2[1].evaluate("userIdString"))
+        await tab.click("#addToGroup")
+        await asyncio.sleep(0.5)
+        # Marking them as ready
+        await tab.click('label[for="imReady"]')
+        await asyncio.sleep(0.5)
+        await tabs_2[1].bringToFront()
+        await tabs_2[1].click('label[for="imReady"]')
+        await asyncio.sleep(0.5)
+        await tab.bringToFront()
+        await asyncio.sleep(10)
+        # Doing the thing
+        with open("groups.db") as group_file:
+            group_database = load(group_file)
+        for clue, is_correct in group_database[0][0].items():
+            if is_correct == "correct":
+                correct_clue = clue
+        for i in range(2):
+            await tab.click(f'label[for="toggle-{correct_clue[0].lower()}"]')
+            await tab.click(f'label[for="toggle-{correct_clue[1]}"]')
+            await asyncio.sleep(0.2)
+        await tab.click("#addClue")
+        await asyncio.sleep(5)
+        people_in_group = await tab.querySelectorEval(
+            "#groupStat", "(e) => {return e.innerHTML}"
+        )
+        assert (
+            people_in_group == "You're in a group with Kendell0 (🏁 finished) and Kendell1 (✅ is ready)."
         )
